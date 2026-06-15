@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Armchair Insider AI Tips: useful AI, browser, and workflow guides for members.">
+<title>AI Tips - Armchair Insider</title>
+<style>
+  :root {
+    --bg: #f2f5f1;
+    --card: #ffffff;
+    --border: #dfe6df;
+    --ink: #172019;
+    --ink-soft: #58635b;
+    --green: #2f8f4e;
+    --green-dark: #1e6938;
+    --green-soft: #e8f5ec;
+    --green-pale: #f4fbf6;
+    --shadow: 0 16px 42px rgba(21, 44, 27, 0.08);
+    --shadow-soft: 0 8px 24px rgba(21, 44, 27, 0.06);
+    --radius: 18px;
+    --maxw: 1120px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    min-height: 100vh;
+    margin: 0;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 12% 0%, rgba(47, 143, 78, 0.12), transparent 34rem),
+      radial-gradient(circle at 92% 22%, rgba(47, 143, 78, 0.05), transparent 28rem),
+      var(--bg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  button, a { -webkit-tap-highlight-color: transparent; }
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(255, 255, 255, 0.94);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(14px);
+  }
+  .header-inner {
+    max-width: var(--maxw);
+    min-height: 64px;
+    margin: 0 auto;
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .site-brand { display: flex; align-items: center; gap: 12px; }
+  .logo-crop {
+    width: 36px;
+    height: 36px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    border-radius: 50%;
+  }
+  .logo-crop img { width: auto; max-width: none; height: 36px; display: block; }
+  .site-title {
+    font-size: 1.04rem;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+  }
+  .header-label {
+    color: var(--ink-soft);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  main {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 44px 24px 80px;
+  }
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(36px, 7vw, 74px);
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(232, 245, 236, 0.92));
+    border: 1px solid #cae2d0;
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+  }
+  .hero::after {
+    content: "AI";
+    position: absolute;
+    right: -0.06em;
+    bottom: -0.42em;
+    color: rgba(47, 143, 78, 0.07);
+    font-size: clamp(10rem, 26vw, 18rem);
+    font-weight: 900;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .hero-copy { position: relative; z-index: 1; max-width: 720px; }
+  .eyebrow {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 5px 11px;
+    color: var(--green-dark);
+    background: var(--green-soft);
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  h1, h2, h3 { margin-top: 0; color: var(--ink); line-height: 1.13; letter-spacing: -0.03em; }
+  h1 { max-width: 650px; margin-bottom: 16px; font-size: clamp(2.7rem, 7vw, 5rem); }
+  h2 { margin-bottom: 8px; font-size: clamp(1.55rem, 3vw, 2rem); }
+  h3 { margin-bottom: 9px; font-size: 1.35rem; }
+  p { margin: 0 0 14px; color: var(--ink-soft); }
+  .hero p { max-width: 650px; font-size: clamp(1rem, 2vw, 1.18rem); }
+  .hero-meta {
+    margin-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .meta-pill {
+    padding: 7px 11px;
+    color: #304137;
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid #d6e4d9;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 750;
+  }
+
+  .library { margin-top: 48px; }
+  .library-head {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .library-head p { margin-bottom: 0; }
+  .tip-count {
+    flex: 0 0 auto;
+    color: var(--green-dark);
+    font-size: 0.8rem;
+    font-weight: 800;
+  }
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .tip-card {
+    min-width: 0;
+    min-height: 330px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .tip-card:hover {
+    transform: translateY(-4px);
+    border-color: #bcd9c3;
+    box-shadow: var(--shadow);
+  }
+  .card-visual {
+    min-height: 132px;
+    padding: 22px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    background:
+      linear-gradient(135deg, #173b24, var(--green-dark));
+  }
+  .visual-command {
+    padding: 10px 13px;
+    color: #eafff0;
+    background: rgba(10, 27, 16, 0.58);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 9px;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.86rem;
+    font-weight: 750;
+  }
+  .visual-arrow { color: #aee7bd; font-size: 1.8rem; font-weight: 900; }
+  .card-body {
+    padding: 22px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+  .tag {
+    align-self: flex-start;
+    margin-bottom: 13px;
+    padding: 4px 9px;
+    color: var(--green-dark);
+    background: var(--green-soft);
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 850;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+  .card-body p { flex: 1; }
+  .open-guide {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    background: var(--green);
+    border-radius: 9px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    transition: background 0.15s ease;
+  }
+  .tip-card:hover .open-guide { background: var(--green-dark); }
+
+  .empty-note {
+    margin-top: 22px;
+    padding: 18px 20px;
+    color: var(--ink-soft);
+    background: rgba(255, 255, 255, 0.66);
+    border: 1px dashed #cad6cc;
+    border-radius: 13px;
+    font-size: 0.87rem;
+  }
+  footer {
+    padding: 26px 20px;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 0.8rem;
+  }
+  a:focus-visible { outline: 3px solid #78bd8b; outline-offset: 3px; }
+
+  @media (max-width: 900px) {
+    .tips-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 640px) {
+    .header-inner, main { padding-left: 16px; padding-right: 16px; }
+    .header-label { display: none; }
+    main { padding-top: 24px; }
+    .hero { padding: 36px 22px 42px; border-radius: 19px; }
+    .hero::after { font-size: 11rem; }
+    .library { margin-top: 38px; }
+    .library-head { align-items: flex-start; flex-direction: column; gap: 4px; }
+    .tips-grid { grid-template-columns: 1fr; }
+    .tip-card { min-height: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a class="site-brand" href="./index.html" aria-label="AI Tips home">
+      <span class="logo-crop"><img src="data:image/png;base64,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" alt="Armchair Insider logo"></span>
+      <span class="site-title">AI Tips</span>
+    </a>
+    <span class="header-label">Armchair Insider member resources</span>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow">Armchair Insider</span>
+      <h1>AI Tips</h1>
+      <p>A growing collection of useful AI, browser, and workflow tips for members. Each tip has its own focused guide, so you can find what you need and put it to work quickly.</p>
+      <div class="hero-meta">
+        <span class="meta-pill">Practical walkthroughs</span>
+        <span class="meta-pill">Member-friendly setup</span>
+        <span class="meta-pill">More tips coming</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="library" aria-labelledby="library-title">
+    <div class="library-head">
+      <div>
+        <span class="eyebrow">Tip library</span>
+        <h2 id="library-title">Browse all AI tips</h2>
+        <p>Select a card to open its dedicated guide.</p>
+      </div>
+      <span class="tip-count" id="tipCount"></span>
+    </div>
+    <div class="tips-grid" id="tipsGrid"></div>
+    <div class="empty-note">More practical AI and workflow tips will be added to this library over time.</div>
+  </section>
+</main>
+
+<footer>Armchair Insider AI Tips</footer>
+
+<script>
+  // Add future tips here. Each item becomes one card on the landing page.
+  const tips = [
+    {
+      title: "Dead Simple Seeking Alpha Charts",
+      description: "Type chart plus a ticker in your browser and instantly open a ready-made Seeking Alpha comparison chart.",
+      category: "Browser Workflow",
+      command: "chart adx",
+      href: "./dead-simple-seeking-alpha-charts.html"
+    }
+  ];
+
+  const tipsGrid = document.getElementById("tipsGrid");
+  const tipCount = document.getElementById("tipCount");
+  tipCount.textContent = tips.length + (tips.length === 1 ? " tip" : " tips");
+
+  tips.forEach((tip) => {
+    const card = document.createElement("article");
+    card.className = "tip-card";
+    card.innerHTML = `
+      <div class="card-visual" aria-hidden="true">
+        <span class="visual-command">&gt; ${tip.command}</span>
+        <span class="visual-arrow">&rarr;</span>
+      </div>
+      <div class="card-body">
+        <span class="tag">${tip.category}</span>
+        <h3>${tip.title}</h3>
+        <p>${tip.description}</p>
+        <a class="open-guide" href="${tip.href}">
+          <span>Open Guide</span><span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    `;
+    tipsGrid.appendChild(card);
+  });
+</script>
+</body>
+</html>
