@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -183,7 +185,7 @@
     height: 126px;
     display: grid;
     place-items: center;
-    background: conic-gradient(var(--red) 0 29%, #e6ebe7 29% 100%);
+    background: conic-gradient(var(--amber) 0 53%, #e6ebe7 53% 100%);
     border-radius: 50%;
   }
   .score div {
@@ -201,9 +203,9 @@
     display: inline-flex;
     margin-top: 5px;
     padding: 7px 11px;
-    color: var(--red);
-    background: var(--red-soft);
-    border: 1px solid #efceca;
+    color: var(--amber);
+    background: var(--amber-soft);
+    border: 1px solid #ead4a5;
     border-radius: 999px;
     font-size: .82rem;
     font-weight: 900;
@@ -397,7 +399,7 @@
   <section class="hero">
     <span class="eyebrow">Armchair Income tip</span>
     <h1>AI Income Investment Scorecard</h1>
-    <p>Analyze any income ticker for payout durability, asset quality, valuation, risk, and portfolio fit. See the KGLD example, then use the AI prompt with your own ticker.</p>
+    <p>Analyze any income ticker for payout durability, asset quality, valuation, risk, and portfolio fit. See the ADX example, then use the AI prompt with your own ticker.</p>
     <div class="credit-line">Shared by a member · Prompt created by <a href="https://armchair-insider.circle.so/u/85901e8b" target="_blank" rel="noopener">Paul Stark</a></div>
 
     <div class="workflow-card" aria-label="How to use the AI Income Investment Scorecard">
@@ -405,7 +407,7 @@
       <div class="workflow-track">
         <div class="workflow-step step-1">
           <div class="step-head"><span class="step-number">1</span><strong>Enter your ticker</strong></div>
-          <input id="tickerInput" type="text" value="KGLD" maxlength="12" autocomplete="off" spellcheck="false" aria-label="Investment ticker">
+          <input id="tickerInput" type="text" value="ADX" maxlength="12" autocomplete="off" spellcheck="false" aria-label="Investment ticker">
         </div>
         <div class="workflow-arrow" aria-hidden="true">→</div>
         <div class="workflow-step step-2">
@@ -432,35 +434,35 @@
   <section id="sample">
     <div style="margin-bottom:18px;">
       <span class="eyebrow sample-label">Sample search result from Claude</span>
-      <h2>KGLD — Income Filter Analysis</h2>
-      <p>Kurv Gold Enhanced Income ETF · Claude response using data as of July 17, 2026</p>
+      <h2>ADX — Durable Income Filter Analysis</h2>
+      <p>Adams Diversified Equity Fund · Claude response using data available through July 2026</p>
     </div>
 
     <div class="card">
       <div class="summary">
-        <div class="score" aria-label="Score: approximately 29 out of 100"><div><strong>29</strong><small>out of 100</small></div></div>
+        <div class="score" aria-label="Score: 53 out of 100"><div><strong>53</strong><small>out of 100</small></div></div>
         <div>
           <span class="eyebrow">Claude’s conclusion</span>
-          <h2>Avoid as a durable-income holding</h2>
-          <p>A short-track-record, return-of-capital-heavy trading vehicle whose 18.5% headline distribution rate is a mirage relative to its 2.81% SEC yield.</p>
-          <span class="decision">Decision: Avoid</span>
+          <h2>Watchlist—not a durable-income anchor</h2>
+          <p>ADX is a high-quality, low-cost, unlevered equity closed-end fund, but its managed distribution is funded mainly by total return rather than recurring investment income. The current near-NAV valuation leaves limited margin of safety.</p>
+          <span class="decision">Decision: Watchlist</span>
         </div>
       </div>
       <div class="facts-grid">
-        <div class="fact"><span>Market price</span><strong>$25.89</strong></div>
-        <div class="fact"><span>Distribution rate</span><strong>18.54%</strong></div>
-        <div class="fact"><span>30-day SEC yield</span><strong>2.81%</strong></div>
-        <div class="fact"><span>Estimated ROC</span><strong>~99%</strong></div>
+        <div class="fact"><span>Estimated market price</span><strong>~$25.65</strong></div>
+        <div class="fact"><span>NAV per share</span><strong>$26.34</strong></div>
+        <div class="fact"><span>Forward market yield</span><strong>~7.2%</strong></div>
+        <div class="fact"><span>NII payout coverage</span><strong>~9%–13%</strong></div>
       </div>
-      <p class="note">Claude stated that confirmed facts were sourced from Kurv’s official fund page and 19a-1 notices. Estimates and assumptions are identified below.</p>
+      <p class="note">Claude separated confirmed fund data from estimates. The market price and current discount were identified as estimates that should be verified before trading.</p>
     </div>
 
-    <div class="qa-list" aria-label="Claude KGLD question and answer analysis">
+    <div class="qa-list" aria-label="Claude ADX question and answer analysis">
       <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">Q</span><h3>What type of investment is KGLD?</h3></div>
+        <div class="qa-question"><span class="qa-number">Q</span><h3>What type of investment is ADX?</h3></div>
         <div class="qa-answer">
-          <p><span class="answer-lead">Derivative-income / options-overlay commodity ETF.</span> It is not a traditional dividend stock, REIT, BDC, or CEF. KGLD holds gold, gold-linked ETPs, and derivatives, then sells option-like exposure to generate monthly “income.”</p>
-          <p>It has no earnings, NII, or free cash flow in the traditional sense. Its distributions come from option premium and capital, not business cash flow.</p>
+          <p><span class="answer-lead">Internally managed diversified U.S. equity closed-end fund.</span> ADX is a total-return equity CEF with a managed distribution policy—not a BDC, REIT, bond fund, or traditional recurring-income vehicle.</p>
+          <p>That distinction is central to the analysis: the cash distribution is designed around a percentage of NAV and total return, rather than being fully supported by dividends and interest received from the portfolio.</p>
         </div>
       </article>
 
@@ -468,118 +470,124 @@
         <div class="qa-question"><span class="qa-number">1</span><h3>What are the current price, distribution, and yield?</h3></div>
         <div class="qa-answer">
           <ul>
-            <li>NAV: <strong>$25.88</strong></li>
-            <li>Market price: <strong>$25.89</strong> — a 0.05% premium, essentially at NAV</li>
-            <li>Latest monthly distribution: <strong>$0.35 per share</strong> in July 2026</li>
-            <li>Annualized distribution rate: <strong>18.54%</strong></li>
-            <li>30-day SEC yield: <strong>2.81%</strong></li>
+            <li>Estimated market price: <strong>about $25.60–$25.90</strong>; Claude used an intraday reference near $25.65.</li>
+            <li>NAV per share: <strong>$26.34 as of June 30, 2026</strong>, up from $23.35 one year earlier.</li>
+            <li>Managed distribution policy: a minimum of <strong>8% of NAV annually</strong>, generally paid quarterly.</li>
+            <li>Declared August 2026 distribution: <strong>$0.50 per share</strong>, following $0.48 in May and $0.47 in February.</li>
+            <li>Estimated forward yield: <strong>about 7.2% on market price</strong> and roughly 7.6%–8% on NAV.</li>
           </ul>
-          <p>The gap between the 18.5% distribution rate and 2.81% SEC yield is the most important number: the “yield” is overwhelmingly option premium and return of capital, not portfolio income.</p>
+          <p>The dollar payout changes with NAV; it is not a fixed or steadily growing dividend.</p>
         </div>
       </article>
 
       <article class="qa-item critical">
         <div class="qa-question"><span class="qa-number">2</span><h3>Is the distribution funded by recurring cash flow?</h3></div>
         <div class="qa-answer">
-          <p><span class="answer-lead">No.</span> Kurv’s 19a-1 notices estimated the most recent distribution at roughly <strong>99% return of capital</strong>. This was disclosed by the fund, not inferred.</p>
+          <p><span class="answer-lead">No—not primarily.</span> Portfolio dividends and interest cover only a small portion of the payout. Claude cited distribution-source examples showing net investment income at roughly <strong>9%–13%</strong>, with the remainder coming from long-term gains and return of capital.</p>
+          <p>This is normal for a total-return equity CEF with a managed distribution, but it is a structural mismatch with a strict “durable recurring income” filter.</p>
         </div>
       </article>
 
-      <article class="qa-item critical">
-        <div class="qa-question"><span class="qa-number">3</span><h3>Is there three-year and trailing distribution coverage?</h3></div>
+      <article class="qa-item">
+        <div class="qa-question"><span class="qa-number">3</span><h3>How should coverage be evaluated?</h3></div>
         <div class="qa-answer">
-          <p><span class="answer-lead">Not assessable.</span> The fund launched July 8, 2025. It has neither a three-year nor a full one-year coverage history. A confirmed coverage ratio is not currently possible, which is disqualifying under a durable-income framework.</p>
+          <p><span class="answer-lead">NII coverage is persistently low by design.</span> The more relevant measure is whether NAV total return has exceeded the approximately 8% annual payout over time.</p>
+          <ul>
+            <li>1-year NAV total return through June 30, 2026: <strong>22.2%</strong></li>
+            <li>3-year annualized: <strong>21.5%</strong></li>
+            <li>5-year annualized: <strong>14.1%</strong></li>
+            <li>10-year annualized: <strong>16.5%</strong></li>
+          </ul>
+          <p>Those longer-term returns exceeded the payout rate, but coverage is not guaranteed each quarter. Q1 2026 NAV total return was <strong>-4.8%</strong>, so that quarter’s distribution effectively reduced capital.</p>
         </div>
       </article>
 
       <article class="qa-item">
         <div class="qa-question"><span class="qa-number">4</span><h3>What is the NAV and per-share trend?</h3></div>
         <div class="qa-answer">
-          <ul>
-            <li>52-week range: <strong>$24.55–$43.44</strong>; the $25.88 NAV is near the low and about 40% below the high.</li>
-            <li>NAV total returns as of June 30, 2026: 1 month <strong>-12.3%</strong>; 3 months <strong>-15.6%</strong>; 6 months/YTD <strong>-7.6%</strong>.</li>
-            <li>Since-inception NAV total return: <strong>+18.5%</strong>, including reinvested distributions.</li>
-            <li>Monthly distribution: $0.45 in March/April, $0.40 in May/June, then $0.35 in July.</li>
-          </ul>
+          <p>NAV rose from <strong>$23.07 at March 31, 2026</strong> to <strong>$26.34 at June 30, 2026</strong>, compared with $23.35 one year earlier. Claude found no evidence of structural NAV erosion and described long-term NAV growth as strong.</p>
+          <p>That makes ADX different from many high-distribution funds: it has historically delivered genuine equity growth, even though its payout is not recurring-income-covered.</p>
         </div>
       </article>
 
       <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">5</span><h3>Is KGLD temporarily cheap or structurally impaired?</h3></div>
+        <div class="qa-question"><span class="qa-number">5</span><h3>Is ADX temporarily cheap or structurally impaired?</h3></div>
         <div class="qa-answer">
-          <p><span class="answer-lead">Mixed, but leaning structural.</span> Part of the decline tracks gold, which fell roughly 28% from its January 2026 high of about $5,595 to around $4,038 in mid-July 2026 amid inflation and Federal Reserve rate-hike concerns.</p>
-          <p>However, an options-overlay fund may distribute more than it earns during pullbacks and cap upside during rallies. Even a full gold recovery may not completely restore NAV per share.</p>
-          <p><span class="tag assessment">Assumption</span> The last point reflects the structure of this fund type, not a fund-specific disclosure.</p>
+          <p><span class="answer-lead">Neither—Claude viewed it as fairly priced.</span> The estimated discount to NAV had narrowed to around <strong>1.8%</strong> in mid-July 2026, versus historically wider discounts.</p>
+          <p>There is no obvious impairment, but the discount-narrowing opportunity has largely played out. Buying near NAV removes much of the valuation advantage that previously made ADX attractive.</p>
         </div>
       </article>
 
       <article class="qa-item">
         <div class="qa-question"><span class="qa-number">6</span><h3>What are the debt, leverage, and credit risks?</h3></div>
         <div class="qa-answer">
-          <p>Traditional corporate debt and interest coverage are not applicable. The risks are derivatives, counterparties, and non-diversification, all flagged in the prospectus.</p>
-          <p>The <strong>1.00% expense ratio</strong> is high compared with plain gold ETFs such as GLD at roughly 0.40% and IAU at roughly 0.25%.</p>
+          <p>Adams Funds generally does not use leverage. Claude cited a <strong>0.49% expense ratio</strong> as of December 31, 2025—low for an actively managed equity CEF.</p>
+          <p>There is no meaningful refinancing or credit-quality risk at the fund level. The primary risks come from equity-market volatility and concentration in large technology companies.</p>
         </div>
       </article>
 
       <article class="qa-item">
         <div class="qa-question"><span class="qa-number">7</span><h3>What is the distribution history?</h3></div>
         <div class="qa-answer">
-          <p>Only about one year of data is available. From August 2025 through July 2026, distributions ranged from <strong>$0.25 to $0.45</strong> per share, with no sustainable-growth pattern and a recent three-month decline. There have been no suspensions, but the record is too short to establish durability.</p>
+          <p>ADX has paid distributions continuously for more than <strong>90 years</strong>. In 2024, Adams Funds increased the managed-distribution policy from 6% to <strong>8% of NAV</strong>.</p>
+          <p>This was a policy-rate increase—not proof of increasing recurring income. Because the payout is tied to NAV, the dollar amount can decline during bear markets.</p>
         </div>
       </article>
 
       <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">8</span><h3>How should capital allocation be assessed?</h3></div>
+        <div class="qa-question"><span class="qa-number">8</span><h3>How did Claude assess capital allocation?</h3></div>
         <div class="qa-answer">
-          <p>Traditional buybacks, acquisitions, and debt reduction do not apply because KGLD is a passive or rules-based ETF. Assets under management were about <strong>$101 million</strong>. Corporate dilution and repurchase analysis is not relevant.</p>
+          <p>ADX is internally managed, has no debt burden to service, and has used tender offers to help narrow its discount. Claude cited an August 2024 tender offer that repurchased roughly <strong>12.4 million shares at $22.47</strong>.</p>
+          <p>The distribution-reinvestment mechanism may be modestly dilutive when shares trade below NAV, but Claude found no pattern of destructive corporate dilution or stock-funded acquisitions.</p>
         </div>
       </article>
 
       <article class="qa-item">
         <div class="qa-question"><span class="qa-number">9</span><h3>How does valuation compare with history and peers?</h3></div>
         <div class="qa-answer">
-          <p>No five-year history exists. KGLD trades essentially at NAV, so it is fair—not cheap. Its 1.00% fee is expensive versus plain gold ETFs.</p>
-          <p>The options overlay can underperform spot gold in strong rallies while still absorbing downside. Claude compared gold’s roughly 64% gain during 2025 with KGLD’s 18.5% since-inception NAV return.</p>
+          <p>At an estimated discount near <strong>1.8%</strong>, ADX was trading near the tight end of its historical range. The valuation case is therefore weak compared with periods when the fund traded at high-single-digit or double-digit discounts.</p>
+          <p>Claude also noted that investors are paying close to full NAV for a portfolio with substantial overlap with broad-market and mega-cap technology indexes.</p>
         </div>
       </article>
 
       <article class="qa-item">
         <div class="qa-question"><span class="qa-number">10</span><h3>What is the bullish case?</h3></div>
         <div class="qa-answer">
-          <p>Monthly cash flow layered onto a legitimate inflation and currency-debasement hedge. Claude cited continued central-bank demand, including a twentieth consecutive month of reported PBoC gold additions in June 2026.</p>
-          <p>The response also cited bank targets near $4,900 from Goldman Sachs and $4,500 for the fourth quarter from JPMorgan, plus claimed tax advantages versus physical gold.</p>
+          <p>A low-cost, internally managed, unlevered equity CEF with more than 90 years of operating history, strong long-term NAV total returns, and a shareholder-friendly managed-distribution and tender-offer program.</p>
+          <p>Claude also highlighted exposure to large technology and AI-related holdings such as NVIDIA, Apple, Alphabet, and Microsoft.</p>
         </div>
       </article>
 
       <article class="qa-item critical">
         <div class="qa-question"><span class="qa-number">11</span><h3>What is the bearish case?</h3></div>
         <div class="qa-answer">
-          <p>The distribution is roughly 99% return of capital rather than earned income. NAV is about 40% below its high, the distribution has declined for three months, the 1.00% fee is a drag, and the record is too short for standard durability tests.</p>
+          <p>The headline yield is created by a NAV-percentage payout policy rather than recurring portfolio income. In a flat or falling market, NAV and the dollar distribution can shrink together.</p>
+          <p>The historical discount has nearly disappeared, and the portfolio’s heavy mega-cap technology exposure may duplicate risks investors already hold through index funds.</p>
         </div>
       </article>
 
       <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">12</span><h3>Which three facts are most likely to invalidate the thesis?</h3></div>
+        <div class="qa-question"><span class="qa-number">12</span><h3>Which three facts could invalidate the thesis?</h3></div>
         <div class="qa-answer">
           <ol style="color:var(--muted);padding-left:20px;">
-            <li>Continued gold-price weakness—possibly from a more hawkish Federal Reserve or reduced safe-haven demand—accelerates NAV decline.</li>
-            <li>Further consecutive distribution reductions confirm shrinking option-premium income.</li>
-            <li>Future 19a-1 notices continue showing near-100% ROC across multiple quarters, confirming that the “income” is mostly returned capital.</li>
+            <li>A sustained equity or technology drawdown shrinks NAV and causes distributions to consume an increasingly smaller asset base.</li>
+            <li>The discount to NAV widens materially after purchasing near NAV.</li>
+            <li>The managed-distribution policy is reduced below 8%, or the fund materially increases leverage or derivatives use.</li>
           </ol>
         </div>
       </article>
 
       <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">13–15</span><h3>What portfolio role, position size, and action range did Claude give?</h3></div>
+        <div class="qa-question"><span class="qa-number">13–15</span><h3>What portfolio role, position size, and action conditions did Claude give?</h3></div>
         <div class="qa-answer">
           <ul>
-            <li><strong>Portfolio role:</strong> speculative or special-situation inflation hedge—not a core income anchor.</li>
-            <li><strong>Maximum allocation:</strong> 0%–2%.</li>
-            <li><strong>Possible entry:</strong> near or below $24–$25, only after further confirmation that gold has stabilized.</li>
-            <li><strong>Fair value:</strong> cannot be meaningfully established because the fund follows gold and options-overlay mechanics rather than intrinsic business value.</li>
-            <li><strong>Next review:</strong> the next monthly 19a-1 notice and the first full annual report.</li>
+            <li><strong>Portfolio role:</strong> growth-income or equity total-return satellite—not a durable-income anchor.</li>
+            <li><strong>Maximum allocation:</strong> <strong>3%–5%</strong>, sized as an equity position.</li>
+            <li><strong>Buy or add:</strong> when the discount widens to roughly <strong>6%–8% or more</strong>.</li>
+            <li><strong>Hold:</strong> while the discount remains around 0%–3%, particularly for investors with a lower cost basis.</li>
+            <li><strong>Trim:</strong> if the fund trades at a premium to NAV.</li>
+            <li><strong>Sell:</strong> if the 8% policy is cut, leverage or derivative use materially increases, or NAV enters a sustained multi-quarter decline.</li>
           </ul>
-          <p>Claude did not provide separate add, hold, trim, and sell triggers in the sample response.</p>
         </div>
       </article>
     </div>
@@ -587,46 +595,48 @@
 
   <section class="card">
     <span class="eyebrow">Claude’s rejection review</span>
-    <h2>Automatic rejection rules triggered</h2>
+    <h2>A strict income filter rejects it—but the fund structure matters</h2>
     <div class="rule-list">
-      <div class="rule"><span class="icon">×</span><div><b>Coverage below 1.0x:</b> confirmed by the 2.81% SEC yield versus the 18.54% distribution rate and roughly 99% ROC.</div></div>
-      <div class="rule"><span class="icon">×</span><div><b>Persistently declining NAV or per-share value:</b> confirmed; about 40% below the 52-week high.</div></div>
-      <div class="rule"><span class="icon">×</span><div><b>Destructive return of capital:</b> confirmed by the fund’s 19a-1 disclosure.</div></div>
-      <div class="rule"><span class="icon" style="color:var(--amber);background:#f7e5c4;">!</span><div><b>Discount-closing explanation:</b> not applicable because the fund trades near NAV, but structural NAV erosion has no confirmed reversal catalyst.</div></div>
-      <div class="rule"><span class="icon" style="color:var(--amber);background:#f7e5c4;">!</span><div><b>Track record:</b> too short to evaluate three-year coverage or dividend growth.</div></div>
+      <div class="rule"><span class="icon">×</span><div><b>Coverage below 1.0x:</b> triggered on a net-investment-income basis because NII covers only about 9%–13% of the payout.</div></div>
+      <div class="rule"><span class="icon" style="color:var(--green-dark);background:var(--green-soft);">✓</span><div><b>Persistently declining NAV:</b> not triggered; long-term NAV and total-return trends have been strong.</div></div>
+      <div class="rule"><span class="icon" style="color:var(--amber);background:#f7e5c4;">!</span><div><b>Return of capital:</b> present in some distributions, but Claude treated it as part of a total-return managed-distribution policy rather than automatically destructive.</div></div>
+      <div class="rule"><span class="icon" style="color:var(--green-dark);background:var(--green-soft);">✓</span><div><b>Debt and leverage:</b> no material leverage or refinancing concern was identified.</div></div>
+      <div class="rule"><span class="icon">×</span><div><b>Portfolio overlap:</b> substantial overlap with broad-market and mega-cap technology exposure may reduce diversification value.</div></div>
+      <div class="rule"><span class="icon" style="color:var(--amber);background:#f7e5c4;">!</span><div><b>Discount-closing case:</b> the historical discount has already narrowed, so little valuation catalyst remains at the current price.</div></div>
     </div>
-    <p class="note"><strong>Claude’s result:</strong> Multiple hard rejection triggers fire. KGLD does not qualify as a durable-income holding.</p>
+    <p class="note"><strong>Claude’s result:</strong> ADX fails a literal recurring-income test, but may still work as a total-return equity sleeve with a managed cash distribution. Asset quality passes; current valuation does not offer a strong entry point.</p>
   </section>
 
   <section class="card">
     <span class="eyebrow">Claude’s score and final answer</span>
-    <h2>Approximately 29 out of 100</h2>
+    <h2>53 out of 100</h2>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Category</th><th>Available</th><th>Score</th><th>Claude’s rationale</th></tr></thead>
         <tbody>
-          <tr><td>Income durability</td><td>30</td><td>3</td><td>99% ROC, no earned-income coverage, and a sub-one-year history.</td></tr>
-          <tr><td>Asset durability</td><td>20</td><td>6</td><td>NAV about 40% below its high; volatile commodity exposure plus options drag.</td></tr>
-          <tr><td>Valuation</td><td>20</td><td>8</td><td>Trades at NAV—fair, not cheap—and is expensive versus plain gold ETFs.</td></tr>
-          <tr><td>Balance sheet and management</td><td>15</td><td>8</td><td>No debt, but derivatives and counterparty risk plus a 1.00% fee.</td></tr>
-          <tr><td>Portfolio fit and risk controls</td><td>15</td><td>4</td><td>Suitable only for a small speculative or special-situation sleeve.</td></tr>
-          <tr><td>Total</td><td>100</td><td>~29</td><td>Avoid as a durable-income holding.</td></tr>
+          <tr><td>Income durability</td><td>30</td><td>8</td><td>The distribution is NAV-policy-driven rather than recurring-income-covered and may shrink in weak markets.</td></tr>
+          <tr><td>Asset durability</td><td>20</td><td>16</td><td>Strong long-term NAV growth, no leverage, and a quality large-cap portfolio, offset by technology concentration.</td></tr>
+          <tr><td>Valuation</td><td>20</td><td>8</td><td>The discount has compressed to roughly 1.8%, leaving little margin of safety.</td></tr>
+          <tr><td>Balance sheet and management</td><td>15</td><td>13</td><td>No debt, low expenses, stable internal management, and a disciplined tender-offer history.</td></tr>
+          <tr><td>Portfolio fit and risk controls</td><td>15</td><td>8</td><td>Useful only as a limited equity satellite because of broad-index and mega-cap technology overlap.</td></tr>
+          <tr><td>Total</td><td>100</td><td>53</td><td>Watchlist—high-quality assets, but not a durable-income anchor and not attractively discounted.</td></tr>
         </tbody>
       </table>
     </div>
 
-    <div class="finding danger" style="margin-top:18px;">
-      <span class="tag">Decision: Avoid</span>
-      <h3>Not a “hold for yield” instrument</h3>
-      <p>Claude described KGLD as a short-track-record, ROC-heavy trading vehicle whose 18.5% headline distribution rate is a mirage relative to its 2.81% SEC yield.</p>
+    <div class="finding warning" style="margin-top:18px;">
+      <span class="tag assessment">Decision: Watchlist</span>
+      <h3>Best viewed as an equity total-return fund with an income wrapper</h3>
+      <p>Claude concluded that ADX can fit as a growth-income satellite, but its payout should not be mistaken for fully earned recurring income. A wider discount would materially improve the entry case.</p>
     </div>
 
     <div class="action-grid">
-      <div class="action"><span>Suggested entry</span><strong>Near or below $24–$25, only after gold stabilizes</strong></div>
-      <div class="action"><span>Fair-value range</span><strong>Cannot be meaningfully established</strong></div>
-      <div class="action"><span>Maximum allocation</span><strong>0%–2%, speculative or inflation-hedge sleeve only</strong></div>
-      <div class="action"><span>Next review</span><strong>August 2026 19a-1 notice and first full annual report, likely after February 2027</strong></div>
+      <div class="action"><span>Suggested entry</span><strong>Wait for a 6%–8%+ discount—roughly $24 or lower if NAV remains near $26</strong></div>
+      <div class="action"><span>Fair-value range</span><strong>About $25–$26, based on NAV less a normal discount</strong></div>
+      <div class="action"><span>Maximum allocation</span><strong>3%–5% as an equity or growth-income satellite</strong></div>
+      <div class="action"><span>Next review</span><strong>Semi-annual report expected on or about July 22, 2026, then the next quarterly update</strong></div>
     </div>
+    <p class="note"><strong>Facts versus estimates:</strong> Claude identified NAV, declared distributions, source breakdowns, expense ratio, leverage policy, tender details, and historical returns as confirmed. The live market price and discount were estimates requiring verification.</p>
   </section>
 
   <section class="card prompt-card" id="prompt">
@@ -722,7 +732,7 @@ Clearly separate confirmed facts from estimates and assumptions. Do not recommen
       <div>
         <span class="eyebrow">Step 3</span>
         <h2 id="aiPickerTitle">Choose your AI</h2>
-        <p>Your <strong id="pickerTicker">KGLD</strong> prompt will be copied when you open an AI. Paste it into the new chat.</p>
+        <p>Your <strong id="pickerTicker">ADX</strong> prompt will be copied when you open an AI. Paste it into the new chat.</p>
       </div>
       <button class="ai-modal-close" id="closeAiPicker" type="button" aria-label="Close AI choices">&times;</button>
     </div>
