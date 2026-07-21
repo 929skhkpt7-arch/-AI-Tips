@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Use one AI prompt to analyze and score an income investment's payout durability, valuation, risks, and portfolio fit.">
+<link rel="icon" type="image/png" href="armchair-income-logo.png">
+<title>AI Income Investment Scorecard — Armchair Income</title>
+<style>
+  :root {
+    --bg: #f2f5f1;
+    --card: #fff;
+    --ink: #172019;
+    --muted: #5d6860;
+    --line: #dce5dd;
+    --green: #2f8f4e;
+    --green-dark: #1e6938;
+    --green-soft: #e9f6ed;
+    --red: #a63b34;
+    --red-soft: #fff0ee;
+    --amber: #9c630e;
+    --amber-soft: #fff6e5;
+    --shadow: 0 14px 38px rgba(24, 55, 32, .08);
+    --radius: 18px;
+    --max: 1040px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: radial-gradient(circle at 15% 0, rgba(47,143,78,.1), transparent 32rem), var(--bg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  button, input { font: inherit; }
+  code, pre { font-family: "SFMono-Regular", Consolas, monospace; }
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(255,255,255,.94);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(12px);
+  }
+  .header-inner {
+    min-height: 62px;
+    max-width: var(--max);
+    margin: auto;
+    padding: 10px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-size: .9rem; font-weight: 850; text-decoration: none; }
+  .brand-logo { width: 42px; height: 42px; flex: 0 0 auto; object-fit: cover; border: 2px solid #f0c91b; border-radius: 50%; box-shadow: 0 3px 9px rgba(24,55,32,.15); }
+  nav { display: flex; gap: 20px; }
+  nav a, nav button { padding: 0; color: var(--muted); background: none; border: 0; cursor: pointer; font-size: .82rem; font-weight: 750; text-decoration: none; }
+  nav a:hover, nav button:hover { color: var(--green-dark); }
+
+  main { max-width: var(--max); margin: auto; padding: 30px 22px 80px; }
+  section { margin: 44px 0; scroll-margin-top: 84px; }
+  .card { padding: 28px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+  .eyebrow {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 4px 9px;
+    color: var(--green-dark);
+    background: var(--green-soft);
+    border-radius: 999px;
+    font-size: .69rem;
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  h1, h2, h3 { line-height: 1.14; letter-spacing: -.025em; }
+  h1 { margin: 4px 0 13px; font-size: clamp(2.15rem, 6vw, 4rem); }
+  h2 { margin: 0 0 11px; font-size: clamp(1.45rem, 3.2vw, 2rem); }
+  h3 { margin: 0 0 7px; font-size: 1.04rem; }
+  p { margin: 0 0 13px; color: var(--muted); }
+  p:last-child { margin-bottom: 0; }
+
+  .hero {
+    margin-top: 0;
+    padding: clamp(35px, 7vw, 70px);
+    text-align: center;
+    background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(233,246,237,.94));
+    border: 1px solid #cce4d2;
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+  }
+  .hero p { max-width: 710px; margin: 0 auto; font-size: 1.08rem; }
+  .credit-line { display: inline-flex; align-items: center; gap: 7px; margin-top: 15px; padding: 6px 10px; color: var(--muted); background: rgba(255,255,255,.8); border: 1px solid var(--line); border-radius: 999px; font-size: .76rem; font-weight: 750; }
+  .credit-line a { color: var(--green-dark); font-weight: 900; }
+  .workflow-card {
+    max-width: 920px;
+    margin: 28px auto 0;
+    padding: 20px;
+    text-align: left;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    box-shadow: 0 16px 38px rgba(24,55,32,.1);
+  }
+  .workflow-title { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; color: var(--ink); font-size: .76rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+  .live-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: livePulse 1.5s ease-in-out infinite; }
+  .workflow-track { display: grid; grid-template-columns: 1.15fr 22px .9fr 22px 1fr 22px .95fr; gap: 7px; align-items: stretch; }
+  .workflow-step {
+    min-width: 0;
+    padding: 14px;
+    background: #f7f9f7;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    animation: stepFocus 8s ease-in-out infinite;
+  }
+  .workflow-step.step-2 { animation-delay: 2s; }
+  .workflow-step.step-3 { animation-delay: 4s; }
+  .workflow-step.step-4 { animation-delay: 6s; }
+  .step-head { display: flex; align-items: center; gap: 7px; margin-bottom: 10px; }
+  .step-number { width: 24px; height: 24px; display: grid; place-items: center; color: #fff; background: var(--green-dark); border-radius: 50%; font-size: .7rem; font-weight: 900; }
+  .step-head strong { font-size: .79rem; }
+  .workflow-step input {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 11px;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid #bcd2c1;
+    border-radius: 8px;
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    outline: none;
+  }
+  .workflow-step input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(47,143,78,.12); }
+  .workflow-arrow { display: grid; place-items: center; color: var(--green); font-size: 1.25rem; font-weight: 900; animation: arrowMove 1.2s ease-in-out infinite; }
+  .copy-step-button { width: 100%; min-height: 40px; }
+  .ai-jump { display: block; width: 100%; padding: 9px; color: #fff; background: var(--ink); border: 0; border-radius: 8px; cursor: pointer; text-align: center; font: inherit; font-size: .74rem; font-weight: 850; }
+  .ai-jump:hover { background: #263a2b; }
+  .mini-ai-row { display: flex; gap: 4px; margin-top: 8px; }
+  .mini-ai-row span { width: 22px; height: 22px; display: grid; place-items: center; color: #fff; background: var(--green-dark); border: 2px solid #fff; border-radius: 50%; font-size: .56rem; font-weight: 900; }
+  .mini-ai-row span:nth-child(2) { background: #d97757; }
+  .mini-ai-row span:nth-child(3) { background: #4c79df; }
+  .mini-ai-row span:nth-child(4) { color: var(--ink); background: #e5eae6; }
+  .result-preview { display: grid; grid-template-columns: 45px 1fr; gap: 9px; align-items: center; }
+  .preview-score { width: 45px; height: 45px; display: grid; place-items: center; color: #fff; background: var(--green-dark); border-radius: 50%; font-size: .68rem; font-weight: 900; }
+  .result-preview strong { display: block; font-size: .76rem; }
+  .result-preview small { color: var(--muted); font-size: .63rem; }
+  .workflow-note { margin: 12px 0 0 !important; color: var(--muted); font-size: .72rem !important; text-align: left; }
+  .disclaimer { max-width: 920px; margin: 12px auto 0 !important; color: #76510e !important; font-size: .76rem !important; font-weight: 750; }
+  @keyframes livePulse { 50% { box-shadow: 0 0 0 6px rgba(47,143,78,.12); opacity: .7; } }
+  @keyframes stepFocus {
+    0%, 18% { border-color: var(--green); background: var(--green-soft); transform: translateY(-3px); box-shadow: 0 9px 20px rgba(30,105,56,.1); }
+    24%, 100% { border-color: transparent; background: #f7f9f7; transform: none; box-shadow: none; }
+  }
+  @keyframes arrowMove { 50% { transform: translateX(3px); opacity: .55; } }
+  .primary, .secondary {
+    border: 0;
+    border-radius: 9px;
+    padding: 11px 15px;
+    cursor: pointer;
+    font-weight: 850;
+  }
+  .primary { color: #fff; background: var(--green-dark); }
+  .primary:hover { background: #15542d; }
+  .secondary { color: var(--green-dark); background: var(--green-soft); }
+  .secondary:hover { background: #dcefe2; }
+  .primary.copied, .secondary.copied { color: #fff; background: #19733d; }
+
+  .summary {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+  .score {
+    width: 126px;
+    height: 126px;
+    display: grid;
+    place-items: center;
+    background: conic-gradient(var(--red) 0 29%, #e6ebe7 29% 100%);
+    border-radius: 50%;
+  }
+  .score div {
+    width: 98px;
+    height: 98px;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    background: #fff;
+    border-radius: 50%;
+  }
+  .score strong { font-size: 2rem; line-height: 1; }
+  .score small { color: var(--muted); font-size: .67rem; font-weight: 750; text-transform: uppercase; }
+  .decision {
+    display: inline-flex;
+    margin-top: 5px;
+    padding: 7px 11px;
+    color: var(--red);
+    background: var(--red-soft);
+    border: 1px solid #efceca;
+    border-radius: 999px;
+    font-size: .82rem;
+    font-weight: 900;
+  }
+  .facts-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 22px; }
+  .fact { padding: 15px; background: #f6f8f6; border: 1px solid var(--line); border-radius: 12px; }
+  .fact span { display: block; color: var(--muted); font-size: .67rem; font-weight: 850; text-transform: uppercase; }
+  .fact strong { display: block; margin-top: 3px; font-size: 1.05rem; }
+
+  .findings { display: grid; grid-template-columns: repeat(2, 1fr); gap: 13px; margin-top: 20px; }
+  .finding { padding: 18px; border: 1px solid var(--line); border-radius: 13px; }
+  .finding p, .finding li { font-size: .88rem; }
+  .finding ul { margin: 8px 0 0; padding-left: 19px; color: var(--muted); }
+  .finding li + li { margin-top: 5px; }
+  .tag { display: inline-block; margin-bottom: 8px; color: var(--green-dark); font-size: .65rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+  .tag.assessment { color: var(--amber); }
+  .warning { background: var(--amber-soft); }
+  .danger { background: var(--red-soft); }
+
+  .rule-list { display: grid; gap: 9px; margin-top: 16px; }
+  .rule { display: grid; grid-template-columns: 23px 1fr; gap: 9px; color: var(--muted); font-size: .88rem; }
+  .rule b { color: var(--ink); }
+  .icon { width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; color: var(--red); background: #f7d9d6; font-weight: 900; }
+
+  .sample-label { margin-bottom: 13px; padding: 8px 15px; font-size: clamp(1rem, 2.3vw, 1.35rem); letter-spacing: .06em; }
+  .qa-list { margin-top: 18px; overflow: hidden; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+  .qa-item { padding: 22px 24px; background: #fff; }
+  .qa-item + .qa-item { border-top: 1px solid var(--line); }
+  .qa-question { display: grid; grid-template-columns: 32px 1fr; gap: 10px; align-items: center; margin-bottom: 11px; }
+  .qa-number { width: 31px; height: 31px; display: grid; place-items: center; color: #fff; background: var(--green-dark); border-radius: 50%; font-size: .75rem; font-weight: 900; }
+  .qa-question h3 { margin: 0; }
+  .qa-answer { padding-left: 42px; }
+  .qa-answer p, .qa-answer li { font-size: .9rem; }
+  .qa-answer ul { margin: 8px 0 0; padding-left: 20px; color: var(--muted); }
+  .qa-answer li + li { margin-top: 5px; }
+  .qa-answer .answer-lead { color: var(--ink); font-weight: 850; }
+  .qa-item.critical { background: #fff9f8; }
+
+  .table-wrap { overflow-x: auto; margin-top: 15px; }
+  table { width: 100%; border-collapse: collapse; font-size: .84rem; }
+  th, td { padding: 10px 11px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+  th { color: var(--ink); background: #f5f8f5; font-size: .68rem; letter-spacing: .05em; text-transform: uppercase; }
+  td { color: var(--muted); }
+  tr:last-child td { color: var(--ink); background: var(--green-soft); font-weight: 850; }
+
+  .action-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 11px; margin-top: 18px; }
+  .action { padding: 14px; background: #f5f8f5; border-radius: 11px; }
+  .action span { display: block; color: var(--muted); font-size: .65rem; font-weight: 850; text-transform: uppercase; }
+  .action strong { display: block; margin-top: 3px; font-size: .9rem; }
+
+  .prompt-card { padding: 0; overflow: hidden; }
+  .prompt-head { padding: 25px 28px; display: flex; justify-content: space-between; gap: 18px; align-items: center; background: var(--green-soft); border-bottom: 1px solid var(--line); }
+  .prompt-head h2 { margin: 0; }
+  .prompt-head p { margin-top: 5px; }
+  .prompt-body { padding: 24px 28px 29px; }
+  .ai-label { margin: 22px 0 8px; color: var(--ink); font-size: .8rem; font-weight: 850; }
+  .ai-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+  .ai-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 12px;
+    color: var(--ink);
+    background: #f6f8f6;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    font-size: .82rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
+  .ai-logo {
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    color: #fff;
+    background: var(--ink);
+    border-radius: 7px;
+    font-size: .78rem;
+    font-weight: 900;
+  }
+  .ai-logo img { width: 17px; height: 17px; filter: brightness(0) invert(1); object-fit: contain; }
+  .ai-link .ai-name { flex: 1; }
+  .ai-link:hover { color: var(--green-dark); border-color: #b9d6c0; background: #f0f8f2; }
+  .ai-link small { color: var(--muted); font-size: .62rem; font-weight: 750; text-transform: uppercase; }
+  body.modal-open { overflow: hidden; }
+  .ai-modal[hidden] { display: none; }
+  .ai-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+  }
+  .ai-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(17, 30, 21, .58);
+    backdrop-filter: blur(4px);
+  }
+  .ai-modal-card {
+    position: relative;
+    width: min(680px, 100%);
+    max-height: min(720px, calc(100vh - 40px));
+    overflow: auto;
+    padding: 26px;
+    background: #fff;
+    border: 1px solid #d5e4d9;
+    border-radius: 24px;
+    box-shadow: 0 28px 80px rgba(12, 31, 18, .32);
+    animation: bubbleIn .2s ease-out;
+  }
+  .ai-modal-head { display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; margin-bottom: 18px; }
+  .ai-modal-head h2 { margin-bottom: 6px; }
+  .ai-modal-head p { margin: 0; font-size: .86rem; }
+  .ai-modal-close {
+    width: 36px;
+    height: 36px;
+    flex: 0 0 auto;
+    color: var(--ink);
+    background: #eef4ef;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+  .ai-modal-close:hover { background: #dfece2; }
+  .ai-modal-card .ai-grid { grid-template-columns: repeat(2, 1fr); }
+  .ai-modal-note { margin: 14px 0 0; font-size: .74rem; }
+  @keyframes bubbleIn { from { opacity: 0; transform: translateY(12px) scale(.97); } to { opacity: 1; transform: none; } }
+  pre {
+    max-height: 650px;
+    overflow: auto;
+    margin: 0;
+    padding: 20px;
+    color: #273029;
+    background: #f1f4f1;
+    border: 1px solid #d7dfd8;
+    border-radius: 12px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-size: .8rem;
+    line-height: 1.55;
+  }
+  .note { margin-top: 11px; font-size: .78rem; }
+
+  footer { padding: 24px 20px; color: var(--muted); border-top: 1px solid var(--line); text-align: center; font-size: .78rem; }
+  a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--green-dark); outline-offset: 2px; }
+
+  @media (max-width: 760px) {
+    nav { display: none; }
+    .facts-grid, .action-grid { grid-template-columns: repeat(2, 1fr); }
+    .findings { grid-template-columns: 1fr; }
+    .ai-grid { grid-template-columns: repeat(2, 1fr); }
+    .workflow-track { grid-template-columns: 1fr; }
+    .workflow-arrow { min-height: 18px; transform: rotate(90deg); }
+    @keyframes arrowMove { 50% { transform: rotate(90deg) translateX(3px); opacity: .55; } }
+  }
+  @media (max-width: 560px) {
+    main, .header-inner { padding-left: 15px; padding-right: 15px; }
+    .hero { padding: 34px 17px; border-radius: 18px; }
+    .summary { grid-template-columns: 1fr; text-align: center; }
+    .score { margin: auto; }
+    .facts-grid, .action-grid, .ai-grid { grid-template-columns: 1fr; }
+    .card { padding: 22px 18px; }
+    .prompt-head { align-items: flex-start; flex-direction: column; padding: 22px 18px; }
+    .prompt-body { padding: 20px 15px 24px; }
+    .qa-answer { padding-left: 0; }
+    .ai-modal { padding: 12px; }
+    .ai-modal-card { max-height: calc(100vh - 24px); padding: 21px 16px; border-radius: 20px; }
+    .ai-modal-card .ai-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a class="brand" href="#top"><img class="brand-logo" src="armchair-income-logo.png" alt="Armchair Income logo"><span>Armchair Income</span></a>
+    <nav aria-label="Page navigation">
+      <a href="#sample">Sample Search</a>
+      <a href="#prompt">Copy prompt</a>
+      <button type="button" data-open-ai-picker aria-haspopup="dialog" aria-expanded="false">Choose an AI</button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <span class="eyebrow">Armchair Income tip</span>
+    <h1>AI Income Investment Scorecard</h1>
+    <p>Analyze any income ticker for payout durability, asset quality, valuation, risk, and portfolio fit. See the KGLD example, then use the AI prompt with your own ticker.</p>
+    <div class="credit-line">Shared by a member · Prompt created by <a href="https://armchair-insider.circle.so/u/85901e8b" target="_blank" rel="noopener">Paul Stark</a></div>
+
+    <div class="workflow-card" aria-label="How to use the AI Income Investment Scorecard">
+      <div class="workflow-title"><span class="live-dot" aria-hidden="true"></span>How it works</div>
+      <div class="workflow-track">
+        <div class="workflow-step step-1">
+          <div class="step-head"><span class="step-number">1</span><strong>Enter your ticker</strong></div>
+          <input id="tickerInput" type="text" value="KGLD" maxlength="12" autocomplete="off" spellcheck="false" aria-label="Investment ticker">
+        </div>
+        <div class="workflow-arrow" aria-hidden="true">→</div>
+        <div class="workflow-step step-2">
+          <div class="step-head"><span class="step-number">2</span><strong>Copy the prompt</strong></div>
+          <button class="primary copy-step-button" id="copyTickerPrompt" type="button">Copy prompt</button>
+        </div>
+        <div class="workflow-arrow" aria-hidden="true">→</div>
+        <div class="workflow-step step-3">
+          <div class="step-head"><span class="step-number">3</span><strong>Open an AI &amp; paste</strong></div>
+          <button class="ai-jump" id="openAiPicker" type="button" data-open-ai-picker aria-haspopup="dialog" aria-expanded="false">Choose an AI</button>
+          <div class="mini-ai-row" aria-hidden="true"><span>GPT</span><span>C</span><span>G</span><span>+6</span></div>
+        </div>
+        <div class="workflow-arrow" aria-hidden="true">→</div>
+        <div class="workflow-step step-4">
+          <div class="step-head"><span class="step-number">4</span><strong>Get the result</strong></div>
+          <div class="result-preview"><span class="preview-score">/100</span><div><strong>Score + decision</strong><small>Buy · Watch · Avoid</small></div></div>
+        </div>
+      </div>
+      <p class="workflow-note">Enter any ticker, copy the prepared prompt, paste it into your preferred AI, and receive the full scorecard.</p>
+    </div>
+    <p class="disclaimer"><strong>Disclaimer:</strong> This is not investment advice. AI search results may be incomplete or inaccurate—verify all information and use at your own risk.</p>
+  </section>
+
+  <section id="sample">
+    <div style="margin-bottom:18px;">
+      <span class="eyebrow sample-label">Sample search result from Claude</span>
+      <h2>KGLD — Income Filter Analysis</h2>
+      <p>Kurv Gold Enhanced Income ETF · Claude response using data as of July 17, 2026</p>
+    </div>
+
+    <div class="card">
+      <div class="summary">
+        <div class="score" aria-label="Score: approximately 29 out of 100"><div><strong>29</strong><small>out of 100</small></div></div>
+        <div>
+          <span class="eyebrow">Claude’s conclusion</span>
+          <h2>Avoid as a durable-income holding</h2>
+          <p>A short-track-record, return-of-capital-heavy trading vehicle whose 18.5% headline distribution rate is a mirage relative to its 2.81% SEC yield.</p>
+          <span class="decision">Decision: Avoid</span>
+        </div>
+      </div>
+      <div class="facts-grid">
+        <div class="fact"><span>Market price</span><strong>$25.89</strong></div>
+        <div class="fact"><span>Distribution rate</span><strong>18.54%</strong></div>
+        <div class="fact"><span>30-day SEC yield</span><strong>2.81%</strong></div>
+        <div class="fact"><span>Estimated ROC</span><strong>~99%</strong></div>
+      </div>
+      <p class="note">Claude stated that confirmed facts were sourced from Kurv’s official fund page and 19a-1 notices. Estimates and assumptions are identified below.</p>
+    </div>
+
+    <div class="qa-list" aria-label="Claude KGLD question and answer analysis">
+      <article class="qa-item">
+        <div class="qa-question"><span class="qa-number">Q</span><h3>What type of investment is KGLD?</h3></div>
+        <div class="qa-answer">
+          <p><span class="answer-lead">Derivative-income / options-overlay commodity ETF.</span> It is not a traditional dividend stock, REIT, BDC, or CEF. KGLD holds gold, gold-linked ETPs, and derivatives, then sells option-like exposure to generate monthly “income.”</p>
+          <p>It has no earnings, NII, or free cash flow in the traditional sense. Its distributions come from option premium and capital, not business cash flow.</p>
+        </div>
+      </article>
+
+      <article class="qa-item">
+        <div class="qa-question"><span class="qa-number">1</span><h3>What are the current price, distribution, and yield?</h3></div>
+        <div class="qa-answer">
+          <ul>
+            <li>NAV: <strong>$25.88</strong></li>
+            <li>Market price: <strong>$25.89</strong> — a 0.05% premium, essentially at NAV</li>
+            <li>Latest monthly distribution: <strong>$0.35 per share</strong> in July 2026</li>
+            <li>Annualized distribution rate: <strong>18.54%</strong></li>
+            <li>30-day SEC yield: <strong>2.81%</strong></li>
+          </ul>
+          <p>The gap between the 18.5% distribution rate and 2.81% SEC yield is the most important number: the “yield” is overwhelmingly option premium and return of capital, not portfolio income.</p>
+        </div>
+      </article>
+
+      <article class="qa-item critical">
+        <div class="qa-question"><span class="qa-number">2</span><h3>Is the distribution funded by recurring cash flow?</h3></div>
+        <div class="qa-answer">
+          <p><span class="answer-lead">No.</span> Kurv’s 19a-1 notices estimated the most recent distribution at roughly <strong>99% return of capital</strong>. This was disclosed by the fund, not inferred.</p>
+        </div>
+      </article>
+
+      <article class="qa-item critical">
+        <div class="qa-question"><span class="qa-number">3</span><h3>Is there three-year and trailing distribution coverage?</h3></div>
+        <div class="qa-answer">
+          <p><span class="answer-lead">Not assessable.</span> The fund launched July 8, 2025. It has neither a three-year nor a full one-year coverage history. A confirmed coverage ratio is not currently possible, which is disqualifying under a durable-income framework.</p>
+        </div>
+      </article>
+
+      <article class="qa-item">
+        <div class="qa-question"><span class="qa-number">4</span><h3>What is the NAV and per-share trend?</h3></div>
+        <div class="qa-answer">
+          <ul>
+            <li>52-week range: <strong>$24.55–$43.44</strong>; the $25.88 NAV is near the low and about 40% below the high.</li>
+            <li>NAV total returns as of June 30, 2026: 1 month <strong>-12.3%</strong>; 3 months <strong>-15.6%</strong>; 6 months/YTD <strong>-7.6%</strong>.</li>
+            <li>Since-inception NAV total return: <strong>+18.5%</strong>, including reinvested distributions.</li>
+            <li>Monthly distribution: $0.45 in March/April, $0.40 in May/June, then $0.35 in July.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="qa-item">
+        <div class="qa-question"><span class="qa-number">5</span><h3>Is KGLD temporarily cheap or structurally impaired?</h3></div>
+        <div class="qa-answer">
+          <p><span class="answer-lead">Mixed, but leaning structural.</span> Part of the decline tracks gold, which fell roughly 28% from its January 2026 high of about $5,595 to around $4,038 in mid-July 2026 amid inflation and Federal Reserve rate-hike concerns.</p>
+          <p>However, an options-overlay fund may distribute more than it earns during pullbacks and cap upside during rallies. Even a full gold recovery may not completely restore NAV per share.</p>
+          <p><span class="tag assessment">Assumption</span> The last point reflects the structure of this fund type, not a fund-specific disclosure.</p>
+        </div>
+      </article>
+
+      <article class="qa-item">
+        <div class="qa-question"><span class="qa-number">6</span><h3>What are the debt, leverage, and credit risks?</h3></div>
+        <div class="qa-answer">
+          <p>Traditional corporate debt and interest coverage are not applicable. The risks are derivatives, counterparties, and non-diversification, all flagged in the prospectus.</p>
+          <p>The <strong>1.00% expense ratio</strong> is high compared with plain gold ETFs such as GLD at roughly 0.40% and IAU at roughly 0.25%.</p>
+        </div>
+      </article>
+
+      <article class="qa-item">
+        <div class="qa-question"><span class="qa-number">7</span><h3>What is the distribution history?</h3></div>
+        <div class="qa-answer">
+          <p>Only about one year of data is available. From August 2025 through July 2026, distributions ranged from <strong>$0.25 to $0.45</strong> per share, with no sustainable-growth pattern and a recent three-month decline. There have been no suspensions, but the record is too short to establish durability.</p>
+        </div>
+      </article>
+
+      <article class="qa-item">
+        <div class="qa-question"><span class="qa-number">8</span><h3>How should capital allocation be assessed?</h3></div>
+        <div class="qa-answer">
+          <p>Traditional buybacks, acquisitions, and debt reduction do not apply because KGLD is a passive or rules-based ETF. Assets under management were about <strong>$101 million</strong>. Corporate dilution and repurchase analysis is not relevant.</p>
+        </div>
+      </article>
+
+      <article class="qa-item">
+        <div class="qa-question"><span class="qa-number">9</span><h3>How does valuation compare with history and peers?</h3></div>
+        <div class="qa-answer">
+          <p>No five-year history exists. KGLD trades essentially at NAV, so it is fair—not cheap. Its 1.00% fee is expensive versus plain gold ETFs.</p>
+          <p>The options overlay can underperform spot gold in strong rallies while still absorbing downside. Claude compared gold’s roughly 64% gain during 2025 with KGLD’s 18.5% since-inception NAV return.</p>
+        </div>
+      </article>
+
+      <article class="qa-item">
+        <div class="qa-question"><span class="qa-number">10</span><h3>What is the bullish case?</h3></div>
+        <div class="qa-answer">
+          <p>Monthly cash flow layered onto a legitimate inflation and currency-debasement hedge. Claude cited continued central-bank demand, including a twentieth consecutive month of reported PBoC gold additions in June 2026.</p>
+          <p>The response also cited bank targets near $4,900 from Goldman Sachs and $4,500 for the fourth quarter from JPMorgan, plus claimed tax advantages versus physical gold.</p>
+        </div>
+      </article>
+
+      <article class="qa-item critical">
+        <div class="qa-question"><span class="qa-number">11</span><h3>What is the bearish case?</h3></div>
+        <div class="qa-answer">
+          <p>The distribution is roughly 99% return of capital rather than earned income. NAV is about 40% below its high, the distribution has declined for three months, the 1.00% fee is a drag, and the record is too short for standard durability tests.</p>
+        </div>
+      </article>
+
+      <article class="qa-item">
+        <div class="qa-question"><span class="qa-number">12</span><h3>Which three facts are most likely to invalidate the thesis?</h3></div>
+        <div class="qa-answer">
+          <ol style="color:var(--muted);padding-left:20px;">
+            <li>Continued gold-price weakness—possibly from a more hawkish Federal Reserve or reduced safe-haven demand—accelerates NAV decline.</li>
+            <li>Further consecutive distribution reductions confirm shrinking option-premium income.</li>
+            <li>Future 19a-1 notices continue showing near-100% ROC across multiple quarters, confirming that the “income” is mostly returned capital.</li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="qa-item">
+        <div class="qa-question"><span class="qa-number">13–15</span><h3>What portfolio role, position size, and action range did Claude give?</h3></div>
+        <div class="qa-answer">
+          <ul>
+            <li><strong>Portfolio role:</strong> speculative or special-situation inflation hedge—not a core income anchor.</li>
+            <li><strong>Maximum allocation:</strong> 0%–2%.</li>
+            <li><strong>Possible entry:</strong> near or below $24–$25, only after further confirmation that gold has stabilized.</li>
+            <li><strong>Fair value:</strong> cannot be meaningfully established because the fund follows gold and options-overlay mechanics rather than intrinsic business value.</li>
+            <li><strong>Next review:</strong> the next monthly 19a-1 notice and the first full annual report.</li>
+          </ul>
+          <p>Claude did not provide separate add, hold, trim, and sell triggers in the sample response.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="card">
+    <span class="eyebrow">Claude’s rejection review</span>
+    <h2>Automatic rejection rules triggered</h2>
+    <div class="rule-list">
+      <div class="rule"><span class="icon">×</span><div><b>Coverage below 1.0x:</b> confirmed by the 2.81% SEC yield versus the 18.54% distribution rate and roughly 99% ROC.</div></div>
+      <div class="rule"><span class="icon">×</span><div><b>Persistently declining NAV or per-share value:</b> confirmed; about 40% below the 52-week high.</div></div>
+      <div class="rule"><span class="icon">×</span><div><b>Destructive return of capital:</b> confirmed by the fund’s 19a-1 disclosure.</div></div>
+      <div class="rule"><span class="icon" style="color:var(--amber);background:#f7e5c4;">!</span><div><b>Discount-closing explanation:</b> not applicable because the fund trades near NAV, but structural NAV erosion has no confirmed reversal catalyst.</div></div>
+      <div class="rule"><span class="icon" style="color:var(--amber);background:#f7e5c4;">!</span><div><b>Track record:</b> too short to evaluate three-year coverage or dividend growth.</div></div>
+    </div>
+    <p class="note"><strong>Claude’s result:</strong> Multiple hard rejection triggers fire. KGLD does not qualify as a durable-income holding.</p>
+  </section>
+
+  <section class="card">
+    <span class="eyebrow">Claude’s score and final answer</span>
+    <h2>Approximately 29 out of 100</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Category</th><th>Available</th><th>Score</th><th>Claude’s rationale</th></tr></thead>
+        <tbody>
+          <tr><td>Income durability</td><td>30</td><td>3</td><td>99% ROC, no earned-income coverage, and a sub-one-year history.</td></tr>
+          <tr><td>Asset durability</td><td>20</td><td>6</td><td>NAV about 40% below its high; volatile commodity exposure plus options drag.</td></tr>
+          <tr><td>Valuation</td><td>20</td><td>8</td><td>Trades at NAV—fair, not cheap—and is expensive versus plain gold ETFs.</td></tr>
+          <tr><td>Balance sheet and management</td><td>15</td><td>8</td><td>No debt, but derivatives and counterparty risk plus a 1.00% fee.</td></tr>
+          <tr><td>Portfolio fit and risk controls</td><td>15</td><td>4</td><td>Suitable only for a small speculative or special-situation sleeve.</td></tr>
+          <tr><td>Total</td><td>100</td><td>~29</td><td>Avoid as a durable-income holding.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding danger" style="margin-top:18px;">
+      <span class="tag">Decision: Avoid</span>
+      <h3>Not a “hold for yield” instrument</h3>
+      <p>Claude described KGLD as a short-track-record, ROC-heavy trading vehicle whose 18.5% headline distribution rate is a mirage relative to its 2.81% SEC yield.</p>
+    </div>
+
+    <div class="action-grid">
+      <div class="action"><span>Suggested entry</span><strong>Near or below $24–$25, only after gold stabilizes</strong></div>
+      <div class="action"><span>Fair-value range</span><strong>Cannot be meaningfully established</strong></div>
+      <div class="action"><span>Maximum allocation</span><strong>0%–2%, speculative or inflation-hedge sleeve only</strong></div>
+      <div class="action"><span>Next review</span><strong>August 2026 19a-1 notice and first full annual report, likely after February 2027</strong></div>
+    </div>
+  </section>
+
+  <section class="card prompt-card" id="prompt">
+    <div class="prompt-head">
+      <div>
+        <span class="eyebrow">Copy and use</span>
+        <h2>AI Income Investment analysis prompt</h2>
+        <p>Copy it, choose an AI below, paste, and run.</p>
+      </div>
+      <button class="secondary" id="copyGenericPrompt" type="button">Copy full prompt</button>
+    </div>
+    <div class="prompt-body">
+<pre id="promptText">Analyze the investment symbol [SYMBOL] using the Durable Income Buying Filter below.
+
+Use the most recent financial reports, earnings release, SEC filings, investor presentation, dividend history, valuation data, and management guidance. Do not rely primarily on third-party summaries.
+
+First identify the type of investment:
+- Common dividend stock
+- BDC
+- REIT
+- Closed-end fund
+- Covered-call ETF
+- Preferred stock
+- Bond fund
+- CLO or high-risk income vehicle
+- Other
+
+Then evaluate:
+
+1. Current price, dividend or distribution, and forward yield.
+2. Whether the dividend is funded through recurring cash flow.
+3. Dividend coverage for the past three years and the latest trailing period.
+4. Free cash flow, earnings, NAV, book value, or NII trend per share.
+5. Whether the asset is temporarily cheap or structurally impaired.
+6. Debt, leverage, interest coverage, credit quality, and refinancing risks.
+7. Dividend history, growth, reductions, suspensions, or special distributions.
+8. Management capital allocation, including debt reduction, acquisitions, dilution, and share repurchases.
+9. Current valuation versus its five-year history and comparable investments.
+10. Main bullish case.
+11. Main bearish case.
+12. The three facts most likely to invalidate the investment thesis.
+13. Portfolio role: anchor, growth income, ballast, inflation hedge, accelerator, or special situation.
+14. Appropriate maximum position size based on risk.
+15. Specific buy, add, hold, trim, and sell conditions.
+
+Apply these automatic rejection rules:
+- Distribution coverage below 1.0x
+- Persistently declining NAV, book value, or cash flow per share
+- Destructive return of capital
+- Rising debt combined with falling cash flow
+- Dividend dependent on asset sales, borrowing, or accounting adjustments
+- No clear explanation for why the current discount should close
+- Excessive overlap with existing portfolio risks
+
+Score the investment out of 100:
+- Income durability: 30 points
+- Asset durability: 20 points
+- Valuation: 20 points
+- Balance sheet and management: 15 points
+- Portfolio fit and risk controls: 15 points
+
+Conclude with one of these decisions:
+- Strong buy candidate
+- Gradual buy
+- Small starter position
+- Watchlist
+- Avoid
+- Sell or exit
+
+Give a suggested entry range, fair-value range, maximum allocation, and the next earnings or reporting event that should be reviewed.
+
+Clearly separate confirmed facts from estimates and assumptions. Do not recommend buying based primarily on the headline yield.</pre>
+    </div>
+  </section>
+</main>
+
+<template id="aiOptionsTemplate">
+  <a class="ai-link" href="https://chatgpt.com/" target="_blank" rel="noopener"><span class="ai-logo">AI</span><span class="ai-name">ChatGPT / GPTs</span><small>Copy + open ↗</small></a>
+  <a class="ai-link" href="https://claude.ai/new" target="_blank" rel="noopener"><span class="ai-logo" style="background:#d97757;"><img src="https://cdn.simpleicons.org/anthropic" alt=""></span><span class="ai-name">Claude</span><small>Copy + open ↗</small></a>
+  <a class="ai-link" href="https://gemini.google.com/app" target="_blank" rel="noopener"><span class="ai-logo" style="background:#4c79df;"><img src="https://cdn.simpleicons.org/googlegemini" alt=""></span><span class="ai-name">Google Gemini</span><small>Copy + open ↗</small></a>
+  <a class="ai-link" href="https://www.perplexity.ai/" target="_blank" rel="noopener"><span class="ai-logo" style="background:#1f7a7a;"><img src="https://cdn.simpleicons.org/perplexity" alt=""></span><span class="ai-name">Perplexity</span><small>Copy + open ↗</small></a>
+  <a class="ai-link" href="https://copilot.microsoft.com/" target="_blank" rel="noopener"><span class="ai-logo" style="background:#7656d6;"><img src="https://cdn.simpleicons.org/githubcopilot" alt=""></span><span class="ai-name">Microsoft Copilot</span><small>Copy + open ↗</small></a>
+  <a class="ai-link" href="https://grok.com/" target="_blank" rel="noopener"><span class="ai-logo"><img src="https://cdn.simpleicons.org/x" alt=""></span><span class="ai-name">Grok</span><small>Copy + open ↗</small></a>
+  <a class="ai-link" href="https://chat.deepseek.com/" target="_blank" rel="noopener"><span class="ai-logo" style="background:#4d6bfe;"><img src="https://cdn.simpleicons.org/deepseek" alt=""></span><span class="ai-name">DeepSeek</span><small>Copy + open ↗</small></a>
+  <a class="ai-link" href="https://poe.com/" target="_blank" rel="noopener"><span class="ai-logo" style="background:#5d54e8;"><img src="https://cdn.simpleicons.org/poe" alt=""></span><span class="ai-name">Poe</span><small>Copy + open ↗</small></a>
+  <a class="ai-link" href="https://chat.mistral.ai/chat" target="_blank" rel="noopener"><span class="ai-logo" style="background:#f06b32;"><img src="https://cdn.simpleicons.org/mistralai" alt=""></span><span class="ai-name">Mistral Le Chat</span><small>Copy + open ↗</small></a>
+</template>
+
+<div class="ai-modal" id="aiPicker" role="dialog" aria-modal="true" aria-labelledby="aiPickerTitle" hidden>
+  <div class="ai-modal-backdrop" data-close-ai-picker></div>
+  <div class="ai-modal-card">
+    <div class="ai-modal-head">
+      <div>
+        <span class="eyebrow">Step 3</span>
+        <h2 id="aiPickerTitle">Choose your AI</h2>
+        <p>Your <strong id="pickerTicker">KGLD</strong> prompt will be copied when you open an AI. Paste it into the new chat.</p>
+      </div>
+      <button class="ai-modal-close" id="closeAiPicker" type="button" aria-label="Close AI choices">&times;</button>
+    </div>
+    <div class="ai-grid" id="aiPickerGrid"></div>
+    <p class="ai-modal-note">The AI opens in a new tab and will not search until you paste and submit the copied prompt.</p>
+  </div>
+</div>
+
+<footer>Armchair Income · AI Income Investment Scorecard · Not investment advice. Verify all information and use at your own risk.</footer>
+
+<script>
+  const promptText = document.getElementById("promptText").innerText.trim();
+  const tickerInput = document.getElementById("tickerInput");
+  const aiPicker = document.getElementById("aiPicker");
+  const aiPickerButtons = document.querySelectorAll("[data-open-ai-picker]");
+  const closeAiPicker = document.getElementById("closeAiPicker");
+  const aiPickerGrid = document.getElementById("aiPickerGrid");
+  const pickerTicker = document.getElementById("pickerTicker");
+  let lastAiPickerOpener = document.getElementById("openAiPicker");
+
+  aiPickerGrid.innerHTML = document.getElementById("aiOptionsTemplate").innerHTML;
+
+  function tickerPrompt() {
+    const ticker = tickerInput.value.trim().toUpperCase().replace(/[^A-Z0-9.\-]/g, "") || "[SYMBOL]";
+    return promptText.replaceAll("[SYMBOL]", ticker);
+  }
+
+  async function copyText(text, button) {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (error) {
+      const area = document.createElement("textarea");
+      area.value = text;
+      area.setAttribute("readonly", "");
+      area.style.position = "fixed";
+      area.style.opacity = "0";
+      document.body.appendChild(area);
+      area.select();
+      document.execCommand("copy");
+      area.remove();
+    }
+    if (!button) return;
+    const original = button.textContent;
+    button.textContent = "Copied!";
+    button.classList.add("copied");
+    setTimeout(() => { button.textContent = original; button.classList.remove("copied"); }, 1400);
+  }
+
+  document.getElementById("copyTickerPrompt").addEventListener("click", event => copyText(tickerPrompt(), event.currentTarget));
+  document.getElementById("copyGenericPrompt").addEventListener("click", event => copyText(promptText, event.currentTarget));
+  document.querySelectorAll(".ai-link").forEach(link => link.addEventListener("click", () => copyText(tickerPrompt())));
+  tickerInput.addEventListener("keydown", event => { if (event.key === "Enter") document.getElementById("copyTickerPrompt").click(); });
+
+  function showAiPicker(event) {
+    lastAiPickerOpener = event.currentTarget;
+    pickerTicker.textContent = tickerInput.value.trim().toUpperCase() || "your ticker";
+    aiPicker.hidden = false;
+    document.body.classList.add("modal-open");
+    aiPickerButtons.forEach(button => button.setAttribute("aria-expanded", "true"));
+    closeAiPicker.focus();
+  }
+
+  function hideAiPicker() {
+    aiPicker.hidden = true;
+    document.body.classList.remove("modal-open");
+    aiPickerButtons.forEach(button => button.setAttribute("aria-expanded", "false"));
+    lastAiPickerOpener.focus();
+  }
+
+  aiPickerButtons.forEach(button => button.addEventListener("click", showAiPicker));
+  closeAiPicker.addEventListener("click", hideAiPicker);
+  aiPicker.querySelector("[data-close-ai-picker]").addEventListener("click", hideAiPicker);
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && !aiPicker.hidden) hideAiPicker();
+  });
+</script>
+</body>
+</html>
