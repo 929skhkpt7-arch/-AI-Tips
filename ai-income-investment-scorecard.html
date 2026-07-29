@@ -7,9 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Use one AI prompt to analyze and score an income investment's payout durability, valuation, risks, and portfolio fit.">
+<meta name="description" content="Use the Durable Income Buying Filter V3.0 to evaluate income durability, capital preservation, valuation, risks, catalysts, and portfolio fit.">
 <link rel="icon" type="image/png" href="armchair-income-logo.png">
-<title>AI Income Investment Scorecard — Armchair Income</title>
+<title>AI Income Investment Scorecard V3 — Armchair Income</title>
 <style>
   :root {
     --bg: #f2f5f1;
@@ -212,6 +212,7 @@
     font-size: .82rem;
     font-weight: 900;
   }
+  .decision.watchlist { color: var(--amber); background: var(--amber-soft); border-color: #ecd39e; }
   .facts-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 22px; }
   .fact { padding: 15px; background: #f6f8f6; border: 1px solid var(--line); border-radius: 12px; }
   .fact span { display: block; color: var(--muted); font-size: .67rem; font-weight: 850; text-transform: uppercase; }
@@ -355,6 +356,18 @@
     font-size: .8rem;
     line-height: 1.55;
   }
+  .claude-result-card { padding: 18px; }
+  .claude-result-frame {
+    width: 100%;
+    height: min(76vh, 1100px);
+    min-height: 720px;
+    display: block;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+  }
+  .claude-result-tools { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .claude-result-tools a { display: inline-flex; text-decoration: none; }
   .note { margin-top: 11px; font-size: .78rem; }
 
   footer { padding: 24px 20px; color: var(--muted); border-top: 1px solid var(--line); text-align: center; font-size: .78rem; }
@@ -379,6 +392,8 @@
     .prompt-head { align-items: flex-start; flex-direction: column; padding: 22px 18px; }
     .prompt-body { padding: 20px 15px 24px; }
     .qa-answer { padding-left: 0; }
+    .claude-result-card { padding: 10px; }
+    .claude-result-frame { min-height: 620px; }
     .ai-modal { padding: 12px; }
     .ai-modal-card { max-height: calc(100vh - 24px); padding: 21px 16px; border-radius: 20px; }
     .ai-modal-card .ai-grid { grid-template-columns: 1fr; }
@@ -399,12 +414,12 @@
 
 <main id="top">
   <section class="hero">
-    <span class="eyebrow">Armchair Income tip</span>
-    <h1>AI Income Investment Scorecard</h1>
-    <p>Analyze any income ticker for payout durability, asset quality, valuation, risk, and portfolio fit. See the ADX example, then use the AI prompt with your own ticker.</p>
+    <span class="eyebrow">Armchair Income tip · Durable Income Filter V3.0</span>
+    <h1>AI Income Investment Scorecard V3</h1>
+    <p>Analyze any income ticker for durable growth, capital preservation, valuation, risk, catalysts, and portfolio fit across a full market cycle.</p>
     <div class="credit-line">Shared by a member · Prompt created by <a href="https://armchair-insider.circle.so/u/85901e8b" target="_blank" rel="noopener">Paul Stark</a></div>
 
-    <div class="workflow-card" aria-label="How to use the AI Income Investment Scorecard">
+    <div class="workflow-card" aria-label="How to use the AI Income Investment Scorecard V3">
       <div class="workflow-title"><span class="live-dot" aria-hidden="true"></span>How it works</div>
       <div class="workflow-track">
         <div class="workflow-step step-1">
@@ -435,9 +450,49 @@
 
   <section id="sample">
     <div style="margin-bottom:18px;">
-      <span class="eyebrow sample-label">Sample search result from Claude</span>
+      <span class="eyebrow sample-label">Sample search result from Claude · V3</span>
+      <h2>ADX — Durable Income Buying Filter v3.0</h2>
+      <p>Adams Diversified Equity Fund · Analysis dated July 29, 2026</p>
+    </div>
+
+    <div class="card" style="margin-bottom:18px;">
+      <div class="summary">
+        <div class="score" aria-label="Score: 66 out of 100"><div><strong>66</strong><small>out of 100</small></div></div>
+        <div>
+          <span class="eyebrow">Claude’s V3 conclusion</span>
+          <h2>🟠 Watchlist</h2>
+          <p>ADX is a well-run, ultra-low-cost, unleveraged mega-cap-growth CEF with a 97-year distribution record, but today's near-zero discount to NAV (vs. a ~14.5% 10-year average) and a payout that is really “harvested total return” rather than durable/growing organic income make it a hold-and-watch, not a fresh-money buy.</p>
+          <span class="decision watchlist">Decision: Watchlist</span>
+        </div>
+      </div>
+      <div class="facts-grid">
+        <div class="fact"><span>Market price</span><strong>~$25.36</strong></div>
+        <div class="fact"><span>Reported NAV</span><strong>$26.34</strong></div>
+        <div class="fact"><span>Forward yield</span><strong>~7.7%–8.1%</strong></div>
+        <div class="fact"><span>Estimated discount</span><strong>~3%–4%</strong></div>
+      </div>
+      <div class="finding warning" style="margin-top:18px;">
+        <span class="tag assessment">Best use of new capital</span>
+        <p><strong>⚠️ Good investment, but better opportunities currently exist</strong> — specifically, better entry points exist within the same fund family/peer group when the discount widens, or in true recurring-income vehicles for investors whose primary objective is durable cash flow rather than total return.</p>
+      </div>
+      <p class="note"><strong>Overall Confidence:</strong> Medium-High (primary-source distribution and performance data is current through 7/17/2026; full FY2026 audited financials are not yet available) · <strong>Maximum Allocation:</strong> 3–5% · <strong>Expected annualized total return range:</strong> roughly 4–9%.</p>
+    </div>
+
+    <div class="card claude-result-card">
+      <span class="eyebrow">Claude’s complete response</span>
+      <p class="note" style="margin:0 0 12px;">Displayed exactly as supplied, including the 23-part analysis, stress test, peer comparison, scoring, and final decision.</p>
+      <iframe class="claude-result-frame" src="claude-adx-v3-result-plates.html" title="Claude’s exact Durable Income Buying Filter V3 result for ADX, divided into section cards"></iframe>
+      <div class="claude-result-tools">
+        <a class="secondary" href="claude-adx-v3-result-plates.html" target="_blank" rel="noopener">Open card view ↗</a>
+        <a class="secondary" href="claude-adx-v3-result.txt" target="_blank" rel="noopener">Open exact response ↗</a>
+      </div>
+    </div>
+
+    <div hidden aria-hidden="true">
+    <div style="margin-bottom:18px;">
+      <span class="eyebrow sample-label">Illustrative ADX result from Claude</span>
       <h2>ADX — Durable Income Filter Analysis</h2>
-      <p>Adams Diversified Equity Fund · Claude response using data available through July 2026</p>
+      <p>Adams Diversified Equity Fund · Prior-version format example. V3 adds stress testing, capital-preservation analysis, expected total return, and peer comparison.</p>
     </div>
 
     <div class="card">
@@ -645,9 +700,10 @@
         </div>
       </article>
     </div>
+    </div>
   </section>
 
-  <section class="card">
+  <section class="card" hidden aria-hidden="true">
     <span class="eyebrow">Claude’s rejection review</span>
     <h2>No hard rejection from finalized results—but two risks remain</h2>
     <div class="rule-list">
@@ -662,7 +718,7 @@
     <p class="note"><strong>Claude’s result:</strong> The finalized record avoids an automatic ROC or coverage rejection. The Watchlist decision instead rests on a tight discount, market-dependent payout, and likely portfolio overlap.</p>
   </section>
 
-  <section class="card">
+  <section class="card" hidden aria-hidden="true">
     <span class="eyebrow">Claude’s score and final answer</span>
     <h2>62 out of 100</h2>
     <div class="table-wrap">
@@ -711,13 +767,14 @@
     <div class="prompt-head">
       <div>
         <span class="eyebrow">Copy and use</span>
-        <h2>AI Income Investment analysis prompt</h2>
+        <h2>AI Income Investment Analysis Prompt V3.0</h2>
         <p>Copy it, then use Step 3 above to open an AI, paste, and run.</p>
       </div>
       <button class="secondary" id="copyGenericPrompt" type="button">Copy full prompt</button>
     </div>
     <div class="prompt-body">
-<pre id="promptText">Analyze the investment symbol [SYMBOL] using the Durable Income Buying Filter below.
+<pre id="promptText"></pre>
+<pre hidden aria-hidden="true">Analyze the investment symbol [SYMBOL] using the Durable Income Buying Filter below.
 
 Use the most recent financial reports, earnings releases, SEC filings, investor presentations, dividend history, valuation data, management guidance, and relevant macroeconomic conditions. Do not rely primarily on third-party summaries.
 
@@ -810,6 +867,314 @@ Before giving the final recommendation, challenge your own conclusion. Explain w
   </section>
 </main>
 
+<script type="text/plain" id="promptV3Source">Durable Income Buying Filter v3.0 (2026)
+
+Objective
+
+Analyze the investment symbol [SYMBOL] using the Durable Income Buying Filter below.
+
+The objective is not to identify the highest-yielding investment. The objective is to identify the investment most likely to deliver durable, growing income while preserving capital over a full market cycle.
+
+Use the most recent financial reports, earnings releases, SEC filings, investor presentations, dividend history, valuation data, management guidance, and conference call transcripts whenever available.
+
+Do not rely primarily on third-party summaries.
+
+Whenever possible, support conclusions with primary sources such as SEC filings, audited financial statements, earnings releases, investor presentations, or conference call transcripts.
+
+If primary-source data is unavailable or conflicts with third-party information, prioritize the primary source and clearly state any uncertainty rather than guessing.
+
+EXECUTIVE SUMMARY — 30-SECOND DECISION
+
+Investment: [SYMBOL]
+Investment Type: Identify first
+- Common dividend stock
+- BDC
+- REIT
+- Closed-end fund
+- Covered-call ETF
+- Preferred stock
+- Bond fund
+- CLO or high-risk income vehicle
+- Other
+
+Overall Score: __/100
+
+Recommendation
+- 🟢 Strong Buy Candidate
+- 🟢 Gradual Buy
+- 🟡 Small Starter Position
+- 🟠 Watchlist
+- 🔴 Avoid
+- ⚫ Sell or Exit
+
+One-Line Investment Thesis
+Summarize the entire investment case in one concise sentence.
+
+Quick Summary
+- Action: Buy / Hold / Sell
+- Suggested Entry Range:
+- Fair Value Range:
+- Forward Yield:
+- Maximum Allocation:
+- Dividend Safety: High / Medium / Low
+- Overall Confidence: High / Medium / Low
+
+Bull Case — 30 seconds
+Summarize why an investor should consider buying today.
+
+Bear Case — 30 seconds
+Summarize the biggest risks in one or two sentences.
+
+Best Use of New Capital
+Choose one:
+- ✅ One of the best opportunities in its category.
+- ⚠️ Good investment, but better opportunities currently exist.
+- ❌ Not an attractive use of new capital today.
+
+FULL DURABLE INCOME ANALYSIS
+
+1. Current Price, Dividend & Yield
+Evaluate:
+- Current price
+- Dividend/distribution
+- Forward yield
+
+2. Dividend Sustainability
+Determine whether the dividend/distribution is supported by recurring cash flow.
+Use the appropriate metric:
+- Free cash flow
+- AFFO
+- NII
+- Earnings
+- Other
+Explain why.
+
+3. Dividend Coverage
+Review:
+- Last three years
+- Latest trailing twelve months
+Determine whether coverage is improving or deteriorating.
+
+4. Fundamental Trend
+Use whichever metric best fits the investment:
+- Free cash flow
+- AFFO
+- NII
+- NAV
+- Book value
+- Earnings
+Determine whether the trend is improving, stable, or deteriorating.
+
+5. Valuation
+Determine whether the investment is:
+- Temporarily cheap
+- Fairly valued
+- Expensive
+- Structurally impaired
+Explain why.
+
+6. Balance Sheet
+Evaluate:
+- Debt
+- Leverage
+- Interest coverage
+- Credit quality
+- Debt maturity schedule
+- Refinancing risk
+
+7. Dividend History
+Review:
+- Growth
+- Cuts
+- Suspensions
+- Special dividends
+Estimate the probability the dividend will:
+- Be maintained over the next 3 years
+- Grow over the next 5 years
+
+8. Management
+Evaluate:
+- Capital allocation
+- Debt reduction
+- Acquisitions
+- Share repurchases
+- Share issuance
+- Rights offerings
+- Dilution
+- Insider buying/selling
+
+Also evaluate management’s execution over the past five years:
+- Guidance accuracy
+- Dividend stewardship
+- Capital allocation
+- Shareholder value creation
+
+9. Relative Valuation
+Compare current valuation against:
+- Five-year history
+- Peer investments
+
+10. Why Is It Mispriced?
+If applicable, explain:
+- Why is the investment mispriced today?
+- What specific event or catalyst is likely to close the valuation gap?
+
+11. Bull Case
+Present the strongest investment case.
+
+12. Bear Case
+Present the strongest opposing argument.
+
+13. Investment Thesis Risks
+Identify the three facts most likely to invalidate the investment thesis.
+
+14. Portfolio Role
+Classify as one of:
+- Anchor
+- Growth Income
+- Ballast
+- Inflation Hedge
+- Accelerator
+- Special Situation
+
+15. Position Sizing
+Recommend an appropriate maximum allocation based on:
+- Business quality
+- Balance sheet
+- Volatility
+- Concentration risk
+
+16. Buy / Hold / Sell Plan
+Provide:
+- Buy conditions
+- Add conditions
+- Hold conditions
+- Trim conditions
+- Sell conditions
+
+17. Catalysts — Next 6–18 Months
+Identify the events most likely to improve or weaken the investment.
+
+18. Most Important Catalyst
+Identify the single event most likely to determine whether the investment outperforms or underperforms.
+Explain why.
+
+19. Macroeconomic Sensitivities
+Evaluate sensitivity to:
+- Interest rates
+- Inflation
+- Recession
+- Commodity prices
+- Currency
+- Regulation
+
+20. Distribution Stress Test
+Estimate dividend coverage if earnings, AFFO, NII, or cash flow decline by:
+- 10%
+- 20%
+- 30%
+Would the dividend likely remain intact?
+
+21. Capital Preservation
+Estimate the probability that an investor’s original capital will still be intact after five years under normal market conditions.
+Explain why.
+
+22. One-Sentence Investment Thesis
+Summarize the complete investment case in one sentence.
+
+23. Expected Total Return — 3–5 Years
+Estimate:
+- Income return
+- Earnings/NAV growth
+- Valuation expansion or contraction
+Provide an expected annualized total return range.
+
+AUTOMATIC REJECTION RULES
+
+Reject or heavily penalize investments that exhibit any of the following:
+- Distribution coverage below 1.0x without a credible path to improvement.
+- Persistently declining NAV, book value, AFFO, NII, earnings, or cash flow per share.
+- Destructive return of capital.
+- Rising debt combined with deteriorating cash flow.
+- Dividend dependent on borrowing, asset sales, or accounting adjustments.
+- No identifiable catalyst for valuation improvement.
+- Excessive overlap with existing portfolio risks.
+- Frequent shareholder dilution or value-destructive rights offerings.
+- Material deterioration in credit quality or management guidance.
+- Investment thesis depends primarily on multiple expansion rather than improving fundamentals.
+
+SPECIAL RULES
+
+- Treat 19a-1 notices only as preliminary estimates.
+- Determine return of capital using audited financial statements and final tax classifications whenever possible.
+- Use the financial metric most appropriate for the investment type.
+- Distinguish temporary cyclical weakness from permanent impairment.
+- Clearly separate:
+  - Confirmed Facts
+  - Reasonable Estimates
+  - Assumptions
+- Assign a High, Medium, or Low confidence level to each major conclusion.
+
+INVESTMENT SCORE — 100 POINTS
+
+Income Durability — 30 points
+Explain points awarded and deducted.
+
+Asset Durability — 20 points
+Explain points awarded and deducted.
+
+Valuation — 20 points
+Explain points awarded and deducted.
+
+Balance Sheet & Management — 15 points
+Explain points awarded and deducted.
+
+Portfolio Fit & Risk Controls — 15 points
+Explain points awarded and deducted.
+
+Total Score: __/100
+
+PORTFOLIO COMPARISON
+
+Compare [SYMBOL] against the three most relevant alternatives, including any comparable holdings already in the portfolio if known.
+
+For each comparison, explain:
+- Which investment is currently the better value.
+- Which has the more durable dividend.
+- Which has the stronger balance sheet.
+- Which offers the better risk-adjusted expected total return.
+- Which deserves the next investment dollar today, and why.
+
+If [SYMBOL] is not the best opportunity in its category, clearly identify which investment you would buy instead and explain why.
+
+FINAL DECISION
+
+Choose one:
+- 🟢 Strong Buy Candidate (90–100)
+- 🟢 Gradual Buy (80–89)
+- 🟡 Small Starter Position (70–79)
+- 🟠 Watchlist (60–69)
+- 🔴 Avoid (40–59)
+- ⚫ Sell or Exit (Below 40)
+
+Then provide:
+- Overall Score
+- Suggested Entry Range
+- Fair Value Range
+- Maximum Allocation
+- Buy, Add, Hold, Trim & Sell Levels
+- Key Catalysts to Monitor
+- Next Earnings or Reporting Event
+- Top Three Risks Going Forward
+- One new piece of information that would immediately change the rating to Sell
+
+Finally, conclude with a short paragraph answering these three questions:
+1. Is the income durable?
+2. Is today’s valuation attractive?
+3. Does this investment deserve the next investment dollar over comparable alternatives?
+
+Do not recommend buying based primarily on the headline yield. Focus on investments capable of delivering durable, growing income while preserving capital across a full market cycle.</script>
+
 <template id="aiOptionsTemplate">
   <a class="ai-link" href="https://chatgpt.com/" target="_blank" rel="noopener"><span class="ai-logo">AI</span><span class="ai-name">ChatGPT / GPTs</span><small>Copy + open ↗</small></a>
   <a class="ai-link" href="https://claude.ai/new" target="_blank" rel="noopener"><span class="ai-logo" style="background:#d97757;"><img src="https://cdn.simpleicons.org/anthropic" alt=""></span><span class="ai-name">Claude</span><small>Copy + open ↗</small></a>
@@ -838,10 +1203,12 @@ Before giving the final recommendation, challenge your own conclusion. Explain w
   </div>
 </div>
 
-<footer>Armchair Income · AI Income Investment Scorecard · Not investment advice. Verify all information and use at your own risk.</footer>
+<footer>Armchair Income · AI Income Investment Scorecard V3 · Not investment advice. Verify all information and use at your own risk.</footer>
 
 <script>
-  const promptText = document.getElementById("promptText").innerText.trim();
+  const promptElement = document.getElementById("promptText");
+  promptElement.textContent = document.getElementById("promptV3Source").textContent.trim();
+  const promptText = promptElement.innerText.trim();
   const tickerInput = document.getElementById("tickerInput");
   const aiPicker = document.getElementById("aiPicker");
   const aiPickerButtons = document.querySelectorAll("[data-open-ai-picker]");
