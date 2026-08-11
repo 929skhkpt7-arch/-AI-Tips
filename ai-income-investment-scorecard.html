@@ -1,15 +1,11 @@
 
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Use the Durable Income Buying Filter V3.0 to evaluate income durability, capital preservation, valuation, risks, catalysts, and portfolio fit.">
-<link rel="icon" type="image/png" href="armchair-income-logo.png">
-<title>AI Income Investment Scorecard V3 — Armchair Income</title>
+<meta name="source-sha256" content="cf8baaf5911deb808a75cc7c2dfffd3609abddfa620bc0479c9c49380c03c7f2">
+<title>ChatGPT ADX V3 Result</title>
 <style>
   :root {
     --bg: #f2f5f1;
@@ -20,1258 +16,609 @@
     --green: #2f8f4e;
     --green-dark: #1e6938;
     --green-soft: #e9f6ed;
-    --red: #a63b34;
-    --red-soft: #fff0ee;
     --amber: #9c630e;
     --amber-soft: #fff6e5;
-    --shadow: 0 14px 38px rgba(24, 55, 32, .08);
-    --radius: 18px;
-    --max: 1040px;
+    --red: #a63b34;
+    --red-soft: #fff0ee;
+    --shadow: 0 10px 28px rgba(24,55,32,.07);
   }
-
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { color-scheme: light; }
   body {
     margin: 0;
+    padding: 18px;
     color: var(--ink);
-    background: radial-gradient(circle at 15% 0, rgba(47,143,78,.1), transparent 32rem), var(--bg);
+    background: var(--bg);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
     line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
   }
-  a { color: inherit; }
-  button, input { font: inherit; }
-  code, pre { font-family: "SFMono-Regular", Consolas, monospace; }
-
-  header {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    background: rgba(255,255,255,.94);
-    border-bottom: 1px solid var(--line);
-    backdrop-filter: blur(12px);
-  }
-  .header-inner {
-    min-height: 62px;
-    max-width: var(--max);
-    margin: auto;
-    padding: 10px 22px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-  }
-  .brand { display: flex; align-items: center; gap: 10px; font-size: .9rem; font-weight: 850; text-decoration: none; }
-  .brand-logo { width: 42px; height: 42px; flex: 0 0 auto; object-fit: cover; border: 2px solid #f0c91b; border-radius: 50%; box-shadow: 0 3px 9px rgba(24,55,32,.15); }
-  nav { display: flex; gap: 20px; }
-  nav a, nav button { padding: 0; color: var(--muted); background: none; border: 0; cursor: pointer; font-size: .82rem; font-weight: 750; text-decoration: none; }
-  nav a:hover, nav button:hover { color: var(--green-dark); }
-
-  main { max-width: var(--max); margin: auto; padding: 30px 22px 80px; }
-  section { margin: 44px 0; scroll-margin-top: 84px; }
-  .card { padding: 28px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
-  .eyebrow {
-    display: inline-block;
-    margin-bottom: 10px;
-    padding: 4px 9px;
-    color: var(--green-dark);
-    background: var(--green-soft);
-    border-radius: 999px;
-    font-size: .69rem;
-    font-weight: 900;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-  }
-  h1, h2, h3 { line-height: 1.14; letter-spacing: -.025em; }
-  h1 { margin: 4px 0 13px; font-size: clamp(2.15rem, 6vw, 4rem); }
-  h2 { margin: 0 0 11px; font-size: clamp(1.45rem, 3.2vw, 2rem); }
-  h3 { margin: 0 0 7px; font-size: 1.04rem; }
-  p { margin: 0 0 13px; color: var(--muted); }
-  p:last-child { margin-bottom: 0; }
-
-  .hero {
-    margin-top: 0;
-    padding: clamp(35px, 7vw, 70px);
-    text-align: center;
-    background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(233,246,237,.94));
+  .result-head {
+    padding: 24px;
+    background: linear-gradient(145deg, #fff, var(--green-soft));
     border: 1px solid #cce4d2;
-    border-radius: 24px;
+    border-radius: 18px;
     box-shadow: var(--shadow);
   }
-  .hero p { max-width: 710px; margin: 0 auto; font-size: 1.08rem; }
-  .credit-line { display: inline-flex; align-items: center; gap: 7px; margin-top: 15px; padding: 6px 10px; color: var(--muted); background: rgba(255,255,255,.8); border: 1px solid var(--line); border-radius: 999px; font-size: .76rem; font-weight: 750; }
-  .credit-line a { color: var(--green-dark); font-weight: 900; }
-  .workflow-card {
-    max-width: 920px;
-    margin: 28px auto 0;
-    padding: 20px;
-    text-align: left;
-    background: #fff;
+  .result-head strong { display: block; color: var(--green-dark); font-size: 1.2rem; }
+  .result-preamble {
+    margin-top: 9px;
+    color: var(--muted);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-size: .88rem;
+  }
+  .plate {
+    margin-top: 14px;
+    overflow: hidden;
+    background: var(--card);
     border: 1px solid var(--line);
-    border-radius: 15px;
-    box-shadow: 0 16px 38px rgba(24,55,32,.1);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
   }
-  .workflow-title { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; color: var(--ink); font-size: .76rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
-  .live-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: livePulse 1.5s ease-in-out infinite; }
-  .workflow-track { display: grid; grid-template-columns: 1.15fr 22px .9fr 22px 1fr 22px .95fr; gap: 7px; align-items: stretch; }
-  .workflow-step {
-    min-width: 0;
-    padding: 14px;
-    background: #f7f9f7;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    animation: stepFocus 8s ease-in-out infinite;
-  }
-  .workflow-step.step-2 { animation-delay: 2s; }
-  .workflow-step.step-3 { animation-delay: 4s; }
-  .workflow-step.step-4 { animation-delay: 6s; }
-  .step-head { display: flex; align-items: center; gap: 7px; margin-bottom: 10px; }
-  .step-number { width: 24px; height: 24px; display: grid; place-items: center; color: #fff; background: var(--green-dark); border-radius: 50%; font-size: .7rem; font-weight: 900; }
-  .step-head strong { font-size: .79rem; }
-  .workflow-step input {
-    width: 100%;
-    min-width: 0;
-    padding: 10px 11px;
-    color: var(--ink);
-    background: #fff;
-    border: 1px solid #bcd2c1;
-    border-radius: 8px;
-    font-weight: 900;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    outline: none;
-  }
-  .workflow-step input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(47,143,78,.12); }
-  .workflow-arrow { display: grid; place-items: center; color: var(--green); font-size: 1.25rem; font-weight: 900; animation: arrowMove 1.2s ease-in-out infinite; }
-  .copy-step-button { width: 100%; min-height: 40px; }
-  .ai-jump { display: block; width: 100%; padding: 9px; color: #fff; background: var(--ink); border: 0; border-radius: 8px; cursor: pointer; text-align: center; font: inherit; font-size: .74rem; font-weight: 850; }
-  .ai-jump:hover { background: #263a2b; }
-  .mini-ai-row { display: flex; gap: 4px; margin-top: 8px; }
-  .mini-ai-row span { width: 22px; height: 22px; display: grid; place-items: center; color: #fff; background: var(--green-dark); border: 2px solid #fff; border-radius: 50%; font-size: .56rem; font-weight: 900; }
-  .mini-ai-row span:nth-child(2) { background: #d97757; }
-  .mini-ai-row span:nth-child(3) { background: #4c79df; }
-  .mini-ai-row span:nth-child(4) { color: var(--ink); background: #e5eae6; }
-  .result-preview { display: grid; grid-template-columns: 45px 1fr; gap: 9px; align-items: center; }
-  .preview-score { width: 45px; height: 45px; display: grid; place-items: center; color: #fff; background: var(--green-dark); border-radius: 50%; font-size: .68rem; font-weight: 900; }
-  .result-preview strong { display: block; font-size: .76rem; }
-  .result-preview small { color: var(--muted); font-size: .63rem; }
-  .workflow-note { margin: 12px 0 0 !important; color: var(--muted); font-size: .72rem !important; text-align: left; }
-  .disclaimer { max-width: 920px; margin: 12px auto 0 !important; color: #76510e !important; font-size: .76rem !important; font-weight: 750; }
-  @keyframes livePulse { 50% { box-shadow: 0 0 0 6px rgba(47,143,78,.12); opacity: .7; } }
-  @keyframes stepFocus {
-    0%, 18% { border-color: var(--green); background: var(--green-soft); transform: translateY(-3px); box-shadow: 0 9px 20px rgba(30,105,56,.1); }
-    24%, 100% { border-color: transparent; background: #f7f9f7; transform: none; box-shadow: none; }
-  }
-  @keyframes arrowMove { 50% { transform: translateX(3px); opacity: .55; } }
-  .primary, .secondary {
-    border: 0;
-    border-radius: 9px;
-    padding: 11px 15px;
-    cursor: pointer;
-    font-weight: 850;
-  }
-  .primary { color: #fff; background: var(--green-dark); }
-  .primary:hover { background: #15542d; }
-  .secondary { color: var(--green-dark); background: var(--green-soft); }
-  .secondary:hover { background: #dcefe2; }
-  .primary.copied, .secondary.copied { color: #fff; background: #19733d; }
-
-  .summary {
-    display: grid;
-    grid-template-columns: 130px 1fr;
-    gap: 24px;
-    align-items: center;
-  }
-  .score {
-    width: 126px;
-    height: 126px;
-    display: grid;
-    place-items: center;
-    background: conic-gradient(var(--amber) 0 53%, #e6ebe7 53% 100%);
-    border-radius: 50%;
-  }
-  .score div {
-    width: 98px;
-    height: 98px;
-    display: grid;
-    place-content: center;
-    text-align: center;
-    background: #fff;
-    border-radius: 50%;
-  }
-  .score strong { font-size: 2rem; line-height: 1; }
-  .score small { color: var(--muted); font-size: .67rem; font-weight: 750; text-transform: uppercase; }
-  .decision {
-    display: inline-flex;
-    margin-top: 5px;
-    padding: 7px 11px;
-    color: var(--amber);
-    background: var(--amber-soft);
-    border: 1px solid #ead4a5;
-    border-radius: 999px;
-    font-size: .82rem;
-    font-weight: 900;
-  }
-  .decision.watchlist { color: var(--amber); background: var(--amber-soft); border-color: #ecd39e; }
-  .facts-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 22px; }
-  .fact { padding: 15px; background: #f6f8f6; border: 1px solid var(--line); border-radius: 12px; }
-  .fact span { display: block; color: var(--muted); font-size: .67rem; font-weight: 850; text-transform: uppercase; }
-  .fact strong { display: block; margin-top: 3px; font-size: 1.05rem; }
-
-  .findings { display: grid; grid-template-columns: repeat(2, 1fr); gap: 13px; margin-top: 20px; }
-  .finding { padding: 18px; border: 1px solid var(--line); border-radius: 13px; }
-  .finding p, .finding li { font-size: .88rem; }
-  .finding ul { margin: 8px 0 0; padding-left: 19px; color: var(--muted); }
-  .finding li + li { margin-top: 5px; }
-  .tag { display: inline-block; margin-bottom: 8px; color: var(--green-dark); font-size: .65rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
-  .tag.assessment { color: var(--amber); }
-  .warning { background: var(--amber-soft); }
-  .danger { background: var(--red-soft); }
-
-  .rule-list { display: grid; gap: 9px; margin-top: 16px; }
-  .rule { display: grid; grid-template-columns: 23px 1fr; gap: 9px; color: var(--muted); font-size: .88rem; }
-  .rule b { color: var(--ink); }
-  .icon { width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; color: var(--red); background: #f7d9d6; font-weight: 900; }
-
-  .sample-label { margin-bottom: 13px; padding: 8px 15px; font-size: clamp(1rem, 2.3vw, 1.35rem); letter-spacing: .06em; }
-  .qa-list { margin-top: 18px; overflow: hidden; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
-  .qa-item { padding: 22px 24px; background: #fff; }
-  .qa-item + .qa-item { border-top: 1px solid var(--line); }
-  .qa-question { display: grid; grid-template-columns: 32px 1fr; gap: 10px; align-items: center; margin-bottom: 11px; }
-  .qa-number { width: 31px; height: 31px; display: grid; place-items: center; color: #fff; background: var(--green-dark); border-radius: 50%; font-size: .75rem; font-weight: 900; }
-  .qa-question h3 { margin: 0; }
-  .qa-answer { padding-left: 42px; }
-  .qa-answer p, .qa-answer li { font-size: .9rem; }
-  .qa-answer ul { margin: 8px 0 0; padding-left: 20px; color: var(--muted); }
-  .qa-answer li + li { margin-top: 5px; }
-  .qa-answer .answer-lead { color: var(--ink); font-weight: 850; }
-  .qa-item.critical { background: #fff9f8; }
-
-  .table-wrap { overflow-x: auto; margin-top: 15px; }
-  table { width: 100%; border-collapse: collapse; font-size: .84rem; }
-  th, td { padding: 10px 11px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
-  th { color: var(--ink); background: #f5f8f5; font-size: .68rem; letter-spacing: .05em; text-transform: uppercase; }
-  td { color: var(--muted); }
-  tr:last-child td { color: var(--ink); background: var(--green-soft); font-weight: 850; }
-
-  .action-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 11px; margin-top: 18px; }
-  .action { padding: 14px; background: #f5f8f5; border-radius: 11px; }
-  .action span { display: block; color: var(--muted); font-size: .65rem; font-weight: 850; text-transform: uppercase; }
-  .action strong { display: block; margin-top: 3px; font-size: .9rem; }
-
-  .prompt-card { padding: 0; overflow: hidden; }
-  .prompt-head { padding: 25px 28px; display: flex; justify-content: space-between; gap: 18px; align-items: center; background: var(--green-soft); border-bottom: 1px solid var(--line); }
-  .prompt-head h2 { margin: 0; }
-  .prompt-head p { margin-top: 5px; }
-  .prompt-body { padding: 24px 28px 29px; }
-  .ai-label { margin: 22px 0 8px; color: var(--ink); font-size: .8rem; font-weight: 850; }
-  .ai-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
-  .ai-link {
+  .plate h2 {
+    margin: 0;
+    padding: 15px 18px;
     display: flex;
+    gap: 9px;
     align-items: center;
-    gap: 8px;
-    padding: 11px 12px;
-    color: var(--ink);
-    background: #f6f8f6;
-    border: 1px solid var(--line);
-    border-radius: 9px;
-    font-size: .82rem;
-    font-weight: 800;
-    text-decoration: none;
+    color: var(--green-dark);
+    background: var(--green-soft);
+    border-bottom: 1px solid var(--line);
+    font-size: 1rem;
+    line-height: 1.25;
   }
-  .ai-logo {
-    width: 28px;
-    height: 28px;
-    display: grid;
+  .section-number {
+    min-width: 29px;
+    height: 29px;
+    display: inline-grid;
     place-items: center;
     flex: 0 0 auto;
     color: #fff;
-    background: var(--ink);
-    border-radius: 7px;
-    font-size: .78rem;
-    font-weight: 900;
-  }
-  .ai-logo img { width: 17px; height: 17px; filter: brightness(0) invert(1); object-fit: contain; }
-  .ai-link .ai-name { flex: 1; }
-  .ai-link:hover { color: var(--green-dark); border-color: #b9d6c0; background: #f0f8f2; }
-  .ai-link small { color: var(--muted); font-size: .62rem; font-weight: 750; text-transform: uppercase; }
-  body.modal-open { overflow: hidden; }
-  .ai-modal[hidden] { display: none; }
-  .ai-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    display: grid;
-    place-items: center;
-    padding: 20px;
-  }
-  .ai-modal-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(17, 30, 21, .58);
-    backdrop-filter: blur(4px);
-  }
-  .ai-modal-card {
-    position: relative;
-    width: min(680px, 100%);
-    max-height: min(720px, calc(100vh - 40px));
-    overflow: auto;
-    padding: 26px;
-    background: #fff;
-    border: 1px solid #d5e4d9;
-    border-radius: 24px;
-    box-shadow: 0 28px 80px rgba(12, 31, 18, .32);
-    animation: bubbleIn .2s ease-out;
-  }
-  .ai-modal-head { display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; margin-bottom: 18px; }
-  .ai-modal-head h2 { margin-bottom: 6px; }
-  .ai-modal-head p { margin: 0; font-size: .86rem; }
-  .ai-modal-close {
-    width: 36px;
-    height: 36px;
-    flex: 0 0 auto;
-    color: var(--ink);
-    background: #eef4ef;
-    border: 0;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.25rem;
+    background: var(--green-dark);
+    border-radius: 8px;
+    font-size: .72rem;
     line-height: 1;
   }
-  .ai-modal-close:hover { background: #dfece2; }
-  .ai-modal-card .ai-grid { grid-template-columns: repeat(2, 1fr); }
-  .ai-modal-note { margin: 14px 0 0; font-size: .74rem; }
-  @keyframes bubbleIn { from { opacity: 0; transform: translateY(12px) scale(.97); } to { opacity: 1; transform: none; } }
-  pre {
-    max-height: 650px;
-    overflow: auto;
-    margin: 0;
-    padding: 20px;
-    color: #273029;
-    background: #f1f4f1;
-    border: 1px solid #d7dfd8;
-    border-radius: 12px;
-    white-space: pre-wrap;
+  .caution .section-number { background: var(--red); }
+  .analytical .section-number { background: var(--amber); }
+  .plate-body {
+    padding: 18px;
+    color: #465049;
     overflow-wrap: anywhere;
-    font-size: .8rem;
-    line-height: 1.55;
+    font-size: .88rem;
   }
-  .claude-result-card { padding: 18px; }
-  .claude-result-frame {
-    width: 100%;
-    height: min(76vh, 1100px);
-    min-height: 720px;
-    display: block;
-    background: #fff;
+  .plate-body > * + * { margin-top: 14px; }
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 28px 2px 4px;
+    color: var(--green-dark);
+    font-size: .78rem;
+    font-weight: 900;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+  }
+  .section-divider::after {
+    height: 1px;
+    flex: 1;
+    content: "";
+    background: #c8d9cb;
+  }
+  .text-block { margin: 0; }
+  .text-block + .text-block { margin-top: 13px; }
+  .narrative {
+    max-width: 94ch;
+    color: #3f4942;
+    font-size: .91rem;
+    line-height: 1.68;
+  }
+  .text-block strong { color: var(--ink); font-weight: 800; }
+  .text-block .metric { color: var(--green-dark); }
+  .text-block em { color: var(--muted); }
+  .subheading {
+    margin: 0;
+    color: var(--ink);
+    font-size: .9rem;
+    line-height: 1.4;
+  }
+  .confidence-callout {
+    margin: 0;
+    padding: 10px 13px;
+    color: var(--green-dark);
+    background: var(--green-soft);
+    border-left: 4px solid var(--green);
+    border-radius: 0 9px 9px 0;
+  }
+  .fact-list,
+  .rule-list,
+  .decision-list {
+    display: grid;
+    gap: 0;
     border: 1px solid var(--line);
     border-radius: 12px;
+    overflow: hidden;
   }
-  .claude-result-tools { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-  .claude-result-tools a { display: inline-flex; text-decoration: none; }
-  .note { margin-top: 11px; font-size: .78rem; }
-
-  footer { padding: 24px 20px; color: var(--muted); border-top: 1px solid var(--line); text-align: center; font-size: .78rem; }
-  a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--green-dark); outline-offset: 2px; }
-
+  .fact-row {
+    display: grid;
+    grid-template-columns: minmax(155px, 29%) 1fr;
+    gap: 16px;
+    align-items: start;
+    padding: 11px 13px;
+    background: #fff;
+  }
+  .fact-row + .fact-row { border-top: 1px solid var(--line); }
+  .fact-row:nth-child(even) { background: #f8faf8; }
+  .row-label { color: var(--ink); line-height: 1.35; }
+  .row-value { min-width: 0; }
+  .fact-row.positive-row { border-left: 4px solid var(--green); }
+  .fact-row.neutral-row { border-left: 4px solid var(--amber); }
+  .fact-row.caution-row { border-left: 4px solid var(--red); }
+  .fact-row.no-label {
+    grid-template-columns: 9px 1fr;
+    gap: 10px;
+  }
+  .row-dot {
+    width: 7px;
+    height: 7px;
+    display: block;
+    margin-top: .55em;
+    background: var(--green);
+    border-radius: 50%;
+  }
+  .risk-list .row-dot { background: var(--red); }
+  .catalyst-list .row-dot { background: var(--amber); }
+  .management-list .row-dot { background: #4a819e; }
+  .rule-list .fact-row {
+    grid-template-columns: minmax(210px, 36%) 1fr;
+    border-left: 4px solid var(--amber);
+  }
+  .rule-list .fact-row.clear { border-left-color: var(--green); }
+  .rule-list .fact-row.flagged { border-left-color: var(--red); }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .summary-grid .fact-row {
+    display: block;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    background: #fff;
+  }
+  .summary-grid .fact-row + .fact-row { border-top: 1px solid var(--line); }
+  .summary-grid .row-label {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--green-dark);
+    font-size: .68rem;
+    letter-spacing: .055em;
+    text-transform: uppercase;
+  }
+  .summary-grid .fact-row:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .executive-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 140px 170px;
+    gap: 10px;
+  }
+  .executive-item {
+    padding: 15px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fff;
+  }
+  .executive-item > strong {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--green-dark);
+    font-size: .68rem;
+    letter-spacing: .055em;
+    text-transform: uppercase;
+  }
+  .executive-item.score-item {
+    background: var(--green-soft);
+    text-align: center;
+  }
+  .executive-item.investment { grid-column: span 2; }
+  .executive-item.score-item > div {
+    color: var(--green-dark);
+    font-size: 1.45rem;
+    font-weight: 900;
+  }
+  .executive-item.recommendation {
+    background: var(--green-soft);
+    border-color: #cce4d2;
+    text-align: center;
+  }
+  .executive-item.recommendation > div { color: var(--green-dark); font-size: 1rem; font-weight: 900; }
+  .executive-item.thesis { grid-column: 1 / -1; line-height: 1.65; }
+  .case-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .case-card {
+    padding: 15px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #f8faf8;
+  }
+  .case-card.capital { grid-column: 1 / -1; background: var(--amber-soft); border-color: #ecd39e; }
+  .case-card.bull { background: var(--green-soft); border-color: #cce4d2; }
+  .case-card.bear { background: var(--red-soft); border-color: #efceca; }
+  .responsive-table {
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+  table { width: 100%; border-collapse: collapse; }
+  th, td {
+    padding: 12px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+  }
+  th { color: var(--ink); background: #f2f6f3; font-weight: 800; }
+  td { color: #465049; }
+  tr:last-child > * { border-bottom: 0; }
+  .data-table { min-width: 560px; font-size: .82rem; }
+  .comparison-table { min-width: 940px; table-layout: fixed; font-size: .8rem; }
+  .comparison-table th:first-child { width: 17%; }
+  .comparison-table thead th {
+    color: #315c74;
+    background: #edf6fb;
+    font-size: .72rem;
+    letter-spacing: .02em;
+  }
+  .comparison-table tbody tr:nth-child(even) > * { background: #f8fafb; }
+  .comparison-table tbody th { color: #315c74; }
+  .comparison-table thead th:first-child,
+  .comparison-table tbody th {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    box-shadow: 1px 0 0 var(--line);
+  }
+  .comparison-table thead th:first-child { z-index: 2; }
+  .score-table { min-width: 690px; font-size: .82rem; }
+  .score-table th { width: 24%; }
+  .score-table .score-cell {
+    width: 78px;
+    color: var(--green-dark);
+    background: var(--green-soft);
+    font-size: 1rem;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+  .score-line {
+    display: block;
+    margin-top: 6px;
+    color: var(--green-dark);
+    font-size: .75rem;
+  }
+  .score-points { display: grid; gap: 5px; }
+  .score-points > div { padding-left: 4px; }
+  .point-positive { color: var(--green-dark); }
+  .point-negative { color: var(--red); }
+  .score-total > * {
+    color: #fff;
+    background: linear-gradient(135deg, var(--green), var(--green-dark));
+  }
+  .score-total th { font-size: 1rem; }
+  .verdict {
+    display: inline-flex;
+    margin-bottom: 14px;
+    padding: 9px 14px;
+    color: var(--amber);
+    background: var(--amber-soft);
+    border: 1px solid #ecd39e;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 900;
+  }
+  .buy-verdict {
+    color: var(--green-dark);
+    background: var(--green-soft);
+    border-color: #bcd9c3;
+  }
+  .action-cards,
+  .catalyst-split {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .action-card,
+  .catalyst-card {
+    padding: 15px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fff;
+  }
+  .action-card > h3,
+  .catalyst-card > h3 { margin: 0 0 10px; color: var(--ink); font-size: .92rem; }
+  .action-card > * + * { margin-top: 10px; }
+  .positive-action,
+  .positive-catalysts { border-color: #bcd9c3; background: #f7fcf8; }
+  .neutral-action { border-color: #ecd39e; background: #fffaf1; }
+  .caution-action,
+  .negative-catalysts { border-color: #efceca; background: #fff9f8; }
+  .rule-cards { display: grid; gap: 9px; }
+  .rule-card {
+    display: grid;
+    grid-template-columns: minmax(210px, 36%) 1fr;
+    gap: 14px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--amber);
+    border-radius: 10px;
+    background: #fff;
+  }
+  .rule-card.clear { border-left-color: var(--green); }
+  .rule-card.flagged { border-left-color: var(--red); }
+  .decision-list .fact-row { grid-template-columns: minmax(205px, 31%) 1fr; }
+  .challenge-grid {
+    display: grid;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .challenge {
+    margin: 0;
+    padding: 15px;
+    border-left: 4px solid #7ba08a;
+    border-radius: 0 10px 10px 0;
+    background: #f7faf8;
+  }
+  .featured { border-color: #bcd9c3; }
+  .featured h2 { color: #fff; background: linear-gradient(135deg, var(--green), var(--green-dark)); }
+  .featured .section-number { color: var(--green-dark); background: #fff; }
+  .positive h2 { color: var(--green-dark); background: var(--green-soft); }
+  .caution { border-color: #efceca; }
+  .caution h2 { color: var(--red); background: var(--red-soft); }
+  .analytical { border-color: #ecd39e; }
+  .analytical h2 { color: var(--amber); background: var(--amber-soft); }
+  .comparison h2 { color: #315c74; background: #edf6fb; }
   @media (max-width: 760px) {
-    nav { display: none; }
-    .facts-grid, .action-grid { grid-template-columns: repeat(2, 1fr); }
-    .findings { grid-template-columns: 1fr; }
-    .ai-grid { grid-template-columns: repeat(2, 1fr); }
-    .workflow-track { grid-template-columns: 1fr; }
-    .workflow-arrow { min-height: 18px; transform: rotate(90deg); }
-    @keyframes arrowMove { 50% { transform: rotate(90deg) translateX(3px); opacity: .55; } }
+    .executive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .executive-item.investment,
+    .executive-item.type,
+    .executive-item.thesis { grid-column: 1 / -1; }
+    .action-cards,
+    .catalyst-split { grid-template-columns: 1fr; }
+    .score-table { min-width: 0; }
+    .score-table tr {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .score-table th,
+    .score-table td { width: auto; }
+    .score-table td:last-child {
+      grid-column: 1 / -1;
+      border-top: 1px solid var(--line);
+    }
+    .score-table .score-cell { width: auto; }
+    .score-total th { grid-column: 1 / -1; }
+    .score-total td { display: none; }
   }
   @media (max-width: 560px) {
-    main, .header-inner { padding-left: 15px; padding-right: 15px; }
-    .hero { padding: 34px 17px; border-radius: 18px; }
-    .summary { grid-template-columns: 1fr; text-align: center; }
-    .score { margin: auto; }
-    .facts-grid, .action-grid, .ai-grid { grid-template-columns: 1fr; }
-    .card { padding: 22px 18px; }
-    .prompt-head { align-items: flex-start; flex-direction: column; padding: 22px 18px; }
-    .prompt-body { padding: 20px 15px 24px; }
-    .qa-answer { padding-left: 0; }
-    .claude-result-card { padding: 10px; }
-    .claude-result-frame { min-height: 620px; }
-    .ai-modal { padding: 12px; }
-    .ai-modal-card { max-height: calc(100vh - 24px); padding: 21px 16px; border-radius: 20px; }
-    .ai-modal-card .ai-grid { grid-template-columns: 1fr; }
+    body { padding: 10px; }
+    .result-head { padding: 18px; }
+    .plate h2 { padding: 13px 14px; }
+    .plate-body { padding: 15px 14px; font-size: .84rem; }
+    .executive-grid { grid-template-columns: 1fr; }
+    .executive-item.investment,
+    .executive-item.type,
+    .executive-item.thesis { grid-column: auto; }
+    .summary-grid,
+    .case-grid { grid-template-columns: 1fr; }
+    .summary-grid .fact-row:last-child:nth-child(odd) { grid-column: auto; }
+    .case-card.capital { grid-column: auto; }
+    .fact-row,
+    .rule-list .fact-row,
+    .decision-list .fact-row {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+    .fact-row.no-label {
+      grid-template-columns: 9px 1fr;
+      gap: 10px;
+    }
+    .row-label { font-size: .76rem; }
+    .rule-card { grid-template-columns: 1fr; gap: 5px; }
   }
 </style>
 </head>
 <body>
-<header>
-  <div class="header-inner">
-    <a class="brand" href="#top"><img class="brand-logo" src="armchair-income-logo.png" alt="Armchair Income logo"><span>Armchair Income</span></a>
-    <nav aria-label="Page navigation">
-      <a href="#sample">Sample Search</a>
-      <a href="#prompt">Copy prompt</a>
-      <button type="button" data-open-ai-picker aria-haspopup="dialog" aria-expanded="false">Choose an AI</button>
-    </nav>
-  </div>
-</header>
-
-<main id="top">
-  <section class="hero">
-    <span class="eyebrow">Armchair Income tip · Durable Income Filter V3.0</span>
-    <h1>AI Income Investment Scorecard V3</h1>
-    <p>Analyze any income ticker for durable growth, capital preservation, valuation, risk, catalysts, and portfolio fit across a full market cycle.</p>
-    <div class="credit-line">Shared by a member · Prompt created by <a href="https://armchair-insider.circle.so/u/85901e8b" target="_blank" rel="noopener">Paul Stark</a></div>
-
-    <div class="workflow-card" aria-label="How to use the AI Income Investment Scorecard V3">
-      <div class="workflow-title"><span class="live-dot" aria-hidden="true"></span>How it works</div>
-      <div class="workflow-track">
-        <div class="workflow-step step-1">
-          <div class="step-head"><span class="step-number">1</span><strong>Enter your ticker</strong></div>
-          <input id="tickerInput" type="text" value="ADX" maxlength="12" autocomplete="off" spellcheck="false" aria-label="Investment ticker">
-        </div>
-        <div class="workflow-arrow" aria-hidden="true">→</div>
-        <div class="workflow-step step-2">
-          <div class="step-head"><span class="step-number">2</span><strong>Copy the prompt</strong></div>
-          <button class="primary copy-step-button" id="copyTickerPrompt" type="button">Copy prompt</button>
-        </div>
-        <div class="workflow-arrow" aria-hidden="true">→</div>
-        <div class="workflow-step step-3">
-          <div class="step-head"><span class="step-number">3</span><strong>Open an AI &amp; paste</strong></div>
-          <button class="ai-jump" id="openAiPicker" type="button" data-open-ai-picker aria-haspopup="dialog" aria-expanded="false">Choose an AI</button>
-          <div class="mini-ai-row" aria-hidden="true"><span>GPT</span><span>C</span><span>G</span><span>+6</span></div>
-        </div>
-        <div class="workflow-arrow" aria-hidden="true">→</div>
-        <div class="workflow-step step-4">
-          <div class="step-head"><span class="step-number">4</span><strong>Get the result</strong></div>
-          <div class="result-preview"><span class="preview-score">/100</span><div><strong>Score + decision</strong><small>Buy · Watch · Avoid</small></div></div>
-        </div>
-      </div>
-      <p class="workflow-note">Enter any ticker, copy the prepared prompt, paste it into your preferred AI, and receive the full scorecard.</p>
-    </div>
-    <p class="disclaimer"><strong>Disclaimer:</strong> This is not investment advice. AI search results may be incomplete or inaccurate—verify all information and use at your own risk.</p>
-  </section>
-
-  <section id="sample">
-    <div style="margin-bottom:18px;">
-      <span class="eyebrow sample-label">Sample search result from Claude · V3</span>
-      <h2>ADX — Durable Income Buying Filter v3.0</h2>
-      <p>Adams Diversified Equity Fund · Analysis dated July 29, 2026</p>
-    </div>
-
-    <div class="card" style="margin-bottom:18px;">
-      <div class="summary">
-        <div class="score" aria-label="Score: 66 out of 100"><div><strong>66</strong><small>out of 100</small></div></div>
-        <div>
-          <span class="eyebrow">Claude’s V3 conclusion</span>
-          <h2>🟠 Watchlist</h2>
-          <p>ADX is a well-run, ultra-low-cost, unleveraged mega-cap-growth CEF with a 97-year distribution record, but today's near-zero discount to NAV (vs. a ~14.5% 10-year average) and a payout that is really “harvested total return” rather than durable/growing organic income make it a hold-and-watch, not a fresh-money buy.</p>
-          <span class="decision watchlist">Decision: Watchlist</span>
-        </div>
-      </div>
-      <div class="facts-grid">
-        <div class="fact"><span>Market price</span><strong>~$25.36</strong></div>
-        <div class="fact"><span>Reported NAV</span><strong>$26.34</strong></div>
-        <div class="fact"><span>Forward yield</span><strong>~7.7%–8.1%</strong></div>
-        <div class="fact"><span>Estimated discount</span><strong>~3%–4%</strong></div>
-      </div>
-      <div class="finding warning" style="margin-top:18px;">
-        <span class="tag assessment">Best use of new capital</span>
-        <p><strong>⚠️ Good investment, but better opportunities currently exist</strong> — specifically, better entry points exist within the same fund family/peer group when the discount widens, or in true recurring-income vehicles for investors whose primary objective is durable cash flow rather than total return.</p>
-      </div>
-      <p class="note"><strong>Overall Confidence:</strong> Medium-High (primary-source distribution and performance data is current through 7/17/2026; full FY2026 audited financials are not yet available) · <strong>Maximum Allocation:</strong> 3–5% · <strong>Expected annualized total return range:</strong> roughly 4–9%.</p>
-    </div>
-
-    <div class="card claude-result-card">
-      <span class="eyebrow">Claude’s complete response</span>
-      <p class="note" style="margin:0 0 12px;">Displayed exactly as supplied, including the 23-part analysis, stress test, peer comparison, scoring, and final decision.</p>
-      <iframe class="claude-result-frame" src="claude-adx-v3-result-plates.html" title="Claude’s exact Durable Income Buying Filter V3 result for ADX, divided into section cards"></iframe>
-      <div class="claude-result-tools">
-        <a class="secondary" href="claude-adx-v3-result-plates.html" target="_blank" rel="noopener">Open card view ↗</a>
-        <a class="secondary" href="ADX-Durable-Income-Filter-v3.pdf" target="_blank" rel="noopener">Open exact response PDF ↗</a>
-      </div>
-    </div>
-
-    <div hidden aria-hidden="true">
-    <div style="margin-bottom:18px;">
-      <span class="eyebrow sample-label">Illustrative ADX result from Claude</span>
-      <h2>ADX — Durable Income Filter Analysis</h2>
-      <p>Adams Diversified Equity Fund · Prior-version format example. V3 adds stress testing, capital-preservation analysis, expected total return, and peer comparison.</p>
-    </div>
-
-    <div class="card">
-      <div class="summary">
-        <div class="score" aria-label="Score: 62 out of 100"><div><strong>62</strong><small>out of 100</small></div></div>
-        <div>
-          <span class="eyebrow">Claude’s conclusion</span>
-          <h2>Watchlist—the fund is strong, but the entry is weak</h2>
-          <p>ADX is a well-run, low-cost equity closed-end fund with strong long-term NAV results and shareholder-friendly capital actions. Its payout still depends on total return, and its roughly 3%–4% discount is unusually tight versus history.</p>
-          <span class="decision">Decision: Watchlist</span>
-        </div>
-      </div>
-      <div class="facts-grid">
-        <div class="fact"><span>Estimated market price</span><strong>~$25.65</strong></div>
-        <div class="fact"><span>NAV per share</span><strong>$26.34</strong></div>
-        <div class="fact"><span>Forward market yield</span><strong>~7.8%</strong></div>
-        <div class="fact"><span>Final ROC, 2022–2025</span><strong>0%</strong></div>
-      </div>
-      <p class="note">Claude treated 19a-1 notices as estimates and used finalized year-end tax character for the ROC conclusion. The market price and current discount remain estimates that should be verified live.</p>
-    </div>
-
-    <div class="qa-list" aria-label="Claude ADX question and answer analysis">
-      <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">Q</span><h3>What type of investment is ADX?</h3></div>
-        <div class="qa-answer">
-          <p><span class="answer-lead">Internally managed diversified U.S. large-cap equity closed-end fund.</span> ADX uses a managed distribution policy targeting 8% of average NAV annually through level quarterly payments.</p>
-          <p>It is an equity total-return vehicle—not a BDC, REIT, bond fund, or traditional recurring-income investment.</p>
-        </div>
-      </article>
-
-      <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">1</span><h3>What are the current price, distribution, and yield?</h3></div>
-        <div class="qa-answer">
-          <ul>
-            <li>Last confirmed trade in Claude’s data: <strong>about $25.65</strong>; verify the live quote.</li>
-            <li>NAV per share: <strong>$26.34 as of June 30, 2026</strong>, up from $23.35 one year earlier.</li>
-            <li>Managed distribution policy: a minimum of <strong>8% of NAV annually</strong>, generally paid quarterly.</li>
-            <li>Declared August 2026 distribution: <strong>$0.50 per share</strong>, following $0.48 in May and $0.47 in February.</li>
-            <li>Estimated forward yield: <strong>about 7.8% on market price</strong>.</li>
-          </ul>
-          <p>The dollar payout changes with NAV; it is not a fixed or steadily growing dividend.</p>
-        </div>
-      </article>
-
-      <article class="qa-item critical">
-        <div class="qa-question"><span class="qa-number">2</span><h3>Is the distribution funded by recurring cash flow?</h3></div>
-        <div class="qa-answer">
-          <p><span class="answer-lead">No—not primarily.</span> ADX’s payout is a total-return distribution policy. Recurring dividends and interest cover only a small share; most of the target is designed to come from realized capital gains.</p>
-          <p>This is normal for a growth-oriented equity CEF, but the “yield” remains market-return dependent and should not be compared with contractual or operating income from bonds, BDCs, or REITs.</p>
-        </div>
-      </article>
-
-      <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">3</span><h3>How should coverage be evaluated?</h3></div>
-        <div class="qa-answer">
-          <p><span class="answer-lead">Final year-end tax character showed full total-return coverage.</span> Interim 19a-1 notices estimated substantial ROC, but the completed fiscal years were later classified as income and capital gains:</p>
-          <ul>
-            <li>2025: <strong>$1.85 total distribution; 0% final ROC</strong></li>
-            <li>2024: <strong>$2.50 total distribution; 0% final ROC</strong></li>
-            <li>2023: <strong>$1.30 total distribution; 0% final ROC</strong></li>
-            <li>2022: <strong>$1.07 total distribution; 0% final ROC</strong></li>
-          </ul>
-          <p>Claude’s verdict: coverage was at least 1.0x for each closed year on a total-return basis. The 2026 result must be rechecked against the final Form 1099-DIV because weak markets could prevent another year-end reclassification.</p>
-        </div>
-      </article>
-
-      <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">4</span><h3>What is the NAV and per-share trend?</h3></div>
-        <div class="qa-answer">
-          <p>NAV rose from <strong>$23.35 at June 30, 2025</strong> to <strong>$26.34 at June 30, 2026</strong>—about 12.8% growth after distributions. Annualized NAV returns were 22.2% for one year, 21.5% for three years, 14.1% for five years, and 16.5% for ten years.</p>
-          <p>The ten-year result ranked near the top of its category. Q1 2026’s -4.8% NAV return also showed that ADX remains closely exposed to broad equity drawdowns.</p>
-        </div>
-      </article>
-
-      <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">5</span><h3>Is ADX temporarily cheap or structurally impaired?</h3></div>
-        <div class="qa-answer">
-          <p><span class="answer-lead">Neither cheap nor impaired—currently rich versus its own history.</span> Claude estimated a roughly <strong>3%–4% discount</strong>, compared with an approximately 14.5% ten-year average discount.</p>
-          <p>The underlying portfolio appears sound, but most of the former discount opportunity has already closed.</p>
-        </div>
-      </article>
-
-      <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">6</span><h3>What are the debt, leverage, and credit risks?</h3></div>
-        <div class="qa-answer">
-          <p>ADX is reported as effectively unlevered, so no meaningful debt maturity, refinancing, or interest-coverage risk was identified. Its <strong>0.49% expense ratio</strong> as of December 31, 2025 is low for an actively managed equity fund.</p>
-          <p><span class="tag assessment">Uncertainty</span> Claude did not independently confirm the zero-leverage claim against the SAI or primary balance sheet in this pass.</p>
-        </div>
-      </article>
-
-      <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">7</span><h3>What is the distribution history?</h3></div>
-        <div class="qa-answer">
-          <p>ADX reports distributions across more than <strong>90 years</strong> and no suspension was found. In 2024, the policy changed from at least 6% based on market price to a minimum <strong>8% of average NAV</strong>, paid more evenly each quarter.</p>
-          <p>This was a genuine policy increase, but not organic dividend growth from recurring earnings.</p>
-        </div>
-      </article>
-
-      <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">8</span><h3>How did Claude assess capital allocation?</h3></div>
-        <div class="qa-answer">
-          <p>Under activist pressure in 2024, ADX raised the payout policy and completed an accretive tender offer for <strong>12,405,174 shares at $22.47</strong>, equal to 98% of then-current NAV. Buying below NAV benefited continuing shareholders.</p>
-          <p>The fund also added an independent director in February 2026 and promoted long-tenured investment professional Gregory Buckley to EVP and portfolio manager in July 2026. No material insider trading information was found in Claude’s review.</p>
-        </div>
-      </article>
-
-      <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">9</span><h3>How does valuation compare with history and peers?</h3></div>
-        <div class="qa-answer">
-          <p>The estimated <strong>3%–4% discount</strong> sits far inside the roughly 14.5% ten-year average. Policy changes, the tender offer, activist pressure, and strong NAV performance may justify some re-rating, but ADX is statistically rich relative to its own history.</p>
-          <p>Claude viewed claims that the narrow discount is still “cheap” as opinion rather than verified fact.</p>
-        </div>
-      </article>
-
-      <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">10</span><h3>What are the technical trend and market sentiment?</h3></div>
-        <div class="qa-answer">
-          <p><span class="answer-lead">Momentum is strong and arguably stretched.</span> ADX traded well above its prior 52-week average while its discount compressed near decade-tight levels.</p>
-          <p>Top holdings represented about 40.3% of net assets, and information technology was roughly 37.7%. Claude judged ADX more overbought than oversold on both price momentum and discount valuation.</p>
-        </div>
-      </article>
-
-      <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">11</span><h3>What is the bullish case?</h3></div>
-        <div class="qa-answer">
-          <ul>
-            <li>Low-cost, internally managed, effectively unlevered structure with more than 90 years of operating history.</li>
-            <li>Top-decile long-term NAV performance.</li>
-            <li>Accretive tender offer, higher managed payout, and an experienced internal investment team.</li>
-            <li>No final destructive ROC in the last four closed fiscal years.</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="qa-item critical">
-        <div class="qa-question"><span class="qa-number">12</span><h3>What is the bearish case?</h3></div>
-        <div class="qa-answer">
-          <p>The 8% payout is market-return dependent, the discount is near decade-tight levels, and roughly 40% exposure to a handful of mega-cap technology names creates concentrated AI-trade risk.</p>
-          <p>ADX may also lag leveraged CEF peers during strong bull markets because it does not use meaningful leverage.</p>
-        </div>
-      </article>
-
-      <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">13</span><h3>Which three facts would invalidate the thesis?</h3></div>
-        <div class="qa-answer">
-          <ol style="color:var(--muted);padding-left:20px;">
-            <li>A closed fiscal year shows genuine ROC alongside declining NAV.</li>
-            <li>The discount widens toward its historical average without a corresponding NAV decline, signaling that the re-rating was not durable.</li>
-            <li>The board reverses the 8% payout or shareholder-friendly tender-offer posture.</li>
-          </ol>
-        </div>
-      </article>
-
-      <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">14</span><h3>What portfolio role fits ADX?</h3></div>
-        <div class="qa-answer">
-          <p><span class="answer-lead">Growth Income / Accelerator.</span> It behaves like a large-cap growth equity holding with a policy-driven distribution—not an Anchor or Ballast and not a substitute for bonds, preferreds, or REITs.</p>
-        </div>
-      </article>
-
-      <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">15</span><h3>What maximum position size did Claude suggest?</h3></div>
-        <div class="qa-answer">
-          <p><strong>3%–5%</strong> of a diversified income portfolio, reduced further when the investor already has substantial mega-cap technology exposure.</p>
-        </div>
-      </article>
-
-      <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">16</span><h3>What are the buy, hold, trim, and sell conditions?</h3></div>
-        <div class="qa-answer">
-          <ul>
-            <li><strong>Buy or add:</strong> if the discount widens toward <strong>8%–12%+</strong>, ideally during a broad pullback without fund-specific impairment.</li>
-            <li><strong>Hold:</strong> while the discount remains in the low-to-mid single digits and NAV compounds near or above its benchmark.</li>
-            <li><strong>Trim:</strong> at a premium or if mega-cap technology concentration rises materially above about 40%.</li>
-            <li><strong>Sell:</strong> after confirmed destructive ROC with falling NAV, or if the board rescinds the 8% policy.</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">17</span><h3>What are the key 6–12 month catalysts?</h3></div>
-        <div class="qa-answer">
-          <ul>
-            <li>The semi-annual report expected on or about July 22, 2026.</li>
-            <li>Q3 and year-end distribution declarations.</li>
-            <li>The 2026 Form 1099-DIV and final tax character in early 2027.</li>
-            <li>Further activist engagement or accretive tenders.</li>
-            <li>Performance of NVIDIA, Apple, Alphabet, Microsoft, and the broader AI trade.</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="qa-item">
-        <div class="qa-question"><span class="qa-number">18</span><h3>What future developments would change the thesis?</h3></div>
-        <div class="qa-answer">
-          <p><strong>More bullish:</strong> a wider discount with NAV still compounding, further below-NAV tenders, or proof that the 8% payout survives a full down cycle without genuine ROC.</p>
-          <p><strong>More bearish:</strong> confirmed ROC with declining NAV, a sustained mega-cap technology drawdown, or reversal of the 8% distribution and shareholder-friendly posture.</p>
-        </div>
-      </article>
-
-      <article class="qa-item critical">
-        <div class="qa-question"><span class="qa-number">19</span><h3>What risk may the market be underestimating?</h3></div>
-        <div class="qa-answer">
-          <p>The market may be treating ADX’s “8% yield” like durable income when it is really an equity total-return policy. In a down market, investors could face a lower payout and a falling NAV at the same time—the opposite of the stability many income buyers expect.</p>
-        </div>
-      </article>
-    </div>
-    </div>
-  </section>
-
-  <section class="card" hidden aria-hidden="true">
-    <span class="eyebrow">Claude’s rejection review</span>
-    <h2>No hard rejection from finalized results—but two risks remain</h2>
-    <div class="rule-list">
-      <div class="rule"><span class="icon" style="color:var(--green-dark);background:var(--green-soft);">✓</span><div><b>Coverage below 1.0x:</b> not triggered in the last four closed fiscal years; finalized tax character showed 0% ROC.</div></div>
-      <div class="rule"><span class="icon" style="color:var(--green-dark);background:var(--green-soft);">✓</span><div><b>Persistently declining NAV:</b> not triggered; long-term NAV and total-return trends have been strong.</div></div>
-      <div class="rule"><span class="icon" style="color:var(--green-dark);background:var(--green-soft);">✓</span><div><b>Destructive return of capital:</b> not triggered by finalized 2022–2025 data; recheck when 2026 tax character is final.</div></div>
-      <div class="rule"><span class="icon" style="color:var(--green-dark);background:var(--green-soft);">✓</span><div><b>Debt and leverage:</b> no material leverage or refinancing concern was identified.</div></div>
-      <div class="rule"><span class="icon" style="color:var(--amber);background:#f7e5c4;">!</span><div><b>Asset-sale dependence:</b> partially applicable because realized gains fund the policy. This is structural for ADX, but still matters to income investors.</div></div>
-      <div class="rule"><span class="icon">×</span><div><b>Portfolio overlap:</b> likely triggered for portfolios already concentrated in broad-market and mega-cap technology exposure.</div></div>
-      <div class="rule"><span class="icon" style="color:var(--amber);background:#f7e5c4;">!</span><div><b>Discount-closing case:</b> applicable in reverse—the discount has largely closed and could revert wider.</div></div>
-    </div>
-    <p class="note"><strong>Claude’s result:</strong> The finalized record avoids an automatic ROC or coverage rejection. The Watchlist decision instead rests on a tight discount, market-dependent payout, and likely portfolio overlap.</p>
-  </section>
-
-  <section class="card" hidden aria-hidden="true">
-    <span class="eyebrow">Claude’s score and final answer</span>
-    <h2>62 out of 100</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Category</th><th>Available</th><th>Score</th><th>Claude’s rationale</th></tr></thead>
-        <tbody>
-          <tr><td>Income durability</td><td>30</td><td>16</td><td>The payout has been honored without final ROC, but remains dependent on equity total return.</td></tr>
-          <tr><td>Asset durability</td><td>20</td><td>17</td><td>High-quality, effectively unlevered portfolio with top-decile long-term performance, offset by concentration.</td></tr>
-          <tr><td>Valuation</td><td>20</td><td>8</td><td>The estimated 3%–4% discount is near decade-tight levels and far inside its historical average.</td></tr>
-          <tr><td>Balance sheet and management</td><td>15</td><td>14</td><td>Low fees, strong capital actions, internal management, and no identified refinancing risk.</td></tr>
-          <tr><td>Portfolio fit and risk controls</td><td>15</td><td>7</td><td>Mega-cap technology exposure likely overlaps with positions already held by income investors.</td></tr>
-          <tr><td>Total</td><td>100</td><td>62</td><td>Watchlist—the fund is well run, but today’s entry point is the weakest part of the case.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="finding warning" style="margin-top:18px;">
-      <span class="tag assessment">Decision: Watchlist</span>
-      <h3>Best viewed as an equity total-return fund with an income wrapper</h3>
-      <p>ADX can fit as a growth-income accelerator, but its payout should not be mistaken for contractual income. Claude rejected the current price—not the quality of the fund.</p>
-    </div>
-
-    <div class="action-grid">
-      <div class="action"><span>Suggested entry</span><strong>Wait for an 8%–12%+ discount to NAV</strong></div>
-      <div class="action"><span>Fair-value range</span><strong>NAV minus a normalized 8%–10% discount</strong></div>
-      <div class="action"><span>Maximum allocation</span><strong>3%–5% as an equity or growth-income satellite</strong></div>
-      <div class="action"><span>Next review</span><strong>Semi-annual report, then the mid-October distribution update</strong></div>
-    </div>
-    <div class="finding" style="margin-top:18px;">
-      <span class="tag">Top three metrics</span>
-      <p><strong>1.</strong> Discount or premium to NAV · <strong>2.</strong> Final 2026 return-of-capital percentage · <strong>3.</strong> Top-holding concentration and technology-sector weight.</p>
-    </div>
-
-    <div class="finding warning" style="margin-top:13px;">
-      <span class="tag assessment">Final Challenge</span>
-      <h3>Why a thoughtful investor could disagree</h3>
-      <p>The strongest opposing view is that ADX’s tender offer and 8%-of-NAV policy created a permanent re-rating, so waiting for the old 14.5% average discount may mean missing continued top-decile compounding.</p>
-      <p>Claude would move toward <strong>Small Starter Position</strong> if 2026 reporting confirms zero final ROC and the discount remains stable, indicating that the tighter valuation is a durable new normal rather than a temporary overshoot.</p>
-    </div>
-
-    <p class="note"><strong>Facts versus estimates:</strong> NAV, declared distributions, finalized tax character, tender details, and historical returns were treated as confirmed. The live price, current discount, and leverage characterization require fresh verification.</p>
-    <p class="note"><strong>Key sources cited by Claude:</strong> <a href="https://adamsfunds.com/wp-content/uploads/adx_annual_2025.pdf" target="_blank" rel="noopener">2025 annual report</a> · <a href="https://www.stocktitan.net/news/ADX/adams-diversified-equity-fund-announces-first-half-2026-a1d8ts46o92c.html" target="_blank" rel="noopener">first-half 2026 results</a> · <a href="https://www.sec.gov/Archives/edgar/data/2230/000089843224000440/scto-c.htm" target="_blank" rel="noopener">SEC tender filing</a> · <a href="https://www.adamsfunds.com/news/adams-diversified-equity-fund-announces-tender-offer-results/" target="_blank" rel="noopener">tender results</a>.</p>
-  </section>
-
-  <section class="card prompt-card" id="prompt">
-    <div class="prompt-head">
-      <div>
-        <span class="eyebrow">Copy and use</span>
-        <h2>AI Income Investment Analysis Prompt V3.0</h2>
-        <p>Copy it, then use Step 3 above to open an AI, paste, and run.</p>
-      </div>
-      <button class="secondary" id="copyGenericPrompt" type="button">Copy full prompt</button>
-    </div>
-    <div class="prompt-body">
-<pre id="promptText"></pre>
-<pre hidden aria-hidden="true">Analyze the investment symbol [SYMBOL] using the Durable Income Buying Filter below.
-
-Use the most recent financial reports, earnings releases, SEC filings, investor presentations, dividend history, valuation data, management guidance, and relevant macroeconomic conditions. Do not rely primarily on third-party summaries.
-
-Whenever possible, support each major conclusion with primary sources such as SEC filings, earnings releases, investor presentations, or audited financial statements.
-
-First identify the type of investment:
-- Common dividend stock
-- BDC
-- REIT
-- Closed-end fund
-- Covered-call ETF
-- Preferred stock
-- Bond fund
-- CLO or high-risk income vehicle
-- Other
-
-Then evaluate:
-
-1. Current price, dividend or distribution, and forward yield.
-2. Whether the dividend is funded through recurring cash flow.
-3. Dividend coverage for the past three years and the latest trailing period.
-4. Free cash flow, earnings, NAV, book value, or NII trend per share.
-5. Whether the asset is temporarily cheap or structurally impaired.
-6. Debt, leverage, interest coverage, credit quality, debt maturity schedule, and refinancing risks.
-7. Dividend history, growth, reductions, suspensions, or special distributions.
-8. Management capital allocation, including debt reduction, acquisitions, dilution, share repurchases, and insider buying or selling when material.
-9. Current valuation versus its five-year history and comparable investments.
-10. Current technical trend, market sentiment, and whether the investment appears overbought, oversold, or fairly valued.
-11. Main bullish case.
-12. Main bearish case.
-13. The three facts most likely to invalidate the investment thesis.
-14. Portfolio role:
-   - Anchor
-   - Growth Income
-   - Ballast
-   - Inflation Hedge
-   - Accelerator
-   - Special Situation
-15. Appropriate maximum position size based on risk.
-16. Specific buy, add, hold, trim, and sell conditions.
-17. Key upcoming catalysts over the next 6–12 months, including earnings, regulatory changes, acquisitions, debt maturities, refinancing events, or other developments that could materially affect the investment.
-18. What would change the investment thesis? List the top three future developments that would make the investment significantly more bullish or bearish.
-19. Identify the biggest risk that the market may be underestimating.
-
-Apply these automatic rejection rules:
-- Distribution coverage below 1.0x.
-- Persistently declining NAV, book value, NII, earnings, or cash flow per share.
-- Destructive return of capital.
-- Rising debt combined with falling cash flow.
-- Dividend dependent on asset sales, borrowing, or accounting adjustments.
-- No clear explanation for why the current discount should close.
-- Excessive overlap with existing portfolio risks.
-
-Score the investment out of 100 using the following weights:
-- Income Durability: 30 points
-- Asset Durability: 20 points
-- Valuation: 20 points
-- Balance Sheet &amp; Management: 15 points
-- Portfolio Fit &amp; Risk Controls: 15 points
-
-Conclude with one of these decisions:
-- Strong Buy Candidate
-- Gradual Buy
-- Small Starter Position
-- Watchlist
-- Avoid
-- Sell or Exit
-
-Provide:
-- Suggested entry range
-- Fair value range
-- Maximum portfolio allocation
-- Next earnings or reporting event that should be reviewed
-- Top three metrics to monitor going forward.
-
-For closed-end funds (CEFs), BDCs, REITs, and other income vehicles, evaluate whether any return of capital is constructive or destructive based on recurring earnings, cash flow, and NAV trends rather than the distribution label alone.
-
-Treat all 19a-1 notices as estimates, not facts. Verify distribution sources using audited financial statements, SEC filings, and year-end tax reporting before concluding that return of capital is constructive or destructive.
-
-Clearly separate confirmed facts from estimates and assumptions. If information is unavailable or uncertain, explicitly state that rather than guessing.
-
-Whenever possible, distinguish between verified facts, management guidance, and analyst or model estimates.
-
-Do not recommend buying based primarily on the headline yield. A high yield alone is never sufficient justification for an investment recommendation.
-
-Final Challenge
-
-Before giving the final recommendation, challenge your own conclusion. Explain why a thoughtful investor could reasonably disagree with your recommendation, identify the strongest opposing argument, and describe what future evidence would cause you to change your opinion.</pre>
-    </div>
-  </section>
-</main>
-
-<script type="text/plain" id="promptV3Source">Durable Income Buying Filter v3.0 (2026)
-
-Objective
-
-Analyze the investment symbol [SYMBOL] using the Durable Income Buying Filter below.
-
-The objective is not to identify the highest-yielding investment. The objective is to identify the investment most likely to deliver durable, growing income while preserving capital over a full market cycle.
-
-Use the most recent financial reports, earnings releases, SEC filings, investor presentations, dividend history, valuation data, management guidance, and conference call transcripts whenever available.
-
-Do not rely primarily on third-party summaries.
-
-Whenever possible, support conclusions with primary sources such as SEC filings, audited financial statements, earnings releases, investor presentations, or conference call transcripts.
-
-If primary-source data is unavailable or conflicts with third-party information, prioritize the primary source and clearly state any uncertainty rather than guessing.
-
-EXECUTIVE SUMMARY — 30-SECOND DECISION
-
-Investment: [SYMBOL]
-Investment Type: Identify first
-- Common dividend stock
-- BDC
-- REIT
-- Closed-end fund
-- Covered-call ETF
-- Preferred stock
-- Bond fund
-- CLO or high-risk income vehicle
-- Other
-
-Overall Score: __/100
-
-Recommendation
-- 🟢 Strong Buy Candidate
-- 🟢 Gradual Buy
-- 🟡 Small Starter Position
-- 🟠 Watchlist
-- 🔴 Avoid
-- ⚫ Sell or Exit
-
-One-Line Investment Thesis
-Summarize the entire investment case in one concise sentence.
-
-Quick Summary
-- Action: Buy / Hold / Sell
-- Suggested Entry Range:
-- Fair Value Range:
-- Forward Yield:
-- Maximum Allocation:
-- Dividend Safety: High / Medium / Low
-- Overall Confidence: High / Medium / Low
-
-Bull Case — 30 seconds
-Summarize why an investor should consider buying today.
-
-Bear Case — 30 seconds
-Summarize the biggest risks in one or two sentences.
-
-Best Use of New Capital
-Choose one:
-- ✅ One of the best opportunities in its category.
-- ⚠️ Good investment, but better opportunities currently exist.
-- ❌ Not an attractive use of new capital today.
-
-FULL DURABLE INCOME ANALYSIS
-
-1. Current Price, Dividend & Yield
-Evaluate:
-- Current price
-- Dividend/distribution
-- Forward yield
-
-2. Dividend Sustainability
-Determine whether the dividend/distribution is supported by recurring cash flow.
-Use the appropriate metric:
-- Free cash flow
-- AFFO
-- NII
-- Earnings
-- Other
-Explain why.
-
-3. Dividend Coverage
-Review:
-- Last three years
-- Latest trailing twelve months
-Determine whether coverage is improving or deteriorating.
-
-4. Fundamental Trend
-Use whichever metric best fits the investment:
-- Free cash flow
-- AFFO
-- NII
-- NAV
-- Book value
-- Earnings
-Determine whether the trend is improving, stable, or deteriorating.
-
-5. Valuation
-Determine whether the investment is:
-- Temporarily cheap
-- Fairly valued
-- Expensive
-- Structurally impaired
-Explain why.
-
-6. Balance Sheet
-Evaluate:
-- Debt
-- Leverage
-- Interest coverage
-- Credit quality
-- Debt maturity schedule
-- Refinancing risk
-
-7. Dividend History
-Review:
-- Growth
-- Cuts
-- Suspensions
-- Special dividends
-Estimate the probability the dividend will:
-- Be maintained over the next 3 years
-- Grow over the next 5 years
-
-8. Management
-Evaluate:
-- Capital allocation
-- Debt reduction
-- Acquisitions
-- Share repurchases
-- Share issuance
-- Rights offerings
-- Dilution
-- Insider buying/selling
-
-Also evaluate management’s execution over the past five years:
-- Guidance accuracy
-- Dividend stewardship
-- Capital allocation
-- Shareholder value creation
-
-9. Relative Valuation
-Compare current valuation against:
-- Five-year history
-- Peer investments
-
-10. Why Is It Mispriced?
-If applicable, explain:
-- Why is the investment mispriced today?
-- What specific event or catalyst is likely to close the valuation gap?
-
-11. Bull Case
-Present the strongest investment case.
-
-12. Bear Case
-Present the strongest opposing argument.
-
-13. Investment Thesis Risks
-Identify the three facts most likely to invalidate the investment thesis.
-
-14. Portfolio Role
-Classify as one of:
-- Anchor
-- Growth Income
-- Ballast
-- Inflation Hedge
-- Accelerator
-- Special Situation
-
-15. Position Sizing
-Recommend an appropriate maximum allocation based on:
-- Business quality
-- Balance sheet
-- Volatility
-- Concentration risk
-
-16. Buy / Hold / Sell Plan
-Provide:
-- Buy conditions
-- Add conditions
-- Hold conditions
-- Trim conditions
-- Sell conditions
-
-17. Catalysts — Next 6–18 Months
-Identify the events most likely to improve or weaken the investment.
-
-18. Most Important Catalyst
-Identify the single event most likely to determine whether the investment outperforms or underperforms.
-Explain why.
-
-19. Macroeconomic Sensitivities
-Evaluate sensitivity to:
-- Interest rates
-- Inflation
-- Recession
-- Commodity prices
-- Currency
-- Regulation
-
-20. Distribution Stress Test
-Estimate dividend coverage if earnings, AFFO, NII, or cash flow decline by:
-- 10%
-- 20%
-- 30%
-Would the dividend likely remain intact?
-
-21. Capital Preservation
-Estimate the probability that an investor’s original capital will still be intact after five years under normal market conditions.
-Explain why.
-
-22. One-Sentence Investment Thesis
-Summarize the complete investment case in one sentence.
-
-23. Expected Total Return — 3–5 Years
-Estimate:
-- Income return
-- Earnings/NAV growth
-- Valuation expansion or contraction
-Provide an expected annualized total return range.
-
-AUTOMATIC REJECTION RULES
-
-Reject or heavily penalize investments that exhibit any of the following:
-- Distribution coverage below 1.0x without a credible path to improvement.
-- Persistently declining NAV, book value, AFFO, NII, earnings, or cash flow per share.
-- Destructive return of capital.
-- Rising debt combined with deteriorating cash flow.
-- Dividend dependent on borrowing, asset sales, or accounting adjustments.
-- No identifiable catalyst for valuation improvement.
-- Excessive overlap with existing portfolio risks.
-- Frequent shareholder dilution or value-destructive rights offerings.
-- Material deterioration in credit quality or management guidance.
-- Investment thesis depends primarily on multiple expansion rather than improving fundamentals.
-
-SPECIAL RULES
-
-- Treat 19a-1 notices only as preliminary estimates.
-- Determine return of capital using audited financial statements and final tax classifications whenever possible.
-- Use the financial metric most appropriate for the investment type.
-- Distinguish temporary cyclical weakness from permanent impairment.
-- Clearly separate:
-  - Confirmed Facts
-  - Reasonable Estimates
-  - Assumptions
-- Assign a High, Medium, or Low confidence level to each major conclusion.
-
-INVESTMENT SCORE — 100 POINTS
-
-Income Durability — 30 points
-Explain points awarded and deducted.
-
-Asset Durability — 20 points
-Explain points awarded and deducted.
-
-Valuation — 20 points
-Explain points awarded and deducted.
-
-Balance Sheet & Management — 15 points
-Explain points awarded and deducted.
-
-Portfolio Fit & Risk Controls — 15 points
-Explain points awarded and deducted.
-
-Total Score: __/100
-
-PORTFOLIO COMPARISON
-
-Compare [SYMBOL] against the three most relevant alternatives, including any comparable holdings already in the portfolio if known.
-
-For each comparison, explain:
-- Which investment is currently the better value.
-- Which has the more durable dividend.
-- Which has the stronger balance sheet.
-- Which offers the better risk-adjusted expected total return.
-- Which deserves the next investment dollar today, and why.
-
-If [SYMBOL] is not the best opportunity in its category, clearly identify which investment you would buy instead and explain why.
-
-FINAL DECISION
-
-Choose one:
-- 🟢 Strong Buy Candidate (90–100)
-- 🟢 Gradual Buy (80–89)
-- 🟡 Small Starter Position (70–79)
-- 🟠 Watchlist (60–69)
-- 🔴 Avoid (40–59)
-- ⚫ Sell or Exit (Below 40)
-
-Then provide:
-- Overall Score
-- Suggested Entry Range
-- Fair Value Range
-- Maximum Allocation
-- Buy, Add, Hold, Trim & Sell Levels
-- Key Catalysts to Monitor
-- Next Earnings or Reporting Event
-- Top Three Risks Going Forward
-- One new piece of information that would immediately change the rating to Sell
-
-Finally, conclude with a short paragraph answering these three questions:
-1. Is the income durable?
-2. Is today’s valuation attractive?
-3. Does this investment deserve the next investment dollar over comparable alternatives?
-
-Do not recommend buying based primarily on the headline yield. Focus on investments capable of delivering durable, growing income while preserving capital across a full market cycle.</script>
-
-<template id="aiOptionsTemplate">
-  <a class="ai-link" href="https://chatgpt.com/" target="_blank" rel="noopener"><span class="ai-logo">AI</span><span class="ai-name">ChatGPT / GPTs</span><small>Copy + open ↗</small></a>
-  <a class="ai-link" href="https://claude.ai/new" target="_blank" rel="noopener"><span class="ai-logo" style="background:#d97757;"><img src="https://cdn.simpleicons.org/anthropic" alt=""></span><span class="ai-name">Claude</span><small>Copy + open ↗</small></a>
-  <a class="ai-link" href="https://gemini.google.com/app" target="_blank" rel="noopener"><span class="ai-logo" style="background:#4c79df;"><img src="https://cdn.simpleicons.org/googlegemini" alt=""></span><span class="ai-name">Google Gemini</span><small>Copy + open ↗</small></a>
-  <a class="ai-link" href="https://www.perplexity.ai/" target="_blank" rel="noopener"><span class="ai-logo" style="background:#1f7a7a;"><img src="https://cdn.simpleicons.org/perplexity" alt=""></span><span class="ai-name">Perplexity</span><small>Copy + open ↗</small></a>
-  <a class="ai-link" href="https://copilot.microsoft.com/" target="_blank" rel="noopener"><span class="ai-logo" style="background:#7656d6;"><img src="https://cdn.simpleicons.org/githubcopilot" alt=""></span><span class="ai-name">Microsoft Copilot</span><small>Copy + open ↗</small></a>
-  <a class="ai-link" href="https://grok.com/" target="_blank" rel="noopener"><span class="ai-logo"><img src="https://cdn.simpleicons.org/x" alt=""></span><span class="ai-name">Grok</span><small>Copy + open ↗</small></a>
-  <a class="ai-link" href="https://chat.deepseek.com/" target="_blank" rel="noopener"><span class="ai-logo" style="background:#4d6bfe;"><img src="https://cdn.simpleicons.org/deepseek" alt=""></span><span class="ai-name">DeepSeek</span><small>Copy + open ↗</small></a>
-  <a class="ai-link" href="https://poe.com/" target="_blank" rel="noopener"><span class="ai-logo" style="background:#5d54e8;"><img src="https://cdn.simpleicons.org/poe" alt=""></span><span class="ai-name">Poe</span><small>Copy + open ↗</small></a>
-  <a class="ai-link" href="https://chat.mistral.ai/chat" target="_blank" rel="noopener"><span class="ai-logo" style="background:#f06b32;"><img src="https://cdn.simpleicons.org/mistralai" alt=""></span><span class="ai-name">Mistral Le Chat</span><small>Copy + open ↗</small></a>
-</template>
-
-<div class="ai-modal" id="aiPicker" role="dialog" aria-modal="true" aria-labelledby="aiPickerTitle" hidden>
-  <div class="ai-modal-backdrop" data-close-ai-picker></div>
-  <div class="ai-modal-card">
-    <div class="ai-modal-head">
-      <div>
-        <span class="eyebrow">Step 3</span>
-        <h2 id="aiPickerTitle">Choose your AI</h2>
-        <p>Your <strong id="pickerTicker">ADX</strong> prompt will be copied when you open an AI. Paste it into the new chat.</p>
-      </div>
-      <button class="ai-modal-close" id="closeAiPicker" type="button" aria-label="Close AI choices">&times;</button>
-    </div>
-    <div class="ai-grid" id="aiPickerGrid"></div>
-    <p class="ai-modal-note">The AI opens in a new tab and will not search until you paste and submit the copied prompt.</p>
-  </div>
-</div>
-
-<footer>Armchair Income · AI Income Investment Scorecard V3 · Not investment advice. Verify all information and use at your own risk.</footer>
-
-<script>
-  const promptElement = document.getElementById("promptText");
-  promptElement.textContent = document.getElementById("promptV3Source").textContent.trim();
-  const promptText = promptElement.innerText.trim();
-  const tickerInput = document.getElementById("tickerInput");
-  const aiPicker = document.getElementById("aiPicker");
-  const aiPickerButtons = document.querySelectorAll("[data-open-ai-picker]");
-  const closeAiPicker = document.getElementById("closeAiPicker");
-  const aiPickerGrid = document.getElementById("aiPickerGrid");
-  const pickerTicker = document.getElementById("pickerTicker");
-  let lastAiPickerOpener = document.getElementById("openAiPicker");
-
-  aiPickerGrid.innerHTML = document.getElementById("aiOptionsTemplate").innerHTML;
-
-  function tickerPrompt() {
-    const ticker = tickerInput.value.trim().toUpperCase().replace(/[^A-Z0-9.\-]/g, "") || "[SYMBOL]";
-    return promptText.replaceAll("[SYMBOL]", ticker);
-  }
-
-  async function copyText(text, button) {
-    try {
-      await navigator.clipboard.writeText(text);
-    } catch (error) {
-      const area = document.createElement("textarea");
-      area.value = text;
-      area.setAttribute("readonly", "");
-      area.style.position = "fixed";
-      area.style.opacity = "0";
-      document.body.appendChild(area);
-      area.select();
-      document.execCommand("copy");
-      area.remove();
-    }
-    if (!button) return;
-    const original = button.textContent;
-    button.textContent = "Copied!";
-    button.classList.add("copied");
-    setTimeout(() => { button.textContent = original; button.classList.remove("copied"); }, 1400);
-  }
-
-  document.getElementById("copyTickerPrompt").addEventListener("click", event => copyText(tickerPrompt(), event.currentTarget));
-  document.getElementById("copyGenericPrompt").addEventListener("click", event => copyText(promptText, event.currentTarget));
-  document.querySelectorAll(".ai-link").forEach(link => link.addEventListener("click", () => copyText(tickerPrompt())));
-  tickerInput.addEventListener("keydown", event => { if (event.key === "Enter") document.getElementById("copyTickerPrompt").click(); });
-
-  function showAiPicker(event) {
-    lastAiPickerOpener = event.currentTarget;
-    pickerTicker.textContent = tickerInput.value.trim().toUpperCase() || "your ticker";
-    aiPicker.hidden = false;
-    document.body.classList.add("modal-open");
-    aiPickerButtons.forEach(button => button.setAttribute("aria-expanded", "true"));
-    closeAiPicker.focus();
-  }
-
-  function hideAiPicker() {
-    aiPicker.hidden = true;
-    document.body.classList.remove("modal-open");
-    aiPickerButtons.forEach(button => button.setAttribute("aria-expanded", "false"));
-    lastAiPickerOpener.focus();
-  }
-
-  aiPickerButtons.forEach(button => button.addEventListener("click", showAiPicker));
-  closeAiPicker.addEventListener("click", hideAiPicker);
-  aiPicker.querySelector("[data-close-ai-picker]").addEventListener("click", hideAiPicker);
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape" && !aiPicker.hidden) hideAiPicker();
-  });
-</script>
+  <header class="result-head">
+    <strong>ChatGPT’s Complete V3 Analysis</strong>
+    <div class="result-preamble"></div>
+  </header>
+  <main><article class="plate featured">
+      <h2>EXECUTIVE SUMMARY — 30-SECOND DECISION</h2>
+      <div class="plate-body"><div class="executive-grid"><div class="executive-item investment"><strong>Investment:</strong><div>ADX — Adams Diversified Equity Fund</div></div><div class="executive-item type"><strong>Investment Type:</strong><div>Closed-end fund (CEF), diversified U.S. equity</div></div><div class="executive-item score-item"><strong>Overall Score:</strong><div><strong class="metric">82/100</strong></div></div><div class="executive-item recommendation"><strong>Recommendation</strong><div>🟢 Gradual Buy</div></div><div class="executive-item thesis"><strong>One-Line Investment Thesis</strong><div>ADX is an unusually durable, unlevered equity CEF whose 8%-of-NAV managed distribution is economically supported by a long record of strong total returns, but today's near-NAV valuation leaves too little margin of safety to make it a full-size purchase.</div></div></div></div>
+    </article>
+<article class="plate featured">
+      <h2>Quick Summary</h2>
+      <div class="plate-body"><div class="responsive-table"><table class="data-table " data-columns="2">
+    <thead><tr><th class="row-heading">Item</th><th>Assessment</th></tr></thead>
+    <tbody><tr><th scope="row">Action</th><td>Buy gradually / wait for better discount</td></tr><tr><th scope="row">Latest verified market price</th><td>$25.36 on July 27–28, 2026</td></tr><tr><th scope="row">Latest verified NAV</th><td>$25.44 on July 27, 2026</td></tr><tr><th scope="row">Discount/premium</th><td>~0.3% discount</td></tr><tr><th scope="row">Forward distribution</th><td>$0.50 quarterly / ~$2.00 annualized</td></tr><tr><th scope="row">Forward yield</th><td>~7.9% at $25.36</td></tr><tr><th scope="row">Fair Value Range</th><td>$23–$26</td></tr><tr><th scope="row">Preferred Entry Range</th><td>$22–$24.50</td></tr><tr><th scope="row">Maximum Allocation</th><td>5% of an equity/income portfolio</td></tr><tr><th scope="row">Dividend Safety</th><td>Medium-High economically; Medium on a strict cash-income basis</td></tr><tr><th scope="row">Overall Confidence</th><td>High</td></tr></tbody>
+  </table></div><p class="text-block narrative">The fund's own website reports a July 27 NAV of $25.44 and market price of $25.36, while its 2026 distributions have been $0.47, $0.48 and $0.50 for Q1–Q3.</p></div>
+    </article>
+<article class="plate positive">
+      <h2>Bull Case — 30 seconds</h2>
+      <div class="plate-body"><p class="text-block narrative">ADX combines 90+ years of distributions, no meaningful structural leverage, a highly diversified large-cap equity portfolio, extremely low ~0.5% expenses, and excellent long-term NAV returns. Through June 30, 2026, NAV total return was 10.8% YTD, 22.2% over one year, 14.1% annualized over five years and 16.5% over ten years.</p></div>
+    </article>
+<article class="plate caution">
+      <h2>Bear Case — 30 seconds</h2>
+      <div class="plate-body"><p class="text-block narrative">The biggest problem is valuation, not the underlying fund. ADX has gone from its historically typical double-digit discount to essentially NAV, meaning investors are now paying almost full underlying asset value for an 8%-of-NAV managed distribution. Adams itself says the fund's 10-year average discount has been 13%.</p></div>
+    </article>
+<article class="plate">
+      <h2>Best Use of New Capital</h2>
+      <div class="plate-body"><p class="text-block narrative">⚠️ Good investment, but better opportunities currently exist.</p></div>
+    </article>
+<div class="section-divider"><span>FULL DURABLE INCOME ANALYSIS</span></div>
+<article class="plate">
+      <h2><span class="section-number">1.</span> <span>Current Price, Dividend &amp; Yield</span></h2>
+      <div class="plate-body"><h3 class="subheading"><strong>Confirmed facts:</strong></h3><div class="fact-list"><div class="fact-row"><strong class="row-label">Latest fund-site price accessed:</strong><div class="row-value">$25.36</div></div><div class="fact-row"><strong class="row-label">Latest NAV:</strong><div class="row-value">$25.44</div></div><div class="fact-row"><strong class="row-label">Discount:</strong><div class="row-value">0.3%</div></div><div class="fact-row"><strong class="row-label">Q3 2026 distribution:</strong><div class="row-value">$0.50</div></div><div class="fact-row"><strong class="row-label">Pay date:</strong><div class="row-value">August 28, 2026</div></div><div class="fact-row"><strong class="row-label">Annualized forward distribution:</strong><div class="row-value">approximately $2.00</div></div><div class="fact-row"><strong class="row-label">Forward yield at $25.36:</strong><div class="row-value">approximately 7.9%.</div></div></div><p class="text-block narrative">The $0.50 distribution is not a conventional corporate dividend. It is part of ADX's managed distribution policy targeting 8% of average NAV annually.</p><p class="confidence-callout"><strong>Confidence:</strong><em> High</em></p></div>
+    </article>
+<article class="plate">
+      <h2><span class="section-number">2.</span> <span>Dividend Sustainability</span></h2>
+      <div class="plate-body"><p class="text-block narrative">This is where ADX needs to be analyzed differently from a normal dividend stock.</p><p class="text-block narrative">There is no corporate free-cash-flow payout ratio to examine.</p><h3 class="subheading"><strong>The appropriate metric is:</strong></h3><p class="text-block narrative">Total economic return on NAV versus the 8% distribution requirement.</p><h3 class="subheading"><strong>ADX explicitly says its distributions may consist of:</strong></h3><div class="fact-list"><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>investment income,</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>realized capital gains,</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>and potentially return of capital.</div></div></div><p class="text-block narrative">The fund also explicitly warns that the distribution amount should not be interpreted as evidence of investment performance.</p><p class="text-block narrative">That distinction is crucial.</p><p class="text-block narrative">2025</p><h3 class="subheading"><strong>ADX generated:</strong></h3><div class="fact-list"><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>$19.2m net investment income</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>$169.9m net realized gains</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>$291.6m change in unrealized appreciation</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>$480.6m total change in net assets from operations</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>$221.0m distributions.</div></div></div><p class="text-block narrative">Thus, the distribution was covered very comfortably by the fund's overall economic return.</p><p class="text-block narrative">2025 NAV total return was 18.9%, versus an 8.1% distribution rate.</p><h3 class="subheading">The important caveat</h3><p class="text-block narrative">The $221m distribution was not covered by investment income alone.</p><p class="text-block narrative">Investment income of $19.2m was only about 9% of the $221m distribution.</p><p class="text-block narrative">So ADX is not a high-yield dividend vehicle in the traditional sense.</p><h3 class="subheading"><strong>It is better understood as:</strong></h3><p class="text-block narrative">A high-quality equity portfolio systematically converting part of its total return into cash income.</p><p class="text-block narrative">That makes the distribution quite durable if the underlying portfolio continues producing adequate long-term total returns.</p><p class="confidence-callout"><strong>Conclusion:</strong> Medium-High confidence</p></div>
+    </article>
+<article class="plate">
+      <h2><span class="section-number">3.</span> <span>Dividend Coverage</span></h2>
+      <div class="plate-body"><h3 class="subheading">Three-year history</h3><div class="responsive-table"><table class="data-table " data-columns="3">
+    <thead><tr><th class="row-heading">Year</th><th>NAV total return</th><th>Distribution rate</th></tr></thead>
+    <tbody><tr><th scope="row">2023</th><td>Strong</td><td>8.1%</td></tr><tr><th scope="row">2024</th><td>23.6%</td><td>10.9%</td></tr><tr><th scope="row">2025</th><td>18.9%</td><td>8.1%</td></tr></tbody>
+  </table></div><p class="text-block narrative">The distribution system changed materially in 2024, so older payout comparisons are less useful.</p><h3 class="subheading"><strong>The five-year distribution history shows:</strong></h3><div class="fact-list"><div class="fact-row"><strong class="row-label">2021:</strong><div class="row-value">$2.98</div></div><div class="fact-row"><strong class="row-label">2022:</strong><div class="row-value">$1.07</div></div><div class="fact-row"><strong class="row-label">2023:</strong><div class="row-value">$1.30</div></div><div class="fact-row"><strong class="row-label">2024:</strong><div class="row-value">$2.50</div></div><div class="fact-row"><strong class="row-label">2025:</strong><div class="row-value">$1.85.</div></div></div><p class="text-block narrative">This is not a steadily rising conventional dividend.</p><p class="text-block narrative">However, the new policy is intentionally smoothing the payout.</p><p class="text-block narrative">2026</p><h3 class="subheading"><strong>Quarterly distributions:</strong></h3><div class="fact-list"><div class="fact-row"><strong class="row-label">Q1:</strong><div class="row-value">$0.47</div></div><div class="fact-row"><strong class="row-label">Q2:</strong><div class="row-value">$0.48</div></div><div class="fact-row"><strong class="row-label">Q3:</strong><div class="row-value">$0.50.</div></div></div><p class="text-block narrative">That progression is encouraging.</p><h3 class="subheading"><strong>Trend:</strong> Improving/stabilizing</h3><p class="confidence-callout"><strong>Confidence:</strong><em> High</em></p></div>
+    </article>
+<article class="plate">
+      <h2><span class="section-number">4.</span> <span>Fundamental Trend</span></h2>
+      <div class="plate-body"><p class="text-block narrative">For ADX, the best fundamental metric is NAV per share plus NAV total return.</p><h3 class="subheading"><strong>NAV:</strong></h3><div class="fact-list"><div class="fact-row"><strong class="row-label">2024 year-end:</strong><div class="row-value">$22.64</div></div><div class="fact-row"><strong class="row-label">2025 year-end:</strong><div class="row-value">$24.72</div></div><div class="fact-row"><strong class="row-label">July 27, 2026:</strong><div class="row-value">$25.44.</div></div></div><p class="text-block narrative">That represents continued NAV appreciation.</p><h3 class="subheading"><strong>More importantly, long-term NAV returns have been excellent:</strong></h3><div class="fact-list"><div class="fact-row"><strong class="row-label">5-year annualized:</strong><div class="row-value">14.1%</div></div><div class="fact-row"><strong class="row-label">10-year annualized:</strong><div class="row-value">16.5%</div></div><div class="fact-row"><strong class="row-label">1-year:</strong><div class="row-value">22.2%</div></div><div class="fact-row"><strong class="row-label">2026 YTD through June:</strong><div class="row-value">10.8%.</div></div></div><h3 class="subheading"><strong>Fundamental trend:</strong> Improving</h3><p class="confidence-callout"><strong>Confidence:</strong><em> High</em></p></div>
+    </article>
+<article class="plate">
+      <h2><span class="section-number">5.</span> <span>Valuation</span></h2>
+      <div class="plate-body"><p class="text-block narrative">This is ADX's weakest major category today.</p><h3 class="subheading"><strong>The July 27 price/NAV relationship was essentially:</strong></h3><p class="text-block narrative">$25.36 / $25.44 = 99.7% of NAV.</p><p class="text-block narrative">In other words, almost no CEF discount.</p><p class="text-block narrative">Yet Adams reports that its 10-year average discount was 13%.</p><h3 class="subheading"><strong>CEFConnect reports approximate historical average discounts of:</strong></h3><div class="fact-list"><div class="fact-row"><strong class="row-label">6 months:</strong><div class="row-value">-3.9%</div></div><div class="fact-row"><strong class="row-label">1 year:</strong><div class="row-value">-5.8%</div></div><div class="fact-row"><strong class="row-label">3 years:</strong><div class="row-value">-9.7%</div></div><div class="fact-row"><strong class="row-label">5 years:</strong><div class="row-value">-11.8%.</div></div></div><p class="text-block narrative">This is a dramatic repricing.</p><h3 class="subheading">Why the discount collapsed</h3><p class="text-block narrative">The new managed distribution policy appears to have changed investor perception.</p><p class="text-block narrative">ADX previously had a more irregular distribution pattern with substantial year-end capital-gain distributions. The 2024 policy changed this to an approximately 8% annual NAV-based payout, paid quarterly.</p><p class="text-block narrative">That makes ADX much more attractive to income investors.</p><h3 class="subheading">But…</h3><p class="text-block narrative">A structural improvement does not justify assuming the discount should permanently disappear.</p><h3 class="subheading"><strong>At today's price, you are effectively paying:</strong></h3><p class="text-block narrative">~1.0x NAV for a portfolio that historically traded around a substantial discount.</p><h3 class="subheading"><strong>Valuation:</strong> Fair to expensive</h3><p class="confidence-callout"><strong>Confidence:</strong><em> High</em></p></div>
+    </article>
+<article class="plate">
+      <h2><span class="section-number">6.</span> <span>Balance Sheet</span></h2>
+      <div class="plate-body"><p class="text-block narrative">ADX is unusually attractive here.</p><p class="text-block narrative">The fund had approximately $3.03 billion of investments and only about $10.5m of total liabilities at year-end 2025.</p><p class="text-block narrative">There is no conventional debt-funded leverage structure.</p><p class="text-block narrative">The fund does use total-return swaps, but they are tiny relative to the portfolio.</p><h3 class="subheading"><strong>Average daily notional amounts during 2025 were only approximately:</strong></h3><div class="fact-list"><div class="fact-row"><strong class="row-label">Long:</strong><div class="row-value">$2.16m</div></div><div class="fact-row"><strong class="row-label">Short:</strong><div class="row-value">$2.15m.</div></div></div><p class="text-block narrative">That is less than 0.2% of NAV.</p><p class="text-block narrative">The swaps are primarily used for paired trades rather than as a large borrowing mechanism.</p><div class="fact-list"><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Balance-sheet verdict</div></div><div class="fact-row"><strong class="row-label">Debt:</strong><div class="row-value">Very low</div></div><div class="fact-row"><strong class="row-label">Structural leverage:</strong><div class="row-value">Very low</div></div><div class="fact-row"><strong class="row-label">Refinancing risk:</strong><div class="row-value">Minimal</div></div><div class="fact-row"><strong class="row-label">Interest-rate sensitivity from financing:</strong><div class="row-value">Minimal</div></div><div class="fact-row"><strong class="row-label">Counterparty risk:</strong><div class="row-value">Low but non-zero</div></div></div><p class="confidence-callout"><strong>Confidence:</strong><em> High</em></p></div>
+    </article>
+<article class="plate">
+      <h2><span class="section-number">7.</span> <span>Dividend History</span></h2>
+      <div class="plate-body"><p class="text-block narrative">ADX has one of the longest distribution records in the investment universe, dating back more than 90 years.</p><p class="text-block narrative">But the history should not be confused with a dividend-growth-stock record.</p><h3 class="subheading"><strong>Annual distributions:</strong></h3><div class="responsive-table"><table class="data-table " data-columns="2">
+    <thead><tr><th class="row-heading">Year</th><th>Total distribution</th></tr></thead>
+    <tbody><tr><th scope="row">2021</th><td>$2.98</td></tr><tr><th scope="row">2022</th><td>$1.07</td></tr><tr><th scope="row">2023</th><td>$1.30</td></tr><tr><th scope="row">2024</th><td>$2.50</td></tr><tr><th scope="row">2025</th><td>$1.85</td></tr></tbody>
+  </table></div><p class="text-block narrative">The new policy makes the future more predictable.</p><h3 class="subheading">Estimated probability</h3><h3 class="subheading"><strong>Distribution maintained over next 3 years:</strong> ~90%</h3><h3 class="subheading"><strong>Distribution higher per share over next 5 years:</strong> ~70%</h3><p class="text-block narrative">The second number is lower because the distribution is linked to NAV. A prolonged bear market could result in lower dollar distributions even if the policy remains intact.</p><p class="confidence-callout"><strong>Confidence:</strong><em> Medium-High</em></p></div>
+    </article>
+<article class="plate">
+      <h2><span class="section-number">8.</span> <span>Management</span></h2>
+      <div class="plate-body"><p class="text-block narrative">ADX is internally managed and has a long operating history. The fund's audited financial statements have been audited by PwC, which has served as auditor since 1929.</p><h3 class="subheading">Capital allocation</h3><p class="text-block narrative">One major positive is the fund's enhanced discount-management program.</p><p class="text-block narrative">ADX may repurchase shares when the discount exceeds 15% for 30 consecutive trading days and can conduct a proportional tender offer when the discount exceeds 19%.</p><p class="text-block narrative">This creates a useful floor against extreme discounts.</p><h3 class="subheading">Share issuance</h3><p class="text-block narrative">The other side of the equation is important.</p><h3 class="subheading"><strong>In 2025 ADX issued approximately:</strong></h3><p class="text-block narrative">4.95 million shares worth $106.5m</p><p class="text-block narrative">to satisfy distributions, at a weighted average discount of 4.8% to NAV.</p><p class="text-block narrative">This can dilute NAV economically if shares are issued below NAV.</p><p class="text-block narrative">However, it also allows shareholders to receive distributions in shares and is part of the fund's established policy.</p><p class="text-block narrative">2024 tender offer</p><p class="text-block narrative">ADX repurchased 12.4m shares for $278.7m in 2024, at approximately a 2% discount to NAV.</p><p class="text-block narrative">That was shareholder-friendly.</p><h3 class="subheading">Five-year execution</h3><h3 class="subheading"><strong>The evidence points toward:</strong></h3><div class="fact-list management-list"><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Strong NAV growth</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Strong relative performance</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Conservative leverage</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Low expenses</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Meaningful discount management</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>More predictable distributions</div></div></div><h3 class="subheading"><strong>Management:</strong> Strong</h3><p class="confidence-callout"><strong>Confidence:</strong><em> High</em></p></div>
+    </article>
+<article class="plate">
+      <h2><span class="section-number">9.</span> <span>Relative Valuation</span></h2>
+      <div class="plate-body"><p class="text-block narrative">ADX is currently expensive relative to its own history.</p><h3 class="subheading"><strong>For comparison:</strong></h3><div class="fact-list"><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>ADX</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>~0.3% discount</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>~7.9% annualized distribution</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>14.1% 5-year NAV return</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>16.5% 10-year NAV return</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>~0.5% expense ratio</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>No meaningful structural leverage.</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>CII — BlackRock Enhanced Large Cap Core</div></div></div><h3 class="subheading"><strong>As of July 23:</strong></h3><div class="fact-list"><div class="fact-row"><strong class="row-label">NAV:</strong><div class="row-value">$23.93</div></div><div class="fact-row"><strong class="row-label">Market price:</strong><div class="row-value">$24.34</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>1.7% premium</div></div><div class="fact-row"><strong class="row-label">Distribution rate:</strong><div class="row-value">6.95%</div></div><div class="fact-row"><strong class="row-label">Expense ratio:</strong><div class="row-value">0.93%</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Uses option-writing strategies.</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>GAB — Gabelli Equity Trust</div></div></div><h3 class="subheading"><strong>As of July 27:</strong></h3><div class="fact-list"><div class="fact-row"><strong class="row-label">NAV:</strong><div class="row-value">$5.90</div></div><div class="fact-row"><strong class="row-label">Price:</strong><div class="row-value">$5.62</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>4.75% discount</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>10% distribution policy</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Higher expenses</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Uses leverage.</div></div></div><p class="text-block narrative">GAB's 10% distribution is therefore materially higher, but its policy explicitly allows return of capital and the fund's primary objective is long-term capital appreciation rather than income.</p><p class="text-block narrative">ADX wins the quality/balance-sheet contest, but not necessarily the price contest.</p></div>
+    </article>
+<article class="plate">
+      <h2><span class="section-number">10.</span> <span>Why Is It Mispriced?</span></h2>
+      <div class="plate-body"><h3 class="subheading"><strong>The historical mispricing was:</strong></h3><p class="text-block narrative">Investors undervalued the combination of ADX's long-term performance, low costs, lack of leverage and distribution history.</p><p class="text-block narrative">The market has partially corrected that.</p><p class="text-block narrative">The catalyst was likely the 2024 managed-distribution policy, which transformed an irregular capital-gains-heavy distribution profile into a smoother 8%-of-NAV quarterly income proposition.</p><p class="text-block narrative">The subsequent catalyst has been strong performance.</p><p class="text-block narrative">The problem today is that the catalyst has already happened.</p><p class="text-block narrative">Therefore I would not build a thesis around further discount compression.</p></div>
+    </article>
+<article class="plate positive">
+      <h2><span class="section-number">11.</span> <span>Bull Case</span></h2>
+      <div class="plate-body"><h3 class="subheading"><strong>The strongest case for ADX is:</strong></h3><div class="fact-list"><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Excellent long-term NAV compounding</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>8% managed distribution</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Minimal leverage</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Low 0.49% expense ratio</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Large-cap diversified portfolio</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>90+ years of distributions</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Strong management</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Potential for distribution growth as NAV grows</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Discount-management mechanism</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Recent performance above the S&amp;P 500</div></div></div><p class="text-block narrative">The 2026 portfolio is tilted toward high-quality mega-cap companies, with NVIDIA, Apple, Alphabet, Microsoft and Amazon among the largest positions. Those five alone represented roughly 24% of net assets at June 30.</p></div>
+    </article>
+<article class="plate caution">
+      <h2><span class="section-number">12.</span> <span>Bear Case</span></h2>
+      <div class="plate-body"><h3 class="subheading"><strong>The bear case is straightforward:</strong></h3><p class="text-block narrative">ADX is now a full-price equity CEF.</p><h3 class="subheading"><strong>The investor is exposed to:</strong></h3><div class="fact-list"><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>broad U.S. equity-market risk,</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>mega-cap technology concentration,</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>valuation risk,</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>NAV volatility,</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>potential distribution reductions if long-term returns disappoint,</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>and the possibility that the historical CEF discount returns.</div></div></div><p class="text-block narrative">The last point matters enormously.</p><p class="text-block narrative">If NAV remains $25.44 but the market price falls back to a 10% discount, the share price would be about:</p><p class="text-block narrative">$22.90</p><p class="text-block narrative">before considering any subsequent NAV movement.</p><p class="text-block narrative">That is roughly a 10% price loss despite no deterioration in NAV.</p></div>
+    </article>
+<article class="plate caution">
+      <h2><span class="section-number">13.</span> <span>Three Facts Most Likely to Invalidate the Thesis</span></h2>
+      <div class="plate-body"><h3 class="subheading">Risk #1 — Persistent NAV deterioration</h3><p class="text-block narrative">If NAV begins falling persistently even after distributions are considered, the 8% payout becomes less attractive.</p><h3 class="subheading">Risk #2 — Distribution becomes economically destructive</h3><p class="text-block narrative">If long-term NAV total returns fall materially below 8%, the managed distribution could begin consuming capital.</p><h3 class="subheading">Risk #3 — Discount normalization</h3><p class="text-block narrative">A return toward the historical 10–13% discount could produce a substantial market-price decline even if the underlying portfolio remains healthy.</p><p class="confidence-callout"><strong>Confidence:</strong><em> High</em></p></div>
+    </article>
+<article class="plate">
+      <h2><span class="section-number">14.</span> <span>Portfolio Role</span></h2>
+      <div class="plate-body"><h3 class="subheading">Growth Income</h3><p class="text-block narrative">ADX is not a bond substitute or ballast.</p><h3 class="subheading"><strong>It is essentially:</strong></h3><p class="text-block narrative">equity-market exposure + systematic monetization of total returns.</p><p class="text-block narrative">It belongs alongside equity holdings, not in the fixed-income bucket.</p></div>
+    </article>
+<article class="plate">
+      <h2><span class="section-number">15.</span> <span>Position Sizing</span></h2>
+      <div class="plate-body"><h3 class="subheading"><strong>Maximum allocation:</strong> 5%</h3><h3 class="subheading"><strong>I would use:</strong></h3><div class="fact-list"><div class="fact-row"><strong class="row-label">1–2%:</strong><div class="row-value">starter position</div></div><div class="fact-row"><strong class="row-label">2–3.5%:</strong><div class="row-value">normal position</div></div><div class="fact-row"><strong class="row-label">4–5%:</strong><div class="row-value">maximum for a high-conviction income portfolio</div></div></div><p class="text-block narrative">I would not make ADX a 10%+ position merely because the distribution is approximately 8%.</p><p class="text-block narrative">The underlying assets remain equities and can fall substantially in a bear market.</p></div>
+    </article>
+<article class="plate">
+      <h2><span class="section-number">16.</span> <span>Buy / Hold / Sell Plan</span></h2>
+      <div class="plate-body"><div class="action-cards"><div class="action-card positive-action"><h3>🟢 Buy</h3><p class="text-block narrative">$22–$24.50</p><p class="text-block narrative">This provides a modest discount to NAV and meaningfully improves expected returns.</p></div><div class="action-card positive-action"><h3>🟢 Add</h3><h3 class="subheading">Below $23</h3><p class="text-block narrative">Especially if NAV fundamentals remain intact.</p></div><div class="action-card neutral-action"><h3>🟡 Hold</h3><p class="text-block narrative">$24–$27</p><p class="text-block narrative">Good investment, but little valuation cushion.</p></div><div class="action-card caution-action"><h3>🟠 Trim</h3><p class="text-block narrative">$28–$30</p><p class="text-block narrative">Particularly if this represents a sustained premium to NAV.</p></div><div class="action-card caution-action"><h3>🔴 Sell / Exit</h3><p class="text-block narrative">Not merely because the price falls.</p><h3 class="subheading"><strong>Sell if:</strong></h3><div class="fact-list"><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>NAV deterioration becomes persistent,</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>distribution policy becomes economically destructive,</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>management materially increases leverage,</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>or the investment thesis changes fundamentally.</div></div></div><p class="text-block narrative">A temporary 20–30% equity-market decline alone would not be a sell signal.</p></div></div></div>
+    </article>
+<article class="plate">
+      <h2><span class="section-number">17.</span> <span>Catalysts — Next 6–18 Months</span></h2>
+      <div class="plate-body"><div class="catalyst-split">
+    <div class="catalyst-card positive-catalysts"><h3>Positive</h3><div class="fact-list catalyst-list"><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Continued NAV growth</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Continued strong U.S. equity earnings</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Further growth in the quarterly distribution</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Return of a modest discount followed by recovery</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Continued outperformance versus the S&amp;P 500</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Share repurchases if the discount widens substantially</div></div></div></div>
+    <div class="catalyst-card negative-catalysts"><h3>Negative</h3><div class="fact-list risk-list"><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>U.S. equity bear market</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Mega-cap technology valuation compression</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>NAV decline below the level needed to support the distribution</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Reappearance of a large CEF discount</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Weakening corporate earnings</div></div></div></div>
+  </div></div>
+    </article>
+<article class="plate">
+      <h2><span class="section-number">18.</span> <span>Most Important Catalyst</span></h2>
+      <div class="plate-body"><h3 class="subheading">NAV total return versus the 8% distribution rate</h3><p class="text-block narrative">This is the single most important variable.</p><h3 class="subheading"><strong>If ADX compounds NAV at:</strong></h3><div class="fact-list"><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>12–15%+ → the 8% distribution is highly attractive.</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>~8–10% → distribution remains broadly sustainable.</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>5–7% → the payout becomes increasingly dependent on capital.</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Negative returns for multiple years → the policy becomes much less attractive.</div></div></div><p class="text-block narrative">This is more important than the headline yield.</p></div>
+    </article>
+<article class="plate">
+      <h2><span class="section-number">19.</span> <span>Macroeconomic Sensitivities</span></h2>
+      <div class="plate-body"><div class="responsive-table"><table class="data-table " data-columns="3">
+    <thead><tr><th class="row-heading">Factor</th><th>ADX Sensitivity</th><th>Assessment</th></tr></thead>
+    <tbody><tr><th scope="row">Interest rates</th><td>Medium</td><td>Higher rates can compress equity valuations</td></tr><tr><th scope="row">Inflation</th><td>Medium</td><td>Depends on corporate pricing power</td></tr><tr><th scope="row">Recession</th><td>High</td><td>Equity NAV can decline materially</td></tr><tr><th scope="row">Commodity prices</th><td>Low-Medium</td><td>Diversified exposure</td></tr><tr><th scope="row">Currency</th><td>Low-Medium</td><td>Mostly U.S. equities</td></tr><tr><th scope="row">Regulation</th><td>Medium</td><td>Especially technology/financial holdings</td></tr></tbody>
+  </table></div><p class="text-block narrative">ADX is fundamentally an equity-market risk vehicle, not a rate-sensitive income fund.</p></div>
+    </article>
+<article class="plate analytical">
+      <h2><span class="section-number">20.</span> <span>Distribution Stress Test</span></h2>
+      <div class="plate-body"><p class="text-block narrative">A conventional payout ratio isn't appropriate.</p><p class="text-block narrative">Instead, use 2025's 18.9% NAV total return as the starting economic coverage.</p><h3 class="subheading"><strong>Distribution rate:</strong> 8.1%</h3><h3 class="subheading"><strong>Approximate coverage:</strong></h3><p class="text-block narrative">18.9 / 8.1 = 2.33x</p><h3 class="subheading"><strong>Stress scenarios:</strong></h3><div class="responsive-table"><table class="data-table " data-columns="3">
+    <thead><tr><th class="row-heading">NAV Total Return</th><th>Distribution</th><th>Economic Coverage</th></tr></thead>
+    <tbody><tr><th scope="row">18.9% baseline</th><td>8.1%</td><td>2.33x</td></tr><tr><th scope="row">-10%</th><td>~17.0%</td><td>2.10x</td></tr><tr><th scope="row">-20%</th><td>~15.1%</td><td>1.86x</td></tr><tr><th scope="row">-30%</th><td>~13.2%</td><td>1.63x</td></tr></tbody>
+  </table></div><p class="text-block narrative">These are illustrative stress estimates, not forecasts.</p><p class="text-block narrative">The important limitation is that total return can be unrealized. A fund can have a positive NAV return while not generating enough realized gains or investment income in a particular period to fund a cash distribution without realizing securities.</p><p class="text-block narrative">Nevertheless, the long-term economic cushion is substantial.</p><p class="text-block narrative">Would the distribution survive?</p><p class="text-block narrative"><strong>10% decline:</strong> Very likely.</p><p class="text-block narrative"><strong>20% decline:</strong> Likely.</p><p class="text-block narrative"><strong>30% decline:</strong> Probably, but confidence falls substantially if the decline persists.</p><p class="text-block narrative">The real danger is not one bad year. It is multiple years of returns below the 8% distribution target.</p></div>
+    </article>
+<article class="plate analytical">
+      <h2><span class="section-number">21.</span> <span>Capital Preservation</span></h2>
+      <div class="plate-body"><h3 class="subheading">ADX should not be described as &quot;capital safe.&quot;</h3><p class="text-block narrative">It is an equity fund.</p><p class="text-block narrative">In a severe bear market, the market price can fall 30–50%.</p><h3 class="subheading"><strong>However, over five years under normal market conditions, I estimate:</strong></h3><h3 class="subheading"><strong>Probability original nominal capital remains intact:</strong> ~75–85%</h3><p class="text-block narrative">That estimate assumes distributions are included in the economic return and assumes no prolonged structural impairment of U.S. large-cap equities.</p><p class="text-block narrative">For market price alone, the probability is lower.</p><p class="text-block narrative">This distinction matters because ADX can trade at a discount even when NAV is healthy.</p><p class="confidence-callout"><strong>Confidence:</strong><em> Medium</em></p></div>
+    </article>
+<article class="plate">
+      <h2><span class="section-number">22.</span> <span>One-Sentence Investment Thesis</span></h2>
+      <div class="plate-body"><p class="text-block narrative">ADX is one of the strongest long-term equity-income CEFs because of its low costs, minimal leverage, strong NAV compounding and disciplined 8%-of-NAV distribution, but the current near-NAV price eliminates much of the valuation cushion that makes the vehicle especially compelling.</p></div>
+    </article>
+<article class="plate analytical">
+      <h2><span class="section-number">23.</span> <span>Expected Total Return — 3–5 Years</span></h2>
+      <div class="plate-body"><h3 class="subheading"><strong>My base case:</strong></h3><h3 class="subheading">Income</h3><h3 class="subheading">Approximately 7–8% annually</h3><h3 class="subheading">NAV growth</h3><h3 class="subheading">Approximately 5–8% annually</h3><h3 class="subheading">Valuation</h3><p class="text-block narrative">Approximately -2% to +1% annually, depending on whether today's near-NAV valuation persists.</p><h3 class="subheading">Expected annualized total return</h3><h3 class="subheading"><strong>Base case:</strong> ~9–13%</h3><h3 class="subheading"><strong>Bull case:</strong> ~13–16%</h3><h3 class="subheading"><strong>Bear case:</strong> ~0–5%</h3><p class="text-block narrative">A return to a large historical discount would reduce market-price returns substantially even if NAV continues growing.</p></div>
+    </article>
+<article class="plate caution">
+      <h2>AUTOMATIC REJECTION RULES</h2>
+      <div class="plate-body"><p class="text-block narrative">ADX does not trigger the core automatic rejection rules.</p><div class="rule-cards"><div class="rule-card clear"><strong>Distribution coverage &lt;1x?</strong><div>No, when evaluated economically against long-term total return.</div></div><div class="rule-card clear"><strong>Persistently declining NAV?</strong><div>No.</div></div><div class="rule-card clear"><strong>Destructive leverage?</strong><div>No.</div></div><div class="rule-card clear"><strong>Dividend dependent on borrowing?</strong><div>No.</div></div><div class="rule-card clear"><strong>Frequent destructive dilution?</strong><div>No, although distribution-related share issuance deserves monitoring.</div></div><div class="rule-card clear"><strong>Material credit deterioration?</strong><div>No.</div></div><div class="rule-card clear"><strong>Thesis dependent primarily on multiple expansion?</strong><div>No.</div></div></div><p class="text-block narrative"><strong>This is important:</strong> ADX's investment case does not require the CEF discount to disappear.</p></div>
+    </article>
+<article class="plate comparison">
+      <h2>INVESTMENT SCORE — 100 POINTS</h2>
+      <div class="plate-body"><div class="responsive-table"><table class="score-table"><tbody>
+    <tr>
+          <th scope="row">Income Durability — 25/30</th>
+          <td><div class="score-points"><div class="point-positive">+ 8% NAV-based managed distribution</div><div class="point-positive">+ 90+ years of distributions</div><div class="point-positive">+ Strong NAV total returns</div><div class="point-positive">+ 2026 quarterly payout rising from $0.47 → $0.48 → $0.50</div><div class="point-negative">− Distribution is not funded by recurring investment income</div><div class="point-negative">− Can include realized gains/ROC</div></div></td>
+          <td class="score-line"><strong>Score:</strong> 25/30</td>
+        </tr><tr>
+          <th scope="row">Asset Durability — 18/20</th>
+          <td><div class="score-points"><div class="point-positive">+ Diversified large-cap U.S. equities</div><div class="point-positive">+ Extremely liquid holdings</div><div class="point-positive">+ Excellent long-term NAV returns</div><div class="point-positive">+ No structural leverage</div><div class="point-negative">− Meaningful mega-cap technology concentration</div></div></td>
+          <td class="score-line"><strong>Score:</strong> 18/20</td>
+        </tr><tr>
+          <th scope="row">Valuation — 13/20</th>
+          <td><div class="score-points"><div class="point-positive">+ Near NAV rather than a premium</div><div class="point-positive">+ Strong underlying performance</div><div class="point-negative">− Historically large discount has disappeared</div><div class="point-negative">− 5/10-year discount history suggests current price is rich</div><div class="point-negative">− Little margin of safety</div></div></td>
+          <td class="score-line"><strong>Score:</strong> 13/20</td>
+        </tr><tr>
+          <th scope="row">Balance Sheet &amp; Management — 14/15</th>
+          <td><div class="score-points"><div class="point-positive">+ Minimal liabilities</div><div class="point-positive">+ No meaningful financial leverage</div><div class="point-positive">+ Low expenses</div><div class="point-positive">+ Long operating history</div><div class="point-positive">+ Share repurchase/tender mechanisms</div><div class="point-negative">− Small amount of derivative/counterparty exposure</div></div></td>
+          <td class="score-line"><strong>Score:</strong> 14/15</td>
+        </tr><tr>
+          <th scope="row">Portfolio Fit &amp; Risk Controls — 12/15</th>
+          <td><div class="score-points"><div class="point-positive">+ Excellent complement to traditional dividend equities</div><div class="point-positive">+ Strong growth-income characteristics</div><div class="point-positive">+ Good distribution predictability</div><div class="point-negative">− Still 100%-ish equity risk</div><div class="point-negative">− Not ballast</div><div class="point-negative">− Potential overlap with S&amp;P 500 holdings</div></div></td>
+          <td class="score-line"><strong>Score:</strong> 12/15</td>
+        </tr>
+    <tr class="score-total"><th scope="row" colspan="3"><strong>TOTAL:</strong> <strong class="metric">82/100</strong></th></tr>
+  </tbody></table></div></div>
+    </article>
+<article class="plate comparison">
+      <h2>PORTFOLIO COMPARISON</h2>
+      <div class="plate-body"><p class="text-block narrative">I would use CII, GAB and PEO as the most relevant practical alternatives.</p><div class="responsive-table"><table class="data-table comparison-table" data-columns="5">
+    <thead><tr><th class="row-heading"></th><th>ADX</th><th>CII</th><th>GAB</th><th>PEO</th></tr></thead>
+    <tbody><tr><th scope="row">Strategy</th><td>Diversified U.S. equity</td><td>Equity + options</td><td>All-cap value</td><td>Natural resources</td></tr><tr><th scope="row">Leverage</th><td>Very low</td><td>None/very low</td><td>Yes</td><td>Low/none</td></tr><tr><th scope="row">Distribution</th><td>~7.9%</td><td>~7.0%</td><td>~10% policy</td><td>~8% policy</td></tr><tr><th scope="row">Current valuation</th><td>~NAV</td><td>~small premium</td><td>~4.8% discount</td><td>~near NAV*</td></tr><tr><th scope="row">Long-term durability</th><td>Excellent</td><td>Good</td><td>Good</td><td>Cyclical</td></tr><tr><th scope="row">Balance sheet risk</th><td>Excellent</td><td>Excellent</td><td>Lower</td><td>Good</td></tr><tr><th scope="row">Income predictability</th><td>High</td><td>High</td><td>High</td><td>High</td></tr><tr><th scope="row">Capital preservation</th><td>Best of group</td><td>Good</td><td>Moderate</td><td>Moderate</td></tr><tr><th scope="row">New-money appeal today</th><td>2nd</td><td>3rd</td><td>1st/2nd depending risk</td><td>4th</td></tr></tbody>
+  </table></div><p class="text-block narrative">*PEO's June 30 NAV was $27.44 and the fund's market price was around $26.67 in the latest accessed market data. PEO had an 18.4% first-half 2026 NAV total return.</p><h3 class="subheading">ADX vs CII</h3><p class="text-block narrative">ADX wins on simplicity and long-term income architecture.</p><p class="text-block narrative">CII offers roughly 7% distribution and uses option writing, with 47.7% of the portfolio overwritten as of June 30.</p><p class="text-block narrative">I prefer ADX for a full-cycle income investor because it does not rely on option premiums to create income.</p><h3 class="subheading"><strong>Winner:</strong> ADX</h3><h3 class="subheading">ADX vs GAB</h3><p class="text-block narrative">GAB has the higher nominal distribution policy — 10% — and was trading at a roughly 4.75% discount.</p><h3 class="subheading"><strong>But GAB has:</strong></h3><div class="fact-list"><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>higher expenses,</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>leverage,</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>a more aggressive payout,</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>and a greater possibility that distribution economics include return of capital.</div></div></div><p class="text-block narrative">ADX has the better risk-adjusted profile.</p><p class="text-block narrative"><strong>Winner:</strong> ADX for conservative income; GAB for aggressive income/value.</p><h3 class="subheading">ADX vs PEO</h3><p class="text-block narrative">PEO is attractive and recently performed extremely well, but it is much more concentrated in energy/materials.</p><p class="text-block narrative">At June 30, its top ten positions represented 66.3% of NAV, led by Exxon at 23.9% and Chevron at 12.6%.</p><p class="text-block narrative">That makes PEO a better inflation/commodity-cycle satellite, not my preferred core income holding.</p><h3 class="subheading"><strong>Winner:</strong> ADX</h3></div>
+    </article>
+<article class="plate comparison">
+      <h2>WHICH DESERVES THE NEXT INVESTMENT DOLLAR?</h2>
+      <div class="plate-body"><div class="fact-list"><div class="fact-row"><strong class="row-label">Today:</strong><div class="row-value"></div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>ADX is not quite the winner despite being the highest-quality choice.</div></div></div><h3 class="subheading"><strong>If I had fresh capital specifically for a durable-income CEF, I would rank:</strong></h3><div class="fact-list"><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>1. ADX — best quality</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>2. GAB — better current valuation but higher risk</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>3. CII — good strategy but less compelling valuation</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>4. PEO — excellent recent performance but more cyclical</div></div></div><p class="text-block narrative">However, I would wait for ADX below ~$24.50 before making it the clear first-choice purchase.</p><p class="text-block narrative">That gives you some valuation protection without requiring a return to the historical 10–13% discount.</p></div>
+    </article>
+<article class="plate featured">
+      <h2>FINAL DECISION</h2>
+      <div class="plate-body"><div class="verdict buy-verdict">🟢 GRADUAL BUY — <strong class="metric">82/100</strong>
+Suggested Entry Range</div><p class="text-block narrative">$22–$24.50</p><h3 class="subheading">Fair Value Range</h3><p class="text-block narrative">$23–$26</p><h3 class="subheading">Maximum Allocation</h3><p class="text-block narrative">5%</p><h3 class="subheading">Buy / Add / Hold / Trim / Sell</h3><div class="responsive-table"><table class="data-table " data-columns="2">
+    <thead><tr><th class="row-heading">Price</th><th>Action</th></tr></thead>
+    <tbody><tr><th scope="row">&lt;$22</th><td>🟢 Aggressive add</td></tr><tr><th scope="row">$22–$24.50</th><td>🟢 Buy</td></tr><tr><th scope="row">$24.50–$27</th><td>🟡 Hold / small buys</td></tr><tr><th scope="row">$27–$30</th><td>🟠 Trim selectively</td></tr><tr><th scope="row">&gt;$30</th><td>🔴 Strong trim unless NAV has risen proportionately</td></tr></tbody>
+  </table></div><p class="text-block narrative">These levels should be adjusted for changes in NAV. A CEF price target without reference to NAV is inherently incomplete.</p><div class="fact-list"><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Key Catalysts to Monitor</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>NAV growth</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Quarterly distribution changes</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Discount/premium to NAV</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>S&amp;P 500 relative performance</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Mega-cap technology earnings</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Any change to the 8% managed distribution policy</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Share repurchases if the discount widens</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Next Reporting Event</div></div></div><p class="text-block narrative">The next important formal reporting event is the six-month shareholder/financial reporting cycle for the period ended June 30, 2026. As of the latest Adams Funds page accessed, the June 30, 2026 financial-report section was listed but the 2026 Q2 report was not yet populated.</p><p class="text-block narrative">The already-published June 30 performance figures show 10.8% YTD NAV total return and 22.2% one-year NAV total return, so the next report is mainly important for confirming portfolio turnover, realized gains, distribution sources and NAV accounting.</p><div class="fact-list"><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>Top Three Risks Going Forward</div></div><div class="fact-row no-label"><span class="row-dot" aria-hidden="true"></span><div>1. Valuation compression</div></div></div><p class="text-block narrative">A return from ~0% discount to the historical 10%+ discount could hurt the share price even if the portfolio performs well.</p><p class="text-block narrative">2. U.S. equity bear market</p><p class="text-block narrative">ADX remains an equity fund. An 8% distribution does not prevent a 30–40% NAV drawdown in a severe bear market.</p><p class="text-block narrative">3. Long-term return falls below 8%</p><p class="text-block narrative">If ADX cannot generate approximately 8%+ long-term total returns after expenses, the managed distribution becomes increasingly dependent on capital rather than sustainable economic growth.</p><h3 class="subheading">One New Fact That Would Immediately Change the Rating to Sell</h3><p class="text-block narrative">Evidence that the 8% managed distribution is causing persistent NAV erosion — specifically, several consecutive years in which NAV total returns remain materially below the distribution rate and management nevertheless maintains the payout by returning capital.</p><p class="text-block narrative">That would change ADX from a total-return-funded income strategy into a capital-consumption strategy, which would violate the core Durable Income Buying Filter.</p></div>
+    </article>
+<article class="plate featured">
+      <h2>Bottom Line</h2>
+      <div class="plate-body"><p class="text-block narrative">1. Is the income durable?</p><p class="text-block narrative">Yes, with an important qualification. The distribution mechanism is durable because it is tied to NAV and supported by a portfolio that has historically generated returns well above 8%. But the payout is not equivalent to a corporation's recurring free-cash-flow dividend; it is partly funded by realized capital gains and can potentially include return of capital.</p><p class="text-block narrative">2. Is today's valuation attractive?</p><p class="text-block narrative">Not especially. The fund is essentially trading at NAV, versus a roughly 13% 10-year average discount and approximately 12% five-year average discount according to available historical data.</p><p class="text-block narrative">3. Does ADX deserve the next investment dollar over comparable alternatives?</p><p class="text-block narrative">At $25–26, not quite. At $22–24.50, yes. ADX is probably the highest-quality durable-income CEF of the group, but its current price has already captured much of the improvement investors once received from buying it at a discount. The best opportunity is therefore to own ADX, but buy it opportunistically rather than chase the ~8% headline distribution.</p><p class="text-block narrative"><strong>Final verdict:</strong> 🟢 Gradual Buy — <strong class="metric">82/100</strong>.</p><p class="text-block narrative"><strong>Primary-source starting points:</strong> Adams Diversified Equity Fund — official fund page and SEC 2025 audited shareholder report.</p></div>
+    </article></main>
 </body>
 </html>
