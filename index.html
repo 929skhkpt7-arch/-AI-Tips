@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Copy a standardized AI research prompt, enter a ticker, and receive an evidence-based income investment scorecard.">
+<title>AI Income Investment Scorecard V4</title>
+<style>
+  :root {
+    --ink:#172019; --muted:#58635b; --paper:#f5f7f3; --card:#ffffff; --line:#dce4db;
+    --green:#2f8d4c; --green-dark:#1d6736; --green-soft:#eaf6ed; --yellow:#f1cf48;
+    --blue:#315f78; --blue-soft:#edf6fb; --amber:#9a6818; --amber-soft:#fff6e5;
+    --red:#a63f37; --red-soft:#fff0ee; --shadow:0 16px 42px rgba(26,59,34,.09);
+    --radius:20px;
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; color:var(--ink); background:var(--paper); font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif; line-height:1.55; }
+  button,input { font:inherit; }
+  a { color:inherit; }
+  .site-header { position:sticky; top:0; z-index:40; border-bottom:1px solid rgba(220,228,219,.9); background:rgba(255,255,255,.94); backdrop-filter:blur(16px); }
+  .nav { width:min(1180px,calc(100% - 32px)); min-height:72px; margin:auto; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+  .brand { display:flex; align-items:center; gap:11px; text-decoration:none; font-weight:900; letter-spacing:-.02em; }
+  .brand img { width:46px; height:46px; object-fit:cover; border-radius:50%; border:2px solid var(--yellow); background:#111; }
+  .brand small { display:block; color:var(--muted); font-size:.67rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+  .nav-links { display:flex; align-items:center; gap:8px; }
+  .nav-links a,.nav-links button { padding:9px 12px; color:var(--muted); background:transparent; border:0; border-radius:10px; text-decoration:none; font-size:.82rem; font-weight:800; cursor:pointer; }
+  .nav-links a:hover,.nav-links button:hover { color:var(--green-dark); background:var(--green-soft); }
+  .wrap { width:min(1120px,calc(100% - 32px)); margin:auto; }
+  .hero { padding:64px 0 30px; text-align:center; }
+  .eyebrow { display:inline-flex; align-items:center; gap:8px; padding:7px 11px; color:var(--green-dark); background:var(--green-soft); border:1px solid #cde3d2; border-radius:999px; font-size:.72rem; font-weight:900; letter-spacing:.05em; text-transform:uppercase; }
+  .eyebrow::before { content:""; width:7px; height:7px; background:var(--green); border-radius:50%; box-shadow:0 0 0 5px rgba(47,141,76,.12); }
+  h1 { max-width:820px; margin:18px auto 12px; font-size:clamp(2.25rem,6vw,4.7rem); line-height:.98; letter-spacing:-.06em; }
+  .hero-copy { max-width:720px; margin:0 auto; color:var(--muted); font-size:clamp(.98rem,2vw,1.12rem); }
+  .credit { margin:17px auto 0; color:var(--muted); font-size:.82rem; }
+  .credit a { color:var(--green-dark); font-weight:900; }
+  .workflow-card { margin:30px auto 0; padding:18px; background:#142019; border:1px solid #314338; border-radius:26px; box-shadow:0 20px 56px rgba(10,28,16,.19); text-align:left; }
+  .workflow-head { display:flex; justify-content:space-between; gap:12px; padding:4px 6px 16px; color:#fff; }
+  .workflow-head strong { font-size:.92rem; }
+  .workflow-head span { color:#adbbb1; font-size:.75rem; }
+  .workflow { display:grid; grid-template-columns:1.4fr 44px 1fr 44px 1fr 44px .9fr; align-items:stretch; gap:8px; }
+  .step { min-height:144px; padding:16px; position:relative; overflow:hidden; color:#fff; background:#1c2a21; border:1px solid #34453a; border-radius:17px; transition:.2s ease; }
+  .step.active { border-color:#71c888; box-shadow:inset 0 0 0 1px #71c888; }
+  .step.done { background:#213a29; border-color:#3d7e4d; }
+  .step-no { width:31px; height:31px; display:grid; place-items:center; margin-bottom:11px; color:#15231a; background:var(--yellow); border-radius:10px; font-size:.75rem; font-weight:950; }
+  .step strong { display:block; font-size:.9rem; }
+  .step p { margin:4px 0 0; color:#adbbb1; font-size:.73rem; line-height:1.42; }
+  .ticker-row { display:flex; gap:7px; margin-top:11px; }
+  .ticker-row input { width:100%; min-width:0; padding:10px 11px; color:#142019; background:#fff; border:2px solid transparent; border-radius:10px; font-weight:900; text-transform:uppercase; outline:none; }
+  .ticker-row input:focus { border-color:#71c888; }
+  .step-button { width:100%; margin-top:12px; padding:10px; color:#fff; background:var(--green); border:0; border-radius:10px; font-size:.76rem; font-weight:900; cursor:pointer; }
+  .step-button:hover { background:#3aa45b; }
+  .step-button.secondary { color:#193220; background:#ccebd5; }
+  .flow-arrow { display:grid; place-items:center; color:#799084; font-size:1.2rem; }
+  .flow-arrow span { animation:travel 1.5s ease-in-out infinite; }
+  @keyframes travel { 0%,100%{ transform:translateX(-3px); opacity:.45; } 50%{ transform:translateX(4px); opacity:1; } }
+  .result-orb { width:52px; height:52px; display:grid; place-items:center; margin:12px auto 0; color:#17331e; background:var(--yellow); border-radius:50%; font-size:1.1rem; font-weight:950; box-shadow:0 0 0 0 rgba(241,207,72,.35); animation:pulse 2s infinite; }
+  @keyframes pulse { 70%{ box-shadow:0 0 0 15px rgba(241,207,72,0); } 100%{ box-shadow:0 0 0 0 rgba(241,207,72,0); } }
+  .workflow-status { min-height:22px; margin:12px 7px 0; color:#bcd1c1; font-size:.75rem; text-align:center; }
+  .notice-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px; }
+  .notice { padding:12px 14px; color:#59645c; background:#fff; border:1px solid var(--line); border-radius:13px; font-size:.76rem; text-align:left; }
+  .notice strong { color:var(--ink); }
+  section { padding:52px 0; scroll-margin-top:82px; }
+  .section-intro { display:flex; justify-content:space-between; align-items:end; gap:24px; margin-bottom:20px; }
+  .section-intro h2 { margin:0; font-size:clamp(1.65rem,4vw,2.55rem); line-height:1.05; letter-spacing:-.04em; }
+  .section-intro p { max-width:600px; margin:7px 0 0; color:var(--muted); font-size:.9rem; }
+  .pill { display:inline-flex; padding:6px 9px; color:var(--blue); background:var(--blue-soft); border:1px solid #cee1ec; border-radius:999px; font-size:.68rem; font-weight:900; text-transform:uppercase; letter-spacing:.06em; }
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .info-card { padding:20px; background:#fff; border:1px solid var(--line); border-radius:var(--radius); box-shadow:0 8px 28px rgba(28,52,33,.05); }
+  .info-card .icon { width:38px; height:38px; display:grid; place-items:center; margin-bottom:12px; color:#fff; background:var(--green); border-radius:12px; font-weight:900; }
+  .info-card h3 { margin:0; font-size:.96rem; }
+  .info-card p { margin:7px 0 0; color:var(--muted); font-size:.8rem; }
+  .score-layout { display:grid; grid-template-columns:1.2fr .8fr; gap:14px; }
+  .table-card,.band-card { overflow:hidden; background:#fff; border:1px solid var(--line); border-radius:var(--radius); box-shadow:0 8px 28px rgba(28,52,33,.05); }
+  .table-card table { width:100%; border-collapse:collapse; font-size:.82rem; }
+  th,td { padding:13px 15px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+  thead th { color:var(--blue); background:var(--blue-soft); font-size:.68rem; text-transform:uppercase; letter-spacing:.05em; }
+  tr:last-child > * { border-bottom:0; }
+  tbody th { color:var(--ink); }
+  .points { color:var(--green-dark); font-weight:950; white-space:nowrap; }
+  .band-card { padding:18px; }
+  .band { display:grid; grid-template-columns:76px 1fr; gap:10px; padding:9px 0; border-bottom:1px solid var(--line); font-size:.77rem; }
+  .band:last-child { border-bottom:0; }
+  .band strong { color:var(--green-dark); }
+  .layers { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:14px; }
+  .layer { padding:17px; color:#dbe8df; background:#17231b; border:1px solid #304137; border-radius:16px; font-size:.76rem; }
+  .layer b { display:block; margin-bottom:7px; color:#fff; }
+  .layer span { color:#8dd39f; font-weight:900; }
+  .sample-shell { overflow:hidden; background:#fff; border:1px solid var(--line); border-radius:26px; box-shadow:var(--shadow); }
+  .sample-top { padding:24px; color:#fff; background:linear-gradient(135deg,#17311f,#275c37); }
+  .sample-label { display:flex; justify-content:space-between; gap:12px; align-items:center; color:#bfe0c8; font-size:.73rem; font-weight:900; letter-spacing:.06em; text-transform:uppercase; }
+  .sample-title { display:flex; justify-content:space-between; align-items:end; gap:18px; margin-top:18px; }
+  .sample-title h3 { margin:0; font-size:clamp(1.35rem,3vw,2.05rem); line-height:1.06; }
+  .score-badge { flex:0 0 auto; padding:12px 15px; color:#18301e; background:var(--yellow); border-radius:15px; text-align:center; font-size:.75rem; font-weight:900; }
+  .score-badge strong { display:block; font-size:1.4rem; line-height:1; }
+  .sample-metrics { display:grid; grid-template-columns:repeat(6,1fr); gap:8px; margin-top:20px; }
+  .sample-metric { padding:11px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.13); border-radius:12px; }
+  .sample-metric small { display:block; color:#b8c9bc; font-size:.62rem; text-transform:uppercase; letter-spacing:.04em; }
+  .sample-metric b { display:block; margin-top:4px; color:#fff; font-size:.83rem; }
+  .result-frame-wrap { padding:14px; background:#edf2ed; }
+  .result-frame { width:100%; min-height:940px; display:block; border:1px solid #d6dfd6; border-radius:16px; background:#fff; }
+  .sample-actions { display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; padding:15px 18px; border-top:1px solid var(--line); }
+  .action-group { display:flex; flex-wrap:wrap; gap:8px; }
+  .button { display:inline-flex; align-items:center; justify-content:center; gap:7px; padding:10px 14px; color:#fff; background:var(--green); border:1px solid var(--green); border-radius:11px; text-decoration:none; font-size:.77rem; font-weight:900; cursor:pointer; }
+  .button:hover { background:var(--green-dark); }
+  .button.outline { color:var(--green-dark); background:#fff; border-color:#c8ddcd; }
+  .button.dark { color:#fff; background:#17231b; border-color:#17231b; }
+  .variation-note { padding:12px 16px; color:#5e522c; background:var(--amber-soft); border:1px solid #ead6a6; border-radius:13px; font-size:.78rem; }
+  .prompt-card { overflow:hidden; background:#152019; border:1px solid #314238; border-radius:24px; box-shadow:var(--shadow); }
+  .prompt-toolbar { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 16px; color:#fff; border-bottom:1px solid #324238; }
+  .prompt-toolbar span { color:#9cb1a2; font-size:.75rem; }
+  .prompt-text { max-height:680px; margin:0; padding:20px; overflow:auto; color:#e8efe9; background:#111a15; white-space:pre-wrap; font:12px/1.62 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+  .disclaimer { margin:12px 0 60px; padding:18px; color:#5e522c; background:var(--amber-soft); border:1px solid #ead6a6; border-radius:18px; font-size:.8rem; }
+  footer { padding:24px 0 40px; color:#6b766e; border-top:1px solid var(--line); font-size:.75rem; }
+  .footer-row { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+  .footer-brand { display:flex; align-items:center; gap:9px; color:var(--ink); font-weight:900; }
+  .footer-brand img { width:34px; height:34px; object-fit:cover; border:2px solid var(--yellow); border-radius:50%; }
+  .modal { position:fixed; inset:0; z-index:100; display:none; padding:18px; background:rgba(9,18,12,.72); backdrop-filter:blur(8px); }
+  .modal.open { display:grid; place-items:center; }
+  .modal-panel { width:min(760px,100%); max-height:min(760px,calc(100vh - 36px)); overflow:auto; padding:22px; background:#fff; border:1px solid var(--line); border-radius:26px; box-shadow:0 28px 90px rgba(0,0,0,.34); animation:pop .18s ease-out; }
+  @keyframes pop { from{ transform:scale(.95) translateY(8px); opacity:0; } }
+  .modal-head { display:flex; justify-content:space-between; gap:16px; align-items:start; }
+  .modal-head h2 { margin:0; font-size:1.45rem; letter-spacing:-.03em; }
+  .modal-head p { margin:5px 0 0; color:var(--muted); font-size:.8rem; }
+  .modal-close { width:38px; height:38px; flex:0 0 auto; border:0; border-radius:50%; background:#edf2ee; color:var(--ink); font-size:1.25rem; cursor:pointer; }
+  .ai-group { margin-top:20px; }
+  .ai-group-title { display:flex; align-items:center; gap:7px; margin-bottom:8px; color:var(--muted); font-size:.7rem; font-weight:900; letter-spacing:.06em; text-transform:uppercase; }
+  .ai-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:9px; }
+  .ai-link { display:grid; grid-template-columns:42px 1fr auto; align-items:center; gap:11px; padding:11px; color:var(--ink); background:#f8faf8; border:1px solid var(--line); border-radius:14px; text-decoration:none; transition:.16s ease; }
+  .ai-link:hover { transform:translateY(-2px); border-color:#9ccba8; box-shadow:0 7px 18px rgba(30,73,40,.1); }
+  .ai-logo { width:42px; height:42px; display:grid; place-items:center; border-radius:12px; }
+  .ai-logo img { width:23px; height:23px; object-fit:contain; filter:brightness(0) invert(1); }
+  .ai-name { display:block; font-size:.83rem; font-weight:900; }
+  .ai-access { display:block; margin-top:2px; color:var(--muted); font-size:.65rem; }
+  .ai-open { color:var(--green-dark); font-size:.7rem; font-weight:900; }
+  .modal-foot { margin:14px 2px 0; color:#7a837c; font-size:.68rem; }
+  @media (max-width:900px) {
+    .workflow { grid-template-columns:repeat(2,1fr); }
+    .flow-arrow { display:none; }
+    .grid { grid-template-columns:repeat(2,1fr); }
+    .score-layout { grid-template-columns:1fr; }
+    .layers { grid-template-columns:repeat(2,1fr); }
+    .sample-metrics { grid-template-columns:repeat(3,1fr); }
+  }
+  @media (max-width:640px) {
+    .nav { min-height:64px; }
+    .brand span,.nav-links a { display:none; }
+    .nav-links { margin-left:auto; }
+    .hero { padding-top:42px; }
+    .workflow-head { display:block; }
+    .workflow-head span { display:block; margin-top:4px; }
+    .workflow { grid-template-columns:1fr; }
+    .flow-arrow { display:none; }
+    .step { min-height:0; }
+    .notice-row,.grid,.layers,.ai-grid { grid-template-columns:1fr; }
+    .section-intro,.sample-title,.footer-row { display:block; }
+    .score-badge { width:max-content; margin-top:14px; }
+    .sample-metrics { grid-template-columns:repeat(2,1fr); }
+    .result-frame-wrap { padding:7px; }
+    .result-frame { min-height:740px; }
+  }
+  @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation:none!important; transition:none!important; } }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="nav">
+    <a class="brand" href="#top"><img src="armchair-income-logo.png" alt="Armchair Income"><span>Armchair Income<small>AI Research Tool</small></span></a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#method">Method</a><a href="#sample">Sample Search</a><a href="#prompt">Prompt</a>
+      <button type="button" data-open-ai>Choose your AI</button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <span class="eyebrow">Standardized Research · Prompt Version 4.1</span>
+    <h1>AI Income Investment Scorecard V4</h1>
+    <p class="hero-copy">Enter a ticker, copy one standardized research prompt, and run it in the AI tool you prefer. The output scores documented income durability without using personal financial information or giving transaction advice.</p>
+    <p class="credit">Shared by a member · Prompt created by <a href="https://armchair-insider.circle.so/u/85901e8b" target="_blank" rel="noopener">Paul Stark ↗</a></p>
+
+    <div class="workflow-card" aria-label="Four-step workflow">
+      <div class="workflow-head"><strong>From ticker to standardized research</strong><span>The ticker is inserted only when you copy the prompt.</span></div>
+      <div class="workflow">
+        <div class="step active" id="flowStep1"><span class="step-no">1</span><strong>Enter a ticker</strong><p>Use one public investment symbol.</p><div class="ticker-row"><input id="tickerInput" type="text" maxlength="12" placeholder="Example: ADX" aria-label="Ticker symbol" autocomplete="off" spellcheck="false"></div></div>
+        <div class="flow-arrow" aria-hidden="true"><span>→</span></div>
+        <div class="step" id="flowStep2"><span class="step-no">2</span><strong>Copy the prompt</strong><p>Your ticker replaces the placeholder.</p><button class="step-button" type="button" id="copyTop">Copy ticker prompt</button></div>
+        <div class="flow-arrow" aria-hidden="true"><span>→</span></div>
+        <div class="step" id="flowStep3"><span class="step-no">3</span><strong>Choose your AI</strong><p>Open the options in a pop-up.</p><button class="step-button secondary" type="button" data-open-ai>Open AI options</button></div>
+        <div class="flow-arrow" aria-hidden="true"><span>→</span></div>
+        <div class="step" id="flowStep4"><span class="step-no">4</span><strong>Paste & run</strong><p>Receive a score plus evidence classification.</p><div class="result-orb">100</div></div>
+      </div>
+      <div class="workflow-status" id="workflowStatus" aria-live="polite">Enter a ticker to begin. Nothing is searched automatically.</div>
+    </div>
+
+    <div class="notice-row">
+      <div class="notice"><strong>Not investment advice.</strong> This is standardized, impersonal research for education and testing. Verify all material facts before relying on an AI output.</div>
+      <div class="notice"><strong>Results may vary.</strong> Different AI tools—and different report dates—can return different sources, calculations, confidence levels, scores, and wording.</div>
+    </div>
+  </div>
+
+  <section id="method">
+    <div class="wrap">
+      <div class="section-intro"><div><span class="pill">What V4 does</span><h2>One method. One symbol. Neutral research.</h2><p>Version 4.1 removes transaction instructions and evaluates public evidence using the metric appropriate to the security type.</p></div></div>
+      <div class="grid">
+        <article class="info-card"><span class="icon">1</span><h3>Standardized & impersonal</h3><p>The same symbol, public information, and report date should produce substantially the same report for every reader.</p></article>
+        <article class="info-card"><span class="icon">2</span><h3>Primary-source-first</h3><p>SEC filings, audited reports, issuer materials, and verified market data take priority over summaries.</p></article>
+        <article class="info-card"><span class="icon">3</span><h3>Correct metric by structure</h3><p>CEF NAV return, BDC NII, REIT AFFO, company free cash flow, and other type-specific measures are not mixed.</p></article>
+        <article class="info-card"><span class="icon">4</span><h3>Math & evidence checks</h3><p>Figures are labeled retrieved, calculated, or research incomplete. Missing inputs are not guessed.</p></article>
+        <article class="info-card"><span class="icon">5</span><h3>Capital record separated</h3><p>Absolute, strategy-relative, and opportunity-cost records are evaluated without treating every price decline as impairment.</p></article>
+        <article class="info-card"><span class="icon">6</span><h3>One objective peer</h3><p>The report compares one relevant strategy peer using the same distribution, capital, quality, leverage, fee, and valuation criteria.</p></article>
+      </div>
+
+      <div class="section-intro" style="margin-top:42px"><div><span class="pill">100-point system</span><h2>Score breakdown</h2></div></div>
+      <div class="score-layout">
+        <div class="table-card"><table><thead><tr><th>Category</th><th>What it measures</th><th>Points</th></tr></thead><tbody>
+          <tr><th>Distribution Support</th><td>Coverage, recurring economics, history, variability, and stress resilience.</td><td class="points">30</td></tr>
+          <tr><th>Capital Preservation</th><td>Economic-value trend, total return, drawdowns, and recoveries.</td><td class="points">25</td></tr>
+          <tr><th>Business & Asset Quality</th><td>Durability, demand, concentration, cyclicality, and impairment risk.</td><td class="points">20</td></tr>
+          <tr><th>Valuation Context</th><td>Current valuation against the security's own history and comparable strategies.</td><td class="points">15</td></tr>
+          <tr><th>Management & Balance Sheet</th><td>Leverage, liquidity, maturities, capital allocation, and stewardship.</td><td class="points">10</td></tr>
+        </tbody></table></div>
+        <div class="band-card" aria-label="Research classifications">
+          <div class="band"><strong>90–100</strong><span>Exceptional documented durability</span></div>
+          <div class="band"><strong>80–89</strong><span>Strong documented durability</span></div>
+          <div class="band"><strong>70–79</strong><span>Above-average documented durability</span></div>
+          <div class="band"><strong>60–69</strong><span>Mixed durability evidence</span></div>
+          <div class="band"><strong>40–59</strong><span>Material durability weaknesses</span></div>
+          <div class="band"><strong>Below 40</strong><span>Severe documented weaknesses</span></div>
+        </div>
+      </div>
+      <div class="layers">
+        <div class="layer"><b><span>Layer 1 ·</span> Research summary</b>A1–A3: at a glance, scores, and plain-language explanation.</div>
+        <div class="layer"><b><span>Layer 2 ·</span> Balanced case</b>A4–A8: supporting evidence, contrary evidence, monitoring, and peer comparison.</div>
+        <div class="layer"><b><span>Layer 3 ·</span> Full evidence</b>A9–A15: distributions, capital, assets, valuation, risks, catalysts, and tax characteristics.</div>
+        <div class="layer"><b><span>Layer 4 ·</span> Evidence quality</b>A16–A19: provenance, sources, definitions, and permitted follow-ups.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sample">
+    <div class="wrap">
+      <div class="section-intro"><div><span class="pill">Sample Search</span><h2>Sample search result from ChatGPT</h2><p>ADX is shown only to demonstrate the V4.1 format. The complete result appears below, divided into readable plates without changing ChatGPT's answer.</p></div></div>
+      <div class="sample-shell">
+        <div class="sample-top">
+          <div class="sample-label"><span>ChatGPT · ADX · V4.1</span><span>Report date: Aug. 21, 2026</span></div>
+          <div class="sample-title"><h3>Adams Diversified Equity Fund, Inc.</h3><div class="score-badge"><strong>86 / 100</strong>Strong documented durability</div></div>
+          <div class="sample-metrics">
+            <div class="sample-metric"><small>Market price</small><b>$25.86</b></div>
+            <div class="sample-metric"><small>NAV</small><b>$26.37</b></div>
+            <div class="sample-metric"><small>Discount</small><b>-1.9%</b></div>
+            <div class="sample-metric"><small>Forward yield</small><b>~7.7%</b></div>
+            <div class="sample-metric"><small>Support score</small><b>25 / 30</b></div>
+            <div class="sample-metric"><small>Confidence</small><b>High</b></div>
+          </div>
+        </div>
+        <div class="result-frame-wrap"><iframe class="result-frame" src="chatgpt-adx-v4-result-plates.html" title="ChatGPT ADX V4.1 exact standardized research result, formatted into section cards"></iframe></div>
+        <div class="sample-actions">
+          <div class="action-group"><a class="button outline" href="chatgpt-adx-v4-result-plates.html" target="_blank" rel="noopener">Open full card view ↗</a><a class="button dark" href="ADX-ChatGPT-Standardized-Research-V4.pdf" target="_blank" rel="noopener">Open exact response PDF</a></div>
+          <a class="button" href="#prompt">Use the prompt</a>
+        </div>
+      </div>
+      <p class="variation-note"><strong>AI results can vary.</strong> ChatGPT, Claude, Gemini, Copilot, and other tools may use different sources or dates and may interpret the same evidence differently. Check citations, filings, and calculations.</p>
+    </div>
+  </section>
+
+  <section id="prompt">
+    <div class="wrap">
+      <div class="section-intro"><div><span class="pill">Exact V4.1 prompt</span><h2>Copy, paste, and run</h2><p>Enter your ticker above or copy the template below. The AI—not this webpage—performs the research.</p></div><button class="button" type="button" id="copyBottom">Copy ticker prompt</button></div>
+      <div class="prompt-card">
+        <div class="prompt-toolbar"><strong>Durable Income Research System · Version 4.1</strong><span>Standardized Single-Symbol Publisher Edition</span></div>
+        <pre class="prompt-text" id="promptText">TICKER SYMBOL: [INSERT TICKER HERE]
+
+PART 1 — IDENTITY, PURPOSE, AND INPUT
+
+1.1 — What You Are
+You are the Durable Income Research System, Version 4.1, Standardized Single-Symbol Publisher Edition. You produce evidence-based, impersonal research about publicly traded securities using public information and a consistent, standard methodology.
+
+You operate strictly under the Publishers' Exclusion of the Investment Advisers Act of 1940 and applicable state-level publisher rules (including California DFPI standards). You do not provide investment advice, personalized recommendations, suitability determinations, portfolio allocations, transaction instructions, financial planning, tax advice, or legal advice. You do not determine whether a security is appropriate for any person or account.
+
+The same symbol analyzed using the same public information and report date must receive substantially the same report for every reader. A reader's identity, holdings, purchase price, financial condition, objectives, risk tolerance, tax circumstances, account type, time horizon, income needs, or intended transaction must not affect the report.
+
+1.2 — Immediate Routing
+Do not begin with an acknowledgment, readiness message, plan, confirmation, or conversational greeting.
+• If one ticker or security name is provided, produce the standardized report.
+• If several symbols are provided, produce a separate, independent standardized report for each. Do not rank, weight, balance, or compare them as components of a portfolio or uses of capital.
+• If nothing is provided, reply only: "Send a ticker symbol or security name for a standardized Durable Income research report."
+• If a symbol is invalid, ambiguous, or maps to multiple securities, ask one concise clarifying question. Never guess.
+• If a reader supplies a portfolio list, brokerage statement, account balance, cost basis, purchase date, financial objective, risk tolerance, tax information, withdrawal need, or other personal financial information, do not use or process it. State once: "This research edition does not process personal financial information or evaluate portfolios. Name a single security for standardized research."
+
+1.3 — Permitted and Forbidden Scope
+The report MAY:
+• Identify and explain the security's structure and operations.
+• Report current and historical public SEC/regulator filings and facts.
+• Analyze distribution support using the correct security-type metric.
+• Analyze historical capital preservation and asset quality.
+• Describe leverage, liquidity, expenses, management, concentration, and documented risks.
+• Compare the security with one objectively selected strategy peer using identical published criteria.
+• Describe current valuation relative to the security's own history and peer context.
+• Produce a neutral research score and evidence classification.
+• Identify objective facts that would strengthen, weaken, or invalidate the research classification.
+
+The report MUST NOT:
+• Tell anyone to buy, sell, hold, avoid, add, trim, exit, replace, rebalance, or allocate money.
+• State that a security is suitable, unsuitable, safe, or recommended for any reader.
+• Provide a target allocation, starting position, maximum position, or dollar amount.
+• Provide a personalized entry price, exit price, price target, stop-loss, or transaction plan.
+• State where a reader's next dollar belongs.
+• Use a reader's purchase price, cost basis, holdings, gains, losses, goals, or individual account type.
+• Connect to, manage, monitor, or route trades to a brokerage account.
+• Claim that a score predicts future returns, guarantees income safety, or acts as an automated "stock picker."
+• Use marketing or promotional buzzwords such as "predictive intelligence," "AI stock selection," or "guaranteed protection."
+• Treat multiple tickers submitted together as a "portfolio" or offer cross-asset allocation summaries.
+
+1.4 — Response to Advice-Seeking Questions
+If asked whether someone should buy, sell, hold, add, trim, avoid, replace, or allocate money to a security, do not answer the transaction question. Reply within the research framework:
+"This system provides standardized securities research rather than individual investment recommendations. The report can explain the security's verified distribution support, historical capital record, valuation context, material risks, and the evidence that would change its research classification."
+Then provide or refer to the relevant standardized evidence. Do not request personal information.
+
+PART 2 — RESEARCH STANDARDS AND DATA INTEGRITY
+
+2.1 — Research Objective
+Measure and describe the public evidence concerning distribution durability, capital preservation, asset quality, valuation, and balance-sheet risk. The score is a standardized research classification, not a transaction recommendation, suitability determination, price forecast, or instruction.
+
+2.2 — Durable Income Definition
+For purposes of this methodology, durable income means recurring cash flow that has historically been supported by economic earnings, has persisted through varying market conditions, and has not depended on destructive return of capital, unsustainable leverage, continual dilution, or favorable conditions that cannot reasonably be treated as permanent.
+This definition is an analytical standard. Say that the methodology gives greater weight to durability than headline yield. Do not instruct the reader to "choose durability."
+
+2.3 — Primary-Source-First Research Protocol
+Research in this order:
+1. Validate the symbol, issuer, security type, exchange, and CUSIP/CIK when available.
+2. Retrieve the latest SEC filings (10-K, 10-Q, 8-K) or regulator-filed documents.
+3. Retrieve official issuer, investor-relations, trustee, exchange, or fund-sponsor materials.
+4. Retrieve current market data from an exchange, sponsor, or recognized market-data provider.
+5. Use specialist databases only for historical comparisons unavailable from primary sources.
+6. Use general third-party websites only to locate primary documents or resolve a remaining gap.
+
+Maintain three internal source states:
+• Encountered: appeared in discovery results.
+• Consulted: opened for discovery or cross-checking.
+• Relied upon: materially supports a report statement.
+Only relied-upon primary and verified market sources belong in the reader-facing source list.
+
+2.4 — Evidence Provenance &amp; Math Verification Rules
+Every material quantitative statement must be categorized internally as:
+• Retrieved: accessed during the current research session from a live public source.
+• Calculated: derived transparently from retrieved figures using standard formulas (show intermediate steps if complex).
+• Research Incomplete: insufficient reliable data to verify.
+
+Math Integrity Rules:
+• Perform arithmetic step-by-step. NEVER guess or estimate precise financial figures (e.g., NII, coverage ratios, NAV per share, leverage multiples).
+• If a baseline financial input cannot be verified from filings or recognized market data, mark the field explicitly as "Research Incomplete".
+• Do not fill gaps with arbitrary estimations or hallucinated numbers.
+
+Confidence limits:
+• High confidence: major components verified against primary filings.
+• Moderate confidence: public data support the conclusion, but some inputs are secondary.
+• Low confidence: primary verification is limited; figures are directional.
+• Research Incomplete: evidence is insufficient to classify the component.
+
+2.5 — Source Conflict Rule
+When sources conflict:
+1. Prefer the most recent final SEC filing or regulator-filed document for contractual and audited facts.
+2. Prefer the official issuer or sponsor for current unaudited operational information.
+3. Prefer the exchange or recognized market-data provider for timestamped prices.
+4. State the conflict and lower confidence if it cannot be resolved.
+
+2.6 — Security-Type Metric Map
+Use the metric appropriate to the security:
+• REIT: AFFO or FFO / AFFO per share and NAV indicators
+• BDC: Net Investment Income (NII) / NAV per share and non-accruals
+• Credit or Equity CEF: Portfolio income, UNII, and realized gains / NAV total return and discount history
+• Option-Income Fund: Option premium plus portfolio income / NAV total return after distributions
+• Common Stock: Free cash flow and earnings / Per-share free cash flow and book value
+• Preferred Stock: Contractual coupon and issuer coverage / Issuer credit, ranking, reset, and call risk
+• Exchange-Traded Debt: Contractual interest and issuer coverage / Issuer credit, ranking, maturity, and call risk
+• Bond Fund: SEC yield and portfolio yield / NAV, duration, and credit trend
+• CLO Fund: Distributable income and tranche cash flow / NAV and tranche credit quality
+• MLP: Distributable cash flow (DCF) / Per-unit cash flow and coverage
+• Royalty Vehicle: Royalty receipts / Reserve life and depletion
+• mREIT: Net interest spread and distributable earnings / Book value per share and funding risk
+
+Never substitute a familiar but incorrect metric.
+
+2.7 — Capital-Preservation Standard
+Evaluate separately:
+1. Absolute capital record: economic value after distributions, inflation-adjusted where the period exceeds five years.
+2. Strategy-relative record: performance against a similar strategy peer.
+3. Opportunity-cost record: performance against the closest unconstrained alternative.
+Do not call an income strategy destructive merely because it trails an unconstrained growth index. Do not infer impairment from price decline alone.
+
+2.8 — Income-Versus-Capital Test
+Use standardized public-history baselines only: full available history and trailing one-, three-, five-, and ten-year periods where available. Never use an individual reader's purchase date, cost basis, distributions received, or unrealized gain/loss.
+
+Decompose historical results into:
+• Distributions over the measured period.
+• Change in NAV, book value, or capital measure.
+• Distribution-adjusted total return.
+
+Classify the public historical record:
+• Income Intact: capital measure is stable or growing and distributions are supported by earnings/gains.
+• Partial Erosion: capital measure declined, but total return remained clearly positive.
+• Capital Depletion: total return remained near zero or negative over a full cycle despite distributions, consuming economic capital.
+• Insufficient History: less than twelve months or no meaningful cycle.
+• Research Incomplete: required history could not be verified.
+
+2.9 — Covered-Call Rules
+Determine overwrite percentage, static or dynamic implementation, strike approach, underlying index or securities, expiration frequency, volatility sensitivity, upside/downside capture, NAV trend, and distribution sources.
+Do not state that option-premium income cannot grow. Do not treat all option-income funds as equivalent.
+
+2.10 — Limited History
+• Under three years: confidence normally cannot exceed Moderate and overall score cannot exceed 80.
+• Three to five years: overall score normally cannot exceed 85 without cycle testing.
+• More than five years: no maturity penalty if evidence supports durability.
+
+2.11 — Missing Data
+For every unavailable material item:
+1. State exactly what is missing.
+2. State how the gap affects confidence.
+3. Score supported components only.
+4. Mark unsupported components Research Incomplete.
+
+2.12 — Neutral Analytical Voice
+Use evidence-conditioned research language:
+• "The reviewed evidence supports..."
+• "The methodology classifies the historical record as..."
+• "The current valuation is above/below its historical range..."
+• "This metric would strengthen/weaken the research score..."
+• "Relative to the selected peer, the subject has..."
+
+NEVER use: "I recommend", "you should", buy, sell, hold, add, trim, avoid, exit, replace, starter position, suitable, right for your portfolio, safe, guaranteed, top stock pick, best use of capital, target weight, entry point, exit point, or price target.
+
+2.13 — Neutral Research Classifications
+Score | Classification
+90–100 | Exceptional documented durability
+80–89 | Strong documented durability
+70–79 | Above-average documented durability
+60–69 | Mixed durability evidence
+40–59 | Material durability weaknesses
+Below 40 | Severe documented weaknesses
+
+These are standardized research classifications, not transaction recommendations or safety guarantees.
+
+2.14 — Severe-Weakness Evidence
+Identify severe weakness only when primary evidence confirms one or more of:
+• Distribution coverage persistently below 1.0x without improvement.
+• Persistent strategy-adjusted deterioration in NAV, book value, NII, or cash flow per share.
+• Destructive return of capital.
+• Rising debt combined with deteriorating cash flow.
+• Distribution funded through borrowing, asset sales, or recurring dilution.
+• Value-destructive issuance or rights offerings.
+• Material credit quality deterioration.
+• Leverage capable of forcing asset sales in an ordinary downturn.
+
+PART 3 — STANDARDIZED SCORE BREAKDOWN
+
+3.1 — Score Components (Total = 100 Points)
+1. Distribution Support (30 pts): Coverage, recurring economics, history, variability, stress resilience.
+2. Capital Preservation (25 pts): Economic-value trend, total return, drawdowns, recoveries.
+3. Business &amp; Asset Quality (20 pts): Asset durability, demand, concentration, cyclicality, impairment risk.
+4. Valuation Context (15 pts): Current valuation against history and comparable strategies.
+5. Management &amp; Balance Sheet (10 pts): Leverage, liquidity, maturities, capital allocation, stewardship.
+
+3.2 — Distribution Support Rescaling
+Distribution Support Score = round((Distribution Support points / 30) x 100)
+87–100: Strongly supported | 70–86: Supported with identified variability | 50–69: Limited support | 27–49: Weakly supported | 0–26: Not supported by recurring economics.
+
+3.3 — Valuation Treatment
+Report current price/valuation, historical range/median, and peer comparison. Do not provide buy-below levels, exit targets, fair-value targets, or transaction triggers.
+
+3.4 — Mechanical Stress Illustrations
+Avoid forecasts and probabilities. When demonstrating stress, make it strictly mechanical arithmetic:
+"If NII declined 20% while the distribution remained unchanged, estimated coverage would decline from 1.15x to 0.92x. This is arithmetic under a stated assumption, not a forecast or prediction."
+
+PART 4 — REPORT OUTPUT STRUCTURE
+
+4.1 — Required Header
+XX / 100 — [NEUTRAL RESEARCH CLASSIFICATION]
+
+TICKER · Investment type · Reported forward yield X.X% · Evidence confidence: [written classification and explanation]
+Research summary: Two or three sentences identifying the strongest supporting evidence, principal limiting evidence, and the fact that would most materially change the score.
+Standardization statement: This report uses public information and the same methodology for every reader. It does not use personal financial circumstances.
+
+4.2 — Layer 1: Research Summary
+A1 — At a Glance Table (Price, Forward Yield, What It Is, Research Classification, Valuation vs Own History, Valuation vs Peer, Distribution Support Score, Historical Capital Record, Evidence Confidence). Add fund size, expenses, leverage, discount/premium for funds.
+A2 — Score Breakdown (All 5 categories, points, and 1 evidence-based sentence each).
+A3 — Plain-Language Explanation (Cash flow mechanism, supporting economic conditions, key documented risk indicator).
+
+4.3 — Layer 2: Balanced Research Case
+A4 — Supporting Evidence
+A5 — Contrary Evidence
+A6 — Evidence That Would Change the Score (Strengthen, Weaken, Invalidate)
+A7 — Monitoring Indicators (Support, Capital, Balance Sheet, Valuation, Next Filing Event)
+A8 — Standardized Peer Comparison (Compare distribution support, capital record, asset quality, leverage, fees, and valuation tradeoffs with 1 peer).
+
+4.4 — Layer 3: Full Evidence
+A9 — Distribution Evidence (Metrics, coverage, tax accounting, spillover)
+A10 — Capital Evidence (NAV/BV trend, income-vs-capital classification)
+A11 — Assets &amp; Balance Sheet (Asset types, non-accruals/defaults, maturities, leverage)
+A12 — Valuation Evidence (Historical multiples, peer context)
+A13 — Material Risks (3 key documented risks, measurement metrics, deterioration thresholds)
+A14 — Strategy Characteristics &amp; Catalysts (Economic exposures, upcoming public catalysts)
+A15 — General Tax Characteristics (General tax nature: 1099 vs K-1, ordinary income vs qualified; no account advice).
+
+4.5 — Layer 4: Evidence Quality
+A16 — Evidence &amp; Data Quality (Retrieved vs calculated figures, complete vs incomplete fields)
+A17 — Sources Relied Upon (SEC filings, official sponsor documents, direct URLs)
+A18 — Terms Used (Definitions of specialized financial metrics used)
+A19 — Permitted Follow-Ups (Standardized options: show arithmetic, peer metric comparison, rate stress walkthrough, printable output).
+
+PART 5 — REQUIRED DISCLOSURE
+
+Print this block at the end of every report:
+
+IMPORTANT RESEARCH DISCLOSURE
+This report is standardized, impersonal financial research produced from publicly available information. It is educational and informational only. It does not provide investment advice, a recommendation, a solicitation, a suitability determination, a personal financial plan, or an instruction to buy, hold, sell, avoid, size, or allocate capital to any security.
+The report does not consider—and the system does not request or use—a reader's holdings, purchase price, financial condition, objectives, income needs, tax circumstances, account type, time horizon, liquidity needs, or risk tolerance. Every reader searching the same security using the same report date receives substantially the same standardized analysis.
+Scores and classifications describe how the reviewed evidence fits a published research methodology. They are opinions about documented characteristics, not measurements of safety, predictions of performance, guarantees of income, or transaction recommendations. A higher score does not mean a security is appropriate for any person.
+This report was generated with artificial intelligence and may contain errors, omissions, stale information, incorrect calculations, or misidentified data. Material facts should be checked against cited SEC filings, issuer materials, fund-sponsor documents, and current market data.
+Investing involves risk, including loss of principal. Prices, net asset values, distributions, earnings, credit conditions, and security terms may change. Historical results do not predict future results. Any stress illustration shown is mechanical arithmetic based on stated assumptions and is not a forecast.
+Tax descriptions are general and are not tax advice. Legal descriptions are general and are not legal advice. Readers should consult appropriately licensed professionals regarding their own circumstances. No advisory, fiduciary, professional, or client relationship is created by use of this report.
+⚠️ COMMUNITY DISCLAIMER &amp; NOTICE
+Hey everyone! A quick heads-up regarding the research prompts shared in this channel:
+- For Educational &amp; Testing Use Only: These prompts are shared simply for fun, testing, and exploring how AI can help summarize public SEC filings.
+- Not Financial Advice: The outputs generated by these prompts are automated summaries of public data—not investment advice, personal recommendations, or instructions to buy, sell, or hold any stock.
+- Run at Your Own Discretion: Anyone copying and running these prompts on their own setup does so independently and at their own discretion.
+- Double-Check the Facts: AI can sometimes make mistakes or miscalculate numbers. Always double-check facts against official SEC filings and consult a professional for financial decisions!
+</pre>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="disclaimer"><strong>Important:</strong> This tool shares an AI research prompt for educational and testing purposes. It is not investment, legal, or tax advice and does not provide instructions to buy, sell, hold, avoid, size, or allocate capital. AI can produce errors, stale data, incorrect calculations, or misidentified facts. Use at your own discretion and verify material information against official filings and current market data.</div></div>
+</main>
+
+<footer><div class="wrap footer-row"><div class="footer-brand"><img src="armchair-income-logo.png" alt=""><span>Armchair Income</span></div><span>AI Income Investment Scorecard V4 · Prompt Version 4.1 · Standardized research, not investment advice.</span></div></footer>
+
+<div class="modal" id="aiModal" role="dialog" aria-modal="true" aria-labelledby="aiModalTitle">
+  <div class="modal-panel">
+    <div class="modal-head"><div><h2 id="aiModalTitle">Choose your AI</h2><p>The ticker prompt is copied when you open an AI. Paste it into a new chat, then run it.</p></div><button class="modal-close" type="button" id="closeModal" aria-label="Close">×</button></div>
+    <div class="ai-group">
+      <div class="ai-group-title">No sign-up needed to run the prompt</div>
+      <div class="ai-grid">
+        <a class="ai-link" href="https://chatgpt.com/" target="_blank" rel="noopener" data-ai><span class="ai-logo" style="background:#101a16"><img src="ai-logos-v4/chatgpt.svg" alt="" style="filter:none"></span><span><span class="ai-name">ChatGPT / GPTs</span><small class="ai-access">No sign-up needed</small></span><span class="ai-open">Open ↗</span></a>
+        <a class="ai-link" href="https://gemini.google.com/app" target="_blank" rel="noopener" data-ai><span class="ai-logo" style="background:#4c79df"><img src="ai-logos-v4/gemini.svg" alt=""></span><span><span class="ai-name">Google Gemini</span><small class="ai-access">No sign-up needed</small></span><span class="ai-open">Open ↗</span></a>
+        <a class="ai-link" href="https://www.perplexity.ai/" target="_blank" rel="noopener" data-ai><span class="ai-logo" style="background:#1f7a7a"><img src="ai-logos-v4/perplexity.svg" alt=""></span><span><span class="ai-name">Perplexity</span><small class="ai-access">No sign-up needed</small></span><span class="ai-open">Open ↗</span></a>
+        <a class="ai-link" href="https://chat.mistral.ai/chat" target="_blank" rel="noopener" data-ai><span class="ai-logo" style="background:#ef682f"><img src="ai-logos-v4/mistral.svg" alt=""></span><span><span class="ai-name">Mistral Le Chat</span><small class="ai-access">No sign-up needed</small></span><span class="ai-open">Open ↗</span></a>
+      </div>
+    </div>
+    <div class="ai-group">
+      <div class="ai-group-title">Account required—unless already signed in</div>
+      <div class="ai-grid">
+        <a class="ai-link" href="https://copilot.microsoft.com/" target="_blank" rel="noopener" data-ai><span class="ai-logo" style="background:#7157d9"><img src="ai-logos-v4/copilot.svg" alt=""></span><span><span class="ai-name">Microsoft Copilot</span><small class="ai-access">Account required</small></span><span class="ai-open">Open ↗</span></a>
+        <a class="ai-link" href="https://chat.deepseek.com/" target="_blank" rel="noopener" data-ai><span class="ai-logo" style="background:#4d6bfe"><img src="ai-logos-v4/deepseek.svg" alt=""></span><span><span class="ai-name">DeepSeek</span><small class="ai-access">Account required</small></span><span class="ai-open">Open ↗</span></a>
+        <a class="ai-link" href="https://claude.ai/new" target="_blank" rel="noopener" data-ai><span class="ai-logo" style="background:#d97757"><img src="ai-logos-v4/claude.svg" alt=""></span><span><span class="ai-name">Claude</span><small class="ai-access">Account required</small></span><span class="ai-open">Open ↗</span></a>
+        <a class="ai-link" href="https://grok.com/" target="_blank" rel="noopener" data-ai><span class="ai-logo" style="background:#171717"><img src="ai-logos-v4/grok.svg" alt=""></span><span><span class="ai-name">Grok</span><small class="ai-access">Account required</small></span><span class="ai-open">Open ↗</span></a>
+        <a class="ai-link" href="https://poe.com/" target="_blank" rel="noopener" data-ai><span class="ai-logo" style="background:#5c54e7"><img src="ai-logos-v4/poe.svg" alt=""></span><span><span class="ai-name">Poe</span><small class="ai-access">Account required</small></span><span class="ai-open">Open ↗</span></a>
+      </div>
+    </div>
+    <p class="modal-foot">Access and sign-in requirements can change. The webpage copies the prompt but does not submit or search a ticker automatically.</p>
+  </div>
+</div>
+
+<script>
+  const tickerInput = document.getElementById('tickerInput');
+  const promptTemplate = document.getElementById('promptText').textContent;
+  const workflowStatus = document.getElementById('workflowStatus');
+  const modal = document.getElementById('aiModal');
+  const steps = [1,2,3,4].map(function(n){ return document.getElementById('flowStep' + n); });
+
+  function cleanTicker() {
+    return tickerInput.value.toUpperCase().replace(/[^A-Z0-9.-]/g,'').slice(0,12);
+  }
+  function tickerPrompt() {
+    const ticker = cleanTicker();
+    return promptTemplate.replace('[INSERT TICKER HERE]', ticker || '[INSERT TICKER HERE]');
+  }
+  function setStage(stage) {
+    steps.forEach(function(step,index){ step.classList.toggle('done', index + 1 < stage); step.classList.toggle('active', index + 1 === stage); });
+  }
+  function fallbackCopy(text) {
+    const area = document.createElement('textarea');
+    area.value = text; area.setAttribute('readonly',''); area.style.position='fixed'; area.style.opacity='0';
+    document.body.appendChild(area); area.select(); document.execCommand('copy'); area.remove();
+  }
+  async function copyPrompt(message) {
+    const ticker = cleanTicker();
+    if (!ticker) {
+      tickerInput.focus(); setStage(1); workflowStatus.textContent='Enter a ticker first. Nothing is searched automatically.'; return false;
+    }
+    tickerInput.value = ticker;
+    try { await navigator.clipboard.writeText(tickerPrompt()); } catch (error) { fallbackCopy(tickerPrompt()); }
+    setStage(3); workflowStatus.textContent = message || ('Prompt copied for ' + ticker + '. Now choose an AI and paste it there.');
+    return true;
+  }
+  tickerInput.addEventListener('input', function(){ tickerInput.value=cleanTicker(); setStage(tickerInput.value ? 2 : 1); workflowStatus.textContent=tickerInput.value ? 'Ticker ready. Copy the prompt next.' : 'Enter a ticker to begin. Nothing is searched automatically.'; });
+  tickerInput.addEventListener('keydown', function(event){ if(event.key==='Enter') copyPrompt(); });
+  document.getElementById('copyTop').addEventListener('click', function(){ copyPrompt(); });
+  document.getElementById('copyBottom').addEventListener('click', function(){ copyPrompt('Prompt copied. Choose an AI, paste, and run it.'); });
+  document.querySelectorAll('[data-open-ai]').forEach(function(button){ button.addEventListener('click', function(){ modal.classList.add('open'); document.body.style.overflow='hidden'; document.getElementById('closeModal').focus(); }); });
+  function closeModal(){ modal.classList.remove('open'); document.body.style.overflow=''; }
+  document.getElementById('closeModal').addEventListener('click', closeModal);
+  modal.addEventListener('click', function(event){ if(event.target===modal) closeModal(); });
+  document.addEventListener('keydown', function(event){ if(event.key==='Escape') closeModal(); });
+  document.querySelectorAll('[data-ai]').forEach(function(link){ link.addEventListener('click', function(event){
+    if (!cleanTicker()) {
+      event.preventDefault(); closeModal(); tickerInput.focus(); setStage(1);
+      workflowStatus.textContent='Enter a ticker first. No AI was opened and nothing was searched.'; return;
+    }
+    copyPrompt('Prompt copied. Paste it into the AI tab that just opened.'); setStage(4);
+  }); });
+</script>
+</body>
+</html>
