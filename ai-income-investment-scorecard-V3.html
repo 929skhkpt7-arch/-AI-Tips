@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Use the Durable Income Buying Filter V3.0 to evaluate income durability, capital preservation, valuation, risks, catalysts, and portfolio fit.">
 <link rel="icon" type="image/png" href="armchair-income-logo.png">
-<title>AI Income Investment Scorecard V3 — Armchair Income</title>
+<title>AI Income Investment Scorecard V3 · Back to V4</title>
 <style>
   :root {
     --bg: #f2f5f1;
@@ -416,12 +416,40 @@
     .ai-modal-card { max-height: calc(100vh - 24px); padding: 21px 16px; border-radius: 20px; }
     .ai-modal-card .ai-grid { grid-template-columns: 1fr; }
   }
+
+  .version-switch {
+    order:99; margin-left:0; flex:0 0 auto; display:inline-flex; align-items:center; gap:8px;
+    padding:7px 10px 7px 8px; color:var(--ink); background:#fff;
+    border:1px solid #cdddcf; border-radius:12px; text-decoration:none;
+    box-shadow:0 5px 14px rgba(28,52,33,.06); transition:.18s ease;
+  }
+  .version-switch:hover { transform:translateY(-1px); border-color:#8dbf9a; box-shadow:0 8px 20px rgba(28,52,33,.11); }
+  .version-current { display:grid; place-items:center; min-width:31px; height:31px; padding:0 7px; color:#fff; background:var(--green); border-radius:9px; font-size:.72rem; font-weight:950; }
+  .version-copy { display:grid; gap:1px; line-height:1.08; }
+  .version-copy small { color:var(--muted); font-size:.58rem; font-weight:800; letter-spacing:.05em; text-transform:uppercase; }
+  .version-copy strong { color:var(--green-dark); font-size:.75rem; white-space:nowrap; }
+  .version-arrow { color:var(--green); font-size:.9rem; font-weight:950; }
+  @media (max-width:760px) {
+    .version-switch { padding:6px; gap:5px; }
+    .version-copy small { display:none; }
+    .version-copy strong { font-size:.68rem; }
+    .version-arrow { display:none; }
+  }
+  @media (max-width:460px) {
+    .version-copy { display:none; }
+    .version-current { min-width:36px; }
+  }
 </style>
 </head>
 <body>
 <header>
   <div class="header-inner">
     <a class="brand" href="#top"><img class="brand-logo" src="armchair-income-logo.png" alt="Armchair Income logo"><span>Armchair Income</span></a>
+    <a class="version-switch" href="ai-income-investment-scorecard.html" aria-label="Return to AI Income Investment Scorecard V4" title="Return to the V4 scorecard">
+      <span class="version-current">V3</span>
+      <span class="version-copy"><small>Version</small><strong>Back to V4</strong></span>
+      <span class="version-arrow" aria-hidden="true">→</span>
+    </a>
     <nav aria-label="Page navigation">
       <a href="#sample">Sample Search</a>
       <a href="#prompt">Copy prompt</a>
@@ -500,9 +528,9 @@
     <div class="card claude-result-card">
       <span class="eyebrow">ChatGPT’s complete response</span>
       <p class="note" style="margin:0 0 12px;">Displayed exactly as supplied, including the 23-part analysis, stress test, peer comparison, scoring, and final decision.</p>
-      <iframe class="claude-result-frame" src="claude-adx-v3-result-plates.html" title="ChatGPT’s exact Durable Income Buying Filter V3 result for ADX, divided into section cards"></iframe>
+      <iframe class="claude-result-frame" src="chatgpt-adx-v3-result-plates.html" title="ChatGPT’s exact Durable Income Buying Filter V3 result for ADX, divided into section cards"></iframe>
       <div class="claude-result-tools">
-        <a class="secondary" href="claude-adx-v3-result-plates.html" target="_blank" rel="noopener">Open card view ↗</a>
+        <a class="secondary" href="chatgpt-adx-v3-result-plates.html" target="_blank" rel="noopener">Open card view ↗</a>
         <a class="secondary" href="ADX-ChatGPT-Income-Filter-Result.pdf" target="_blank" rel="noopener">Open exact response PDF ↗</a>
       </div>
     </div>
