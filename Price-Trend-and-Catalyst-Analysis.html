@@ -82,10 +82,14 @@
   .visual .stage-tag { color:#74500d; background:#f8df86; }
   .stage-card h3 { margin:12px 0 7px; font-size:1.3rem; }
   .stage-card p { margin:0; color:inherit; opacity:.78; font-size:.88rem; }
-  .prompt-card { overflow:hidden; background:#071725; border:1px solid #25435b; border-radius:22px; box-shadow:var(--shadow); }
-  .prompt-toolbar { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 16px; color:#fff; border-bottom:1px solid #29445a; }
-  .prompt-toolbar span { color:#9eb1bf; font-size:.76rem; }
-  .prompt-text { max-height:720px; margin:0; padding:22px; overflow:auto; color:#e7eef3; white-space:pre-wrap; font:13px/1.65 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+  .pdf-card { overflow:hidden; background:#071725; border:1px solid #25435b; border-radius:22px; box-shadow:var(--shadow); }
+  .pdf-toolbar { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:15px 17px; color:#fff; border-bottom:1px solid #29445a; }
+  .pdf-toolbar-copy span { display:block; margin-top:2px; color:#9eb1bf; font-size:.76rem; }
+  .pdf-actions { display:flex; flex-wrap:wrap; gap:8px; }
+  .pdf-action { display:inline-flex; align-items:center; justify-content:center; min-height:40px; padding:8px 12px; color:var(--navy); background:var(--gold); border-radius:10px; text-decoration:none; font-size:.8rem; font-weight:900; }
+  .pdf-action.secondary { color:#fff; background:#173b58; border:1px solid #3b5d75; }
+  .pdf-frame { display:block; width:100%; height:min(78vh,850px); min-height:620px; border:0; background:#e8edf1; }
+  .pdf-note { margin:0; padding:12px 16px; color:#a9bdcb; background:#0b2032; font-size:.78rem; }
   .disclaimer { margin-top:14px; padding:15px 17px; color:#6f531a; background:#fff8df; border:1px solid #ecd88a; border-radius:14px; font-size:.82rem; }
   footer { padding:23px 0 38px; color:#9fb1bf; background:var(--navy); }
   .footer-row { display:flex; justify-content:space-between; align-items:center; gap:20px; font-size:.78rem; }
@@ -125,6 +129,8 @@
     .section-head,.footer-row { display:block; }
     .section-head .button { margin-top:12px; }
     .footer-row > :last-child { display:block; margin-top:8px; }
+    .pdf-toolbar { align-items:flex-start; flex-direction:column; }
+    .pdf-frame { min-height:540px; }
   }
   @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; } }
 </style>
@@ -182,8 +188,16 @@
 
   <section id="prompt">
     <div class="shell">
-      <div class="section-head"><div><span class="mini-label">Exact prompt</span><h2>SEQUOIA Price Trend & Catalyst Analysis v2.1</h2><p>The ticker entered above replaces <strong>[SYMBOL]</strong> throughout the copied prompt.</p></div><button class="button gold" id="copyPromptBottom" type="button">Copy ticker prompt</button></div>
-      <div class="prompt-card"><div class="prompt-toolbar"><strong>Current market data + written report + optional three-page PDF</strong><span>v2.1</span></div><pre class="prompt-text" id="promptText">SEQUOIA
+      <div class="section-head"><div><span class="mini-label">Original formatted prompt</span><h2>SEQUOIA Price Trend & Catalyst Analysis v2.1</h2><p>View or download Paul Stark’s complete PDF prompt below. The ticker tool above still creates a ticker-filled copy for your AI.</p></div></div>
+      <div class="pdf-card">
+        <div class="pdf-toolbar">
+          <div class="pdf-toolbar-copy"><strong>SEQUOIA · What’s Behind the Trend?</strong><span>Official 33-page prompt · Version 2.1</span></div>
+          <div class="pdf-actions"><a class="pdf-action" href="SEQUOIA-Price-Trend-Prompt-v2.1.pdf" target="_blank" rel="noopener">Open PDF ↗</a><a class="pdf-action secondary" href="SEQUOIA-Price-Trend-Prompt-v2.1.pdf" download>Download PDF</a></div>
+        </div>
+        <iframe class="pdf-frame" src="SEQUOIA-Price-Trend-Prompt-v2.1.pdf#page=1&amp;view=FitH" title="SEQUOIA Price Trend and Catalyst Analysis v2.1 PDF prompt" loading="lazy"></iframe>
+        <p class="pdf-note">If the preview does not load in your browser, use Open PDF or Download PDF.</p>
+      </div>
+      <textarea id="promptText" hidden aria-hidden="true">SEQUOIA
 
 What’s Behind the Trend?
 AI Research Using Current Market Data
@@ -2231,7 +2245,7 @@ It should not answer:
 
 WHAT SHOULD THE INVESTOR DO?
 The report must remain clear and decisive about the evidence while avoiding buy, add, hold, sell, wait, avoid, entry-point, target-price, position-sizing, or
-individualized suitability recommendations.</pre></div>
+individualized suitability recommendations.</textarea>
       <div class="disclaimer"><strong>Educational research only.</strong> AI outputs may contain errors, stale information, incorrect calculations, or unsupported conclusions. Results can vary between AI tools. Verify material facts against cited filings, issuer materials, and current market data. This page does not provide investment, legal, or tax advice.</div>
     </div>
   </section>
@@ -2261,7 +2275,7 @@ individualized suitability recommendations.</pre></div>
 
 <script>
   const tickerInput = document.getElementById('tickerInput');
-  const promptTemplate = document.getElementById('promptText').textContent;
+  const promptTemplate = document.getElementById('promptText').value;
   const statusBox = document.getElementById('status');
   const modal = document.getElementById('aiModal');
   const stageNodes = Array.from(document.querySelectorAll('[data-stage]'));
@@ -2290,7 +2304,6 @@ individualized suitability recommendations.</pre></div>
   tickerInput.addEventListener('input',function(){ tickerInput.value=cleanTicker(); setStage(tickerInput.value?2:1); statusBox.textContent=tickerInput.value?'Ticker ready. Copy the prompt next.':'Enter a ticker, copy the prompt, then paste it into your chosen AI. Nothing is searched automatically.'; });
   tickerInput.addEventListener('keydown',function(event){ if(event.key==='Enter') copyTickerPrompt(); });
   document.getElementById('copyPrompt').addEventListener('click',copyTickerPrompt);
-  document.getElementById('copyPromptBottom').addEventListener('click',copyTickerPrompt);
   document.querySelectorAll('[data-open-ai]').forEach(function(button){ button.addEventListener('click',openModal); });
   document.getElementById('closeModal').addEventListener('click',closeModal);
   modal.addEventListener('click',function(event){ if(event.target===modal) closeModal(); });
