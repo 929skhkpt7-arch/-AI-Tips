@@ -62,7 +62,8 @@
   .stage.active strong,.stage.done strong { color:var(--navy); background:var(--gold); }
   .stage.done { color:#146243; background:var(--green-soft); border-color:#bce4ce; }
   .stage.optional { border-style:dashed; }
-  .workspace-note { margin:18px 0 0; color:#9eb4c4; font-size:.78rem; text-align:center; }
+  .workspace-note { max-width:760px; margin:18px auto 0; padding:13px 17px; color:#fff4c5; background:rgba(244,200,75,.12); border:1px solid rgba(244,200,75,.42); border-radius:13px; font-size:.94rem; font-weight:800; text-align:center; box-shadow:0 9px 26px rgba(0,0,0,.12); }
+  .workspace-note strong { color:#fff; }
   section { padding:54px 0; scroll-margin-top:82px; }
   .section-head { display:flex; justify-content:space-between; align-items:end; gap:22px; margin-bottom:19px; }
   .section-head h2 { margin:0; font-size:clamp(1.7rem,4vw,2.6rem); line-height:1.06; letter-spacing:-.045em; }
@@ -82,6 +83,7 @@
   .visual .stage-tag { color:#74500d; background:#f8df86; }
   .stage-card h3 { margin:12px 0 7px; font-size:1.3rem; }
   .stage-card p { margin:0; color:inherit; opacity:.78; font-size:.88rem; }
+  .stage-card .sign-in-note { margin-top:10px; color:#74500d; opacity:1; font-weight:900; }
   .pdf-card { overflow:hidden; background:#071725; border:1px solid #25435b; border-radius:22px; box-shadow:var(--shadow); }
   .pdf-toolbar { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:15px 17px; color:#fff; border-bottom:1px solid #29445a; }
   .pdf-toolbar-copy span { display:block; margin-top:2px; color:#9eb1bf; font-size:.76rem; }
@@ -166,7 +168,7 @@
         </div>
       </div>
     </div>
-    <div class="shell"><p class="workspace-note">The first AI response is the written analysis. The prompt creates the detailed three-page visual PDF only if you request it afterward.</p></div>
+    <div class="shell"><p class="workspace-note"><strong>Your AI provides the written report first.</strong> If you also want a downloadable three-page PDF afterward, you must be signed in to your chosen AI.</p></div>
   </section>
 
   <section id="report">
@@ -181,7 +183,7 @@
       </div>
       <div class="two-stage">
         <article class="stage-card written"><span class="stage-tag">Stage 1 · Default</span><h3>Full written report</h3><p>The AI researches, verifies current information, completes the full analysis, and retains a final verified dataset. It stops after the written report.</p></article>
-        <article class="stage-card visual"><span class="stage-tag">Stage 2 · Only if requested</span><h3>Detailed three-page visual PDF</h3><p>If you say yes afterward, the AI reuses the verified dataset to build the SEQUOIA visual report without restarting the research.</p></article>
+        <article class="stage-card visual"><span class="stage-tag">Stage 2 · Only if requested</span><h3>Detailed three-page visual PDF</h3><p>The written report is provided first. If you request the PDF afterward, the AI reuses the verified dataset without restarting the research.</p><p class="sign-in-note">AI sign-in is required only for the downloadable PDF.</p></article>
       </div>
     </div>
   </section>
