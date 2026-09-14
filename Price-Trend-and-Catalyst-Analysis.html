@@ -34,7 +34,7 @@
   .intro { padding:18px 0 2px; color:#fff; }
   .badge { display:inline-flex; align-items:center; gap:8px; padding:7px 11px; color:#ffe78e; background:rgba(244,200,75,.1); border:1px solid rgba(244,200,75,.32); border-radius:999px; font-size:.75rem; font-weight:900; letter-spacing:.05em; text-transform:uppercase; }
   .badge::before { content:""; width:7px; height:7px; background:var(--gold); border-radius:50%; box-shadow:0 0 0 5px rgba(244,200,75,.12); }
-  h1 { max-width:720px; margin:19px 0 15px; font-size:clamp(2.5rem,5.6vw,5rem); line-height:.97; letter-spacing:-.065em; }
+  h1 { max-width:none; margin:19px 0 15px; font-size:clamp(1.3rem,5.6vw,5rem); line-height:.97; letter-spacing:-.065em; white-space:nowrap; }
   .intro-copy { max-width:650px; margin:0; color:#bfd0dc; font-size:1.04rem; }
   .question-lock { max-width:620px; margin-top:24px; padding:14px 16px; color:#dce8ef; background:rgba(255,255,255,.065); border-left:4px solid var(--gold); border-radius:0 12px 12px 0; font-size:.9rem; }
   .creator-credit { margin:14px 0 0; color:#9fb5c7; font-size:.82rem; }
@@ -43,7 +43,7 @@
   .control-card { overflow:hidden; background:#fff; border:1px solid rgba(255,255,255,.16); border-radius:24px; box-shadow:0 25px 70px rgba(0,0,0,.26); }
   .control-head { padding:20px 21px 16px; background:#f8fafb; border-bottom:1px solid var(--line); }
   .control-head span { color:var(--blue); font-size:.75rem; font-weight:900; letter-spacing:.06em; text-transform:uppercase; }
-  .control-head h2 { margin:4px 0 0; font-size:1.35rem; letter-spacing:-.03em; }
+  .control-head h2 { margin:4px 0 0; font-size:clamp(.78rem,2.3vw,1.35rem); letter-spacing:-.035em; white-space:nowrap; }
   .control-body { padding:21px; }
   .field-label { display:block; margin-bottom:7px; color:var(--muted); font-size:.82rem; font-weight:850; }
   .ticker-input { width:100%; padding:15px 16px; color:var(--navy); background:#fff; border:2px solid #b9c9d5; border-radius:13px; outline:none; font-size:1.25rem; font-weight:950; letter-spacing:.08em; text-transform:uppercase; }
@@ -116,12 +116,15 @@
   .ai-link:hover { transform:translateY(-2px); border-color:#84b3cf; box-shadow:0 7px 18px rgba(7,44,68,.1); }
   .ai-logo { width:43px; height:43px; display:grid; place-items:center; border-radius:12px; }
   .ai-logo img { width:24px; height:24px; object-fit:contain; filter:brightness(0) invert(1); }
-  .ai-name { display:block; font-size:.86rem; font-weight:900; }
+  .ai-name { display:block; min-height:18px; font-size:.86rem; font-weight:900; white-space:nowrap; }
   .ai-access { display:block; margin-top:1px; color:var(--muted); font-size:.73rem; }
+  .recommended { display:inline-flex; flex:0 0 auto; align-items:center; padding:2px 5px; color:#146243; background:#ddf3e5; border:1px solid #a7d9ba; border-radius:999px; font-size:.56rem; font-style:normal; font-weight:950; letter-spacing:.03em; text-transform:uppercase; }
+  .ai-access .recommended { margin-right:4px; vertical-align:middle; }
   .ai-open { color:var(--blue); font-size:.74rem; font-weight:900; }
   .modal-note { margin:14px 2px 0; color:#788690; font-size:.72rem; }
-  .report-choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; padding:16px 21px 22px; }
-  .report-card { padding:21px; background:#fff; border:1px solid rgba(255,255,255,.2); border-radius:20px; box-shadow:0 18px 38px rgba(0,0,0,.18); }
+  .report-choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); align-items:stretch; gap:16px; padding:16px 21px 22px; }
+  .ai-variance-note { grid-column:1 / -1; margin:0; padding:10px 12px; color:#526675; background:#f4f7f9; border:1px solid var(--line); border-radius:10px; font-size:.75rem; font-weight:750; text-align:center; }
+  .report-card { height:100%; box-sizing:border-box; padding:21px; background:#fff; border:1px solid rgba(255,255,255,.2); border-radius:20px; box-shadow:0 18px 38px rgba(0,0,0,.18); }
   .report-card.pdf-report { color:var(--ink); background:#fff; border-color:rgba(255,255,255,.2); }
   .report-kicker { margin:0 0 4px; color:var(--blue); font-size:.74rem; font-weight:900; letter-spacing:.07em; text-transform:uppercase; }
   .pdf-report .report-kicker { color:var(--blue); }
@@ -129,7 +132,7 @@
   .report-card > p { margin:6px 0 15px; color:var(--muted); font-size:.86rem; }
   .pdf-report > p { color:var(--muted); }
   .home-ai-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; }
-  .home-ai-grid .ai-link { grid-template-columns:38px 1fr; gap:9px; }
+  .home-ai-grid .ai-link { grid-template-columns:38px minmax(0,1fr); min-height:70px; gap:9px; }
   .home-ai-grid .ai-logo { width:38px; height:38px; border-radius:10px; }
   .home-ai-grid .ai-logo img { width:21px; height:21px; }
   .home-ai-grid .ai-open { display:none; }
@@ -194,7 +197,7 @@
         <p>Provides the complete written report.</p>
         <button class="home-copy" id="copyWrittenPrompt" type="button" aria-label="Step 3: Copy written report prompt"><span class="step-no" aria-hidden="true">3</span>Copy</button>
         <div class="home-ai-grid">
-          <a class="ai-link" data-ai href="https://chatgpt.com/" target="_blank" rel="noopener"><span class="ai-logo" style="background:#101a16"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJDaGF0R1BUIj4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMCIgZmlsbD0iIzEwMWExNiIvPgogIDxwYXRoIGQ9Ik0yMCAxNmgyNGE4IDggMCAwIDEgOCA4djE0YTggOCAwIDAgMS04IDhIMzNsLTkgNyAyLTdoLTZhOCA4IDAgMCAxLTgtOFYyNGE4IDggMCAwIDEgOC04WiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICA8cGF0aCBkPSJNMjMgMjloMThNMjMgMzZoMTMiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==" alt="" style="filter:none"></span><span><span class="ai-name">ChatGPT</span><small class="ai-access">Written report only</small></span><span class="ai-open">Open ↗</span></a>
+          <a class="ai-link" data-ai href="https://chatgpt.com/" target="_blank" rel="noopener"><span class="ai-logo" style="background:#101a16"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJDaGF0R1BUIj4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMCIgZmlsbD0iIzEwMWExNiIvPgogIDxwYXRoIGQ9Ik0yMCAxNmgyNGE4IDggMCAwIDEgOCA4djE0YTggOCAwIDAgMS04IDhIMzNsLTkgNyAyLTdoLTZhOCA4IDAgMCAxLTgtOFYyNGE4IDggMCAwIDEgOC04WiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICA8cGF0aCBkPSJNMjMgMjloMThNMjMgMzZoMTMiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==" alt="" style="filter:none"></span><span><span class="ai-name">ChatGPT</span><small class="ai-access"><em class="recommended">Recommended</em>Written report only</small></span><span class="ai-open">Open ↗</span></a>
           <a class="ai-link" data-ai href="https://claude.ai/new" target="_blank" rel="noopener"><span class="ai-logo" style="background:#d97757"><img src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZmZmZmZmIiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+QW50aHJvcGljPC90aXRsZT48cGF0aCBkPSJNMTcuMzA0MSAzLjU0MWgtMy42NzE4bDYuNjk2IDE2LjkxOEgyNFptLTEwLjYwODIgMEwwIDIwLjQ1OWgzLjc0NDJsMS4zNjkzLTMuNTUyN2g3LjAwNTJsMS4zNjkzIDMuNTUyOGgzLjc0NDJMMTAuNTM2MyAzLjU0MDlabS0uMzcxMiAxMC4yMjMyIDIuMjkxNC01Ljk0NTYgMi4yOTE0IDUuOTQ1NloiLz48L3N2Zz4=" alt=""></span><span><span class="ai-name">Claude</span><small class="ai-access">Sign in required</small></span><span class="ai-open">Open ↗</span></a>
           <a class="ai-link" data-ai href="https://gemini.google.com/app" target="_blank" rel="noopener"><span class="ai-logo" style="background:#4c79df"><img src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZmZmZmZmIiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+R29vZ2xlIEdlbWluaTwvdGl0bGU+PHBhdGggZD0iTTExLjA0IDE5LjMyUTEyIDIxLjUxIDEyIDI0cTAtMi40OS45My00LjY4Ljk2LTIuMTkgMi41OC0zLjgxdDMuODEtMi41NVEyMS41MSAxMiAyNCAxMnEtMi40OSAwLTQuNjgtLjkzYTEyLjMgMTIuMyAwIDAgMS0zLjgxLTIuNTggMTIuMyAxMi4zIDAgMCAxLTIuNTgtMy44MVExMiAyLjQ5IDEyIDBxMCAyLjQ5LS45NiA0LjY4LS45MyAyLjE5LTIuNTUgMy44MWExMi4zIDEyLjMgMCAwIDEtMy44MSAyLjU4UTIuNDkgMTIgMCAxMnEyLjQ5IDAgNC42OC45NiAyLjE5LjkzIDMuODEgMi41NXQyLjU1IDMuODEiLz48L3N2Zz4=" alt=""></span><span><span class="ai-name">Gemini</span><small class="ai-access">Written report only</small></span><span class="ai-open">Open ↗</span></a>
         </div>
@@ -205,6 +208,7 @@
         <button class="home-copy" id="copyPdfPrompt" type="button" aria-label="Step 3: Copy PDF report prompt"><span class="step-no" aria-hidden="true">3</span>Copy</button>
         <div class="home-pdf-grid"><a class="ai-link" data-ai data-mode="pdf" href="https://chatgpt.com/" target="_blank" rel="noopener"><span class="ai-logo" style="background:#101a16"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJDaGF0R1BUIj4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMCIgZmlsbD0iIzEwMWExNiIvPgogIDxwYXRoIGQ9Ik0yMCAxNmgyNGE4IDggMCAwIDEgOCA4djE0YTggOCAwIDAgMS04IDhIMzNsLTkgNyAyLTdoLTZhOCA4IDAgMCAxLTgtOFYyNGE4IDggMCAwIDEgOC04WiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICA8cGF0aCBkPSJNMjMgMjloMThNMjMgMzZoMTMiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==" alt="" style="filter:none"></span><span><span class="ai-name">ChatGPT</span><small class="ai-access">PDF report · sign in required</small></span><span class="ai-open">Open ↗</span></a></div>
       </section>
+      <p class="ai-variance-note">Results may vary across different AI tools. Verify important information with the cited sources.</p>
         </div>
       </div>
     </div>
